@@ -1,0 +1,9 @@
+recursive-include samlib *.pyi
+include samlib/py.typed
+include sam-sdk/*.h
+include sam-sdk/LICENSE
+include genstubs.py
+include LICENSE
+include MANIFEST.in
+include README.md
+include mypy.ini

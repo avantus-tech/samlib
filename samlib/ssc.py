@@ -30,8 +30,8 @@
 
 import enum
 from types import MappingProxyType
-from typing import (Any, Callable, Dict, Iterator, List, Mapping, NamedTuple,
-                    NewType, Optional, overload, Sequence, SupportsFloat, Union)
+from typing import (Any, Callable, Dict, Generic, Iterator, List, Mapping, NamedTuple,
+                    NewType, Optional, overload, Sequence, SupportsFloat, Union, Type, TypeVar)
 from typing_extensions import Final
 
 from ._ssc_cffi import ffi as _ffi, lib as _lib
@@ -42,6 +42,8 @@ _data_t = NewType('_data_t', object)
 _entry_t = NewType('_entry_t', object)
 _info_t = NewType('_info_t', object)
 _module_t = NewType('_module_t', object)
+
+_Data = TypeVar('_Data', bound='DataDict')
 
 _String = Union[bytes, str]
 _Number = Union[float, int]
@@ -64,15 +66,13 @@ class DataType(enum.Enum):
     def from_object(cls, obj: Any) -> 'DataType':
         if isinstance(obj, (bytes, str)):
             return cls.STRING
-        if isinstance(obj, (float, int)):
-            return cls.NUMBER
         if isinstance(obj, Sequence):
             if obj and isinstance(obj[0], Sequence):
                 return cls.MATRIX
             return cls.ARRAY
         if isinstance(obj, Mapping):
             return cls.TABLE
-        raise TypeError('unsupported type')
+        return cls.NUMBER
 
 class LogAction(enum.Enum):
     LOG = _lib.SSC_LOG
@@ -193,7 +193,7 @@ class ModuleLog(Sequence[LogMessage]):
         return NotImplemented
 
 
-class Module(_ReadOnlyMixin, Sequence[VarInfo]):
+class Module(_ReadOnlyMixin, Sequence[VarInfo], Generic[_Data]):
     __slots__ = '_module', 'name'
 
     _module: _module_t
@@ -241,7 +241,7 @@ class Module(_ReadOnlyMixin, Sequence[VarInfo]):
     def log(self) -> ModuleLog:
         return ModuleLog(self)
 
-    def exec(self, data: 'Data', *,
+    def exec(self, data: _Data, *,
              set_print: Optional[bool] = None,
              log_callback: Optional[Callable[[LogMessage], Optional[bool]]] = None,
              progress_callback: Optional[Callable[[ProgressUpdate], Optional[bool]]] = None) -> bool:
@@ -259,7 +259,7 @@ class Module(_ReadOnlyMixin, Sequence[VarInfo]):
         return False
 
     def __repr__(self) -> str:
-        return f'{self.__class__.__name__}({self.name})'
+        return f'{self.__class__.__name__}({self.name!r})'
 
 
 class Entry(_ReadOnlyMixin):
@@ -298,7 +298,7 @@ class Entry(_ReadOnlyMixin):
         return f'{self.__class__.__name__}({self.index})'
 
 
-class Data(_ssc.Data, Mapping[str, Any]):
+class DataDict(Mapping[str, Any]):
     __slots__ = '_data', '_free'
 
     _data: _data_t
@@ -321,7 +321,7 @@ class Data(_ssc.Data, Mapping[str, Any]):
             _lib.ssc_data_free(self._data)
 
     @classmethod
-    def _from_object(cls, data: _data_t) -> 'Data':
+    def _from_object(cls: Type[_Data], data: _data_t) -> _Data:
         obj = object.__new__(cls)
         object.__setattr__(obj, '_data', data)
         object.__setattr__(obj, '_free', False)
@@ -367,6 +367,27 @@ class Data(_ssc.Data, Mapping[str, Any]):
     def __bool__(self) -> bool:
         return not data_empty(self)
 
+    def update(self, *args: Mapping[str, Any], **kwargs: Any) -> None:
+        args += (kwargs,)
+        for table in args:
+            for key, value in table.items():
+                self[key] = value
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {_util.decode(key): value.to_dict() if isinstance(value, DataDict) else value
+                for key, value in self.items()}
+
+    @classmethod
+    def from_dict(cls: Type[_Data], table: Mapping[str, Any]) -> _Data:
+        data = cls()
+        for key, value in table.items():
+            if isinstance(value, Mapping):
+                value = cls.from_dict(value)
+            data[key] = value
+        return data
+
+
+class Data(DataDict):
     def __getattr__(self, name: str) -> Any:
         try:
             return self[_ssc._name_map.get(name, name)]
@@ -384,25 +405,6 @@ class Data(_ssc.Data, Mapping[str, Any]):
             del self[_ssc._name_map.get(name, name)]
         except KeyError:
             raise AttributeError(name) from None
-
-    def update(self, *args: Mapping[str, Any], **kwargs: Any) -> None:
-        args += (kwargs,)
-        for table in args:
-            for key, value in table.items():
-                self[key] = value
-
-    def to_dict(self) -> Dict[str, Any]:
-        return {_util.decode(key): value.to_dict() if isinstance(value, Data) else value
-                for key, value in self.items()}
-
-    @classmethod
-    def from_dict(cls, table: Mapping[str, Any]) -> 'Data':
-        data = cls()
-        for key, value in table.items():
-            if isinstance(value, Mapping):
-                value = cls.from_dict(value)
-            data[key] = value
-        return data
 
 
 def iter_entries() -> Iterator['Entry']:
@@ -439,26 +441,26 @@ def data_create() -> Data:
     """
     return Data()
 
-def data_free(data: Data) -> None:
+def data_free(data: _Data) -> None:
     """Frees the memory associated with a data object."""
     pass
 
-def data_clear(data: Data) -> None:
+def data_clear(data: _Data) -> None:
     """Clears all of the variables in a data object."""
     _lib.ssc_data_clear(data._data)
 
-def data_unassign(data: Data, name: _String) -> None:
+def data_unassign(data: _Data, name: _String) -> None:
     """Unassigns the variable with the specified name."""
     _lib.ssc_data_unassign(data._data, _util.encode(name))
 
-def data_rename(data: Data, oldname: _String, newname: _String) -> bool:
+def data_rename(data: _Data, oldname: _String, newname: _String) -> bool:
     """Rename a variable in the data table.
 
     Returns True if the rename succeeded, False otherwise.
     """
     return _lib.ssc_data_rename(data._data, _util.encode(oldname), _util.encode(newname))
 
-def data_query(data: Data, name: _String) -> Optional[DataType]:
+def data_query(data: _Data, name: _String) -> Optional[DataType]:
     """Return the data type of the given attribute in the data object.
 
     Returns None if name does not exist.
@@ -468,7 +470,7 @@ def data_query(data: Data, name: _String) -> Optional[DataType]:
         return None
     return DataType(data_type)
 
-def data_first(data: Data) -> Optional[str]:
+def data_first(data: _Data) -> Optional[str]:
     """Returns the name of the first variable in the table.
 
     Returns None if the data object is empty.
@@ -478,7 +480,7 @@ def data_first(data: Data) -> Optional[str]:
         return None
     return _util.decode(_ffi.string(name))
 
-def data_next(data: Data) -> Optional[str]:
+def data_next(data: _Data) -> Optional[str]:
     """Returns the name of the next variable in the table.
 
     Returns None if there are no more variables in the data object.
@@ -488,11 +490,11 @@ def data_next(data: Data) -> Optional[str]:
         return None
     return _util.decode(_ffi.string(name))
 
-def data_empty(data: Data) -> bool:
+def data_empty(data: _Data) -> bool:
     """Returns True if the given table is empty, False otherwise."""
     return _lib.ssc_data_first(data._data) == _ffi.NULL
 
-def iter_data(data: Data) -> Iterator[str]:
+def iter_data(data: _Data) -> Iterator[str]:
     """Helper to iterate over all the attributes in a data object.
 
     Calling this will reset the position for all concurrent iterators.
@@ -502,20 +504,20 @@ def iter_data(data: Data) -> Iterator[str]:
         yield _util.decode(_ffi.string(name))
         name = _lib.ssc_data_next(data._data)
 
-def data_set_string(data: Data, name: _String, value: _String) -> None:
+def data_set_string(data: _Data, name: _String, value: _String) -> None:
     """Assign a string value to a variable."""
     _lib.ssc_data_set_string(data._data, _util.encode(name), _util.encode(value))
 
-def data_set_number(data: Data, name: _String, value: SupportsFloat) -> None:
+def data_set_number(data: _Data, name: _String, value: SupportsFloat) -> None:
     """Assign a numeric value to a variable."""
     _lib.ssc_data_set_number(data._data, _util.encode(name), float(value))
 
-def data_set_array(data: Data, name: _String, value: _Array) -> None:
+def data_set_array(data: _Data, name: _String, value: _Array) -> None:
     """Assign a numeric array to a variable."""
     array = _ffi.new('ssc_number_t[]', [float(x) for x in value])
     _lib.ssc_data_set_array(data._data, _util.encode(name), array, len(array))
 
-def data_set_matrix(data: Data, name: _String, value: _Matrix) -> None:
+def data_set_matrix(data: _Data, name: _String, value: _Matrix) -> None:
     """Assign a numeric matrix to a variable."""
     nrows = len(value)
     ncols = max(len(row) for row in value) if nrows else 0
@@ -523,32 +525,32 @@ def data_set_matrix(data: Data, name: _String, value: _Matrix) -> None:
                        _ffi.new(f'ssc_number_t[{nrows}][{ncols}]', [[float(x) for x in row] for row in value]))
     _lib.ssc_data_set_matrix(data._data, _util.encode(name), matrix, nrows, ncols)
 
-def data_set_table(data: Data, name: _String, value: Data) -> None:
+def data_set_table(data: _Data, name: _String, value: _Data) -> None:
     """Assign a table value to a variable."""
-    if not isinstance(value, Data):
+    if not isinstance(value, DataDict):
         value = Data.from_dict(value)
     _lib.ssc_data_set_table(data._data, _util.encode(name), value._data)
 
-def data_get_bytes(data: Data, name: _String) -> Optional[bytes]:
+def data_get_bytes(data: _Data, name: _String) -> Optional[bytes]:
     """Return a string variable as bytes."""
     string = _lib.ssc_data_get_string(data._data, _util.encode(name))
     if string == _ffi.NULL:
         return None
     return _ffi.string(string)
 
-def data_get_string(data: Data, name: _String) -> Optional[str]:
+def data_get_string(data: _Data, name: _String) -> Optional[str]:
     """Return a string variable as a decoded string."""
     string = data_get_bytes(data, name)
     return None if string is None else _util.decode(string)
 
-def data_get_number(data: Data, name: _String) -> Optional[float]:
+def data_get_number(data: _Data, name: _String) -> Optional[float]:
     """Return a numeric variable as a float."""
     number = _ffi.new('ssc_number_t *')
     if not _lib.ssc_data_get_number(data._data, _util.encode(name), number):
         return None
     return number[0]
 
-def data_get_array(data: Data, name: _String) -> Optional[List[float]]:
+def data_get_array(data: _Data, name: _String) -> Optional[List[float]]:
     """Return an array variable as a list."""
     length = _ffi.new('int *')
     array = _lib.ssc_data_get_array(data._data, _util.encode(name), length)
@@ -556,7 +558,7 @@ def data_get_array(data: Data, name: _String) -> Optional[List[float]]:
         return None
     return _ffi.unpack(array, length[0])
 
-def data_get_matrix(data: Data, name: _String) -> Optional[List[List[float]]]:
+def data_get_matrix(data: _Data, name: _String) -> Optional[List[List[float]]]:
     """Return a matrix variable as a list of lists."""
     nrows = _ffi.new('int *')
     ncols = _ffi.new('int *')
@@ -566,7 +568,7 @@ def data_get_matrix(data: Data, name: _String) -> Optional[List[List[float]]]:
     it = iter(_ffi.unpack(matrix, nrows[0] * ncols[0]))
     return [[next(it) for _ in range(ncols[0])] for _ in range(nrows[0])]
 
-def data_get_table(data: Data, name: _String) -> Optional[Data]:
+def data_get_table(data: _Data, name: _String) -> Optional[Data]:
     """Return a table variable."""
     table = _lib.ssc_data_get_table(data._data, _util.encode(name))
     if table == _ffi.NULL:
@@ -574,7 +576,7 @@ def data_get_table(data: Data, name: _String) -> Optional[Data]:
     return Data._from_object(table)
 
 
-_getters: Final[Mapping[DataType, Callable[[Data, _String], Optional[object]]]] = MappingProxyType({
+_getters: Final[Mapping[DataType, Callable[[_Data, _String], Optional[object]]]] = MappingProxyType({
     DataType.STRING: data_get_string,
     DataType.NUMBER: data_get_number,
     DataType.ARRAY: data_get_array,
@@ -582,7 +584,7 @@ _getters: Final[Mapping[DataType, Callable[[Data, _String], Optional[object]]]] 
     DataType.TABLE: data_get_table,
 })
 
-_setters: Final[Mapping[DataType, Callable[[Data, _String, Any], None]]] = MappingProxyType({
+_setters: Final[Mapping[DataType, Callable[[_Data, _String, Any], None]]] = MappingProxyType({
     DataType.STRING: data_set_string,
     DataType.NUMBER: data_set_number,
     DataType.ARRAY: data_set_array,
@@ -591,7 +593,7 @@ _setters: Final[Mapping[DataType, Callable[[Data, _String, Any], None]]] = Mappi
 })
 
 
-def data_get_value(data: Data, name: _String, data_type: DataType) -> Optional[object]:
+def data_get_value(data: _Data, name: _String, data_type: DataType) -> Optional[object]:
     """Helper to get attribute without knowing the data type."""
     try:
         get_value = _getters[data_type]
@@ -599,7 +601,7 @@ def data_get_value(data: Data, name: _String, data_type: DataType) -> Optional[o
         raise TypeError(f'attribute data type {data_type} is unknown') from None
     return get_value(data, name)
 
-def data_set_value(data: Data, name: _String, data_type: DataType, value: Any) -> None:
+def data_set_value(data: _Data, name: _String, data_type: DataType, value: Any) -> None:
     """Helper to set attribute without knowing the data type."""
     try:
         set_value = _setters[data_type]
@@ -719,7 +721,7 @@ def module_exec_set_print(print: int) -> None:
     """
     _lib.ssc_module_exec_set_print(print)
 
-def module_exec_simple(name: str, data: Data) -> bool:
+def module_exec_simple(name: str, data: _Data) -> bool:
     """The simplest way to run a computation module over a data set.
 
     Simply specify the name of the module, and a data set.  If the whole
@@ -733,7 +735,7 @@ def module_exec_simple(name: str, data: Data) -> bool:
     """
     return bool(_lib.ssc_module_exec_simple(_util.encode(name), data._data))
 
-def module_exec_simple_nothread(name: str, data: Data) -> str:
+def module_exec_simple_nothread(name: str, data: _Data) -> str:
     """Another very simple way to run a computation module over a data set.
 
     The function returns the empty string on success.  If something went
@@ -743,7 +745,7 @@ def module_exec_simple_nothread(name: str, data: Data) -> str:
     error = _lib.ssc_module_exec_simple_nothread(_util.encode(name), data._data)
     return '' if error == _ffi.NULL else _util.decode(error)
 
-def module_exec(module: Module, data: Data) -> bool:
+def module_exec(module: Module, data: _Data) -> bool:
     """Runs an instantiated computation module over the specified data set.
 
     Returns True on success, False on failure.  Uses default internal
@@ -774,7 +776,7 @@ def _handle_update(_module: _module_t, _handler: object, action: int, f0: float,
     return False if result is False else True
 
 def module_exec_with_handler(
-        module: Module, data: Data,
+        module: Module, data: _Data,
         log_callback: Optional[Callable[[LogMessage], Optional[bool]]],
         progress_callback: Optional[Callable[[ProgressUpdate], Optional[bool]]]) -> bool:
     """A full-featured way to run a compute module over a data set.

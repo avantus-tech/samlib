@@ -12,10 +12,10 @@ _data_types = {
     ssc.DataType.NUMBER: 'float',
     ssc.DataType.ARRAY: 'Array',
     ssc.DataType.MATRIX: 'Matrix',
-    ssc.DataType.TABLE: "'Data'",
+    ssc.DataType.TABLE: 'Table',
 }
 
-def gen_stubs(mod_file, stub_file):
+def gen_stubs(sam_path):
     word = re.compile(r'^\w+$')
     non_word = re.compile(r'[^\w]+')
     name_map: Dict[str, str] = {}
@@ -33,85 +33,95 @@ def gen_stubs(mod_file, stub_file):
             name_map[name] = entry_name
         return name
 
-    stub_file.write('''
-# This is a generated file
-
-from typing import Dict, Sequence
-from typing_extensions import Final
-
-Array = Sequence[float]
-Matrix = Sequence[Array]
-
-_name_map: Final[Dict[str, str]]
-''')
     modules = []
     for entry in ssc.iter_entries():
         module = check_name(entry.name)
         modules.append(module)
-        stub_file.write(f'\nclass _{module}:\n')
         vars = set()
+        attrs = []
+        params = []
+        keys = []
         for var in entry.module():
             name = check_name(var.name)
             if name in vars:
                 continue  # skip duplicate name
             vars.add(name)
             data_type = _data_types[var.data_type]
+            keys.append(f'{var.name!r}: {data_type}')
             if var.var_type == ssc.VarType.OUTPUT:
                 data_type = f'Final[{data_type}]'
-            stub_file.write(f'    {name}: {data_type}\n')
-    props = '\n'.join(f'''\
-    @property
-    def {name}(self) -> _{name}: ...''' for name in modules)
-    stub_file.write(f'''
-class Data:
-{props}
+            else:
+                params.append(f'{name}: {data_type} = ...')
+            attr = [
+                (key, value)
+                for key, value in [
+                    ('name', '' if name == var.name else var.name),
+                    ('label', var.label),
+                    ('units', var.units),
+                    ('type', var.data_type.name),
+                    ('group', var.group),
+                    ('required', var.required),
+                    ('constraints', var.constraints),
+                    ('meta', var.meta),
+                ]
+                if value
+            ]
+            attr = ', '.join(f'{k}={v!r}' for k, v in attr)
+            attrs.append(f'{name}: {data_type} = {var.var_type.name}({attr})')
+
+        attrs = f'\n    '.join(attrs)
+        params = f',\n{" " * 17}'.join(params)
+        keys = f',\n        '.join(keys)
+        with (sam_path / 'modules' / f'{module}.pyi').open('w') as file:
+            file.write(f'''
+# This is a generated file
+
+"""{entry.name} - {entry.description}"""
+
+# VERSION: {entry.version}
+
+from typing import Any, Dict, Mapping
+from typing_extensions import Final
+
+from .. import ssc
+from ._util import *
+
+try:
+    from mypy_extensions import TypedDict
+except ImportError:
+    DataDict = Dict[str, Any]
+else:
+    DataDict = TypedDict('DataDict', {{
+        {keys}
+    }}, total=False)
+
+class Data(ssc.DataDict):
+    {attrs}
+
+    def __init__(self, *args: Mapping[str, Any],
+                 {params}) -> None: ...
+    def to_dict(self) -> DataDict: ...  # type: ignore
+
+class Module(ssc.Module[Data]):
+    def __init__(self) -> None: ...
 ''')
 
     names = '\n'.join(f'    {k!r}: {v!r},' for k, v in name_map.items())
-    props = '\n'.join(f'''\
-    @property
-    def {name}(self):
-        return _DataProxy(self)''' for name in modules)
-    mod_file.write(f'''
+    with (sam_path / '_ssc.py').open('w') as file:
+        file.write(f'''
 # This is a generated file
 
 _name_map = {{
 {names}
 }}
-
-
-class _DataProxy:
-    __slots__ = '_data',
-
-    def __init__(self, data):
-        object.__setattr__(self, '_data', data)
-
-    def __getattr__(self, name):
-        try:
-            return self._data[_name_map.get(name, name)]
-        except KeyError:
-            raise AttributeError(name) from None
-
-    def __setattr__(self, name, value):
-        try:
-            self._data[_name_map.get(name, name)] = value
-        except KeyError:
-            raise AttributeError(name) from None
-
-    def __delattr__(self, name):
-        try:
-            del self._data[_name_map.get(name, name)]
-        except KeyError:
-            raise AttributeError(name) from None
-
-
-class Data:
-{props}
 ''')
+    return modules
 
 
 if __name__ == '__main__':
-    mod_path: Path = Path(ssc.__file__).parent / '_ssc.py'
-    stub_path = mod_path.with_name(mod_path.name + 'i')
-    with mod_path.open('w') as mod_file, stub_path.open('w') as stub_file:
-        gen_stubs(mod_file, stub_file)
+    path: Path = Path(ssc.__file__).parent
+    modules = gen_stubs(path)
+    extra = set(p.name for p in (path / 'modules').glob('*.pyi')) - {f'{name}.pyi' for name in modules}
+    extra -= {'_util.pyi'}
+    if extra:
+        print('Extra (unknown) stubs:', ', '.join(extra))

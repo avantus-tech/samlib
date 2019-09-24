@@ -1,8 +1,13 @@
 
+from typing import Set
+
 from .. import ssc
 
 
 __all__ = ()
+
+
+_modules: Set[str]
 
 
 class ModuleProxy:
@@ -22,4 +27,11 @@ class ModuleProxy:
 
 
 def __getattr__(name: str) -> ModuleProxy:
-    return ModuleProxy(name)
+    global _modules
+    try:
+        _modules
+    except NameError:
+        _modules = set(entry.name for entry in ssc.iter_entries())
+    if name in _modules:
+        return ModuleProxy(name)
+    raise AttributeError(f'module {name} does not exist')

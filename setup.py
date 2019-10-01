@@ -7,7 +7,7 @@
 
 from distutils.command.build_ext import build_ext as _build_ext
 from distutils.dep_util import newer_group
-from distutils import ccompiler, log, sysconfig
+from distutils import log, spawn
 import math
 import pathlib
 import shutil
@@ -91,6 +91,8 @@ class build_ext(_build_ext):
                             shutil.copyfileobj(src, dst)
                 if platform != 'win':
                     lib_path.chmod(0o755)
+                if sys.platform == 'darwin':
+                    spawn.spawn(['install_name_tool', '-id', '@loader_path/libssc.dylib', str(lib_path)])
         libssc_path = pathlib.Path('.' if self.inplace else self.build_lib, 'samlib', lib_name)
         if self.force or newer_group([lib_path], libssc_path, 'newer'):
             if not self.dry_run:
@@ -118,18 +120,12 @@ extern "Python" ssc_bool_t _handle_update(ssc_module_t module, ssc_handler_t han
     return ''.join(source)
 
 
-compiler = ccompiler.new_compiler()
-sysconfig.customize_compiler(compiler)
-try:
-    using_gcc = 'gcc' in compiler.compiler[0]
-except AttributeError:
-    using_gcc = False
-
 ffibuilder = cffi.FFI()
 ffibuilder.cdef(read_source())
 ffibuilder.set_source('samlib._ssc_cffi', '#include "sscapi.h"',
                       include_dirs=['sam-sdk'], libraries=['ssc'],
-                      extra_link_args=(['-Wl,-rpath=${ORIGIN}'] if using_gcc else []))
+                      extra_link_args=(['-Wl,-rpath=${ORIGIN}'] if sys.platform == 'linux' else []))
+
 
 setup(
     name='samlib',

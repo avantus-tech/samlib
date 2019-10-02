@@ -11,6 +11,7 @@ from distutils import log, spawn
 import math
 import pathlib
 import shutil
+import ssl
 import sys
 import urllib.request
 import zipfile
@@ -46,7 +47,8 @@ class download(Command):
             return
         log.info(f'downloading {ssc_url}')
         if not self.dry_run:
-            with urllib.request.urlopen(ssc_url) as src, ssc_zip.open('wb') as dst:
+            ctx = ssl.create_default_context(cafile=ssc_zip.parent / 'cacert.pem')
+            with urllib.request.urlopen(ssc_url, context=ctx) as src, ssc_zip.open('wb') as dst:
                 shutil.copyfileobj(src, dst, 8192)
 
 

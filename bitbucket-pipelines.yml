@@ -1,0 +1,15 @@
+image: python:3.7
+
+pipelines:
+  default:
+    - step:
+        name: samlib
+        caches:
+          - pip
+        script:
+          - pip install 'mypy>=0.740'
+          - mypy samlib --junit-xml test-reports/mypy.xml
+
+definitions:
+  caches:
+    pip: ~/.cache/pip

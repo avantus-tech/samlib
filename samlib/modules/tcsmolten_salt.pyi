@@ -5,19 +5,15 @@
 
 # VERSION: 1
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'solar_resource_file': str,
+DataDict = TypedDict('DataDict', {
+    'solar_resource_file': str,
         'solar_resource_data': Table,
         'ppa_multiplier_model': float,
         'dispatch_factors_ts': Array,
@@ -413,7 +409,7 @@ else:
         'sf_adjust:constant': float,
         'sf_adjust:hourly': Array,
         'sf_adjust:periods': Matrix
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     solar_resource_file: str = INPUT(label='local weather file path', type='STRING', group='Weather', required='?', constraints='LOCAL_FILE')
@@ -1071,7 +1067,7 @@ class Data(ssc.DataDict):
                  sf_adjust_constant: float = ...,
                  sf_adjust_hourly: Array = ...,
                  sf_adjust_periods: Matrix = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

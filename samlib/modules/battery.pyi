@@ -5,19 +5,15 @@
 
 # VERSION: 10
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'en_batt': float,
+DataDict = TypedDict('DataDict', {
+    'en_batt': float,
         'system_use_lifetime_output': float,
         'analysis_period': float,
         'gen': Array,
@@ -177,7 +173,7 @@ else:
         'batt_pv_charge_percent': float,
         'batt_bank_installed_capacity': float,
         'batt_dispatch_sched': Matrix
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     en_batt: float = INPUT(label='Enable battery storage model', units='0/1', type='NUMBER', group='Battery', required='?=0')
@@ -450,7 +446,7 @@ class Data(ssc.DataDict):
                  dispatch_tod_factors: Array = ...,
                  dispatch_sched_weekday: Matrix = ...,
                  dispatch_sched_weekend: Matrix = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

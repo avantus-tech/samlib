@@ -146,7 +146,8 @@ setup(
     # Required dependencies
     install_requires=[
         'cffi>=1.12',
-        'typing_extensions',
+        'mypy-extensions',
+        'typing-extensions',
     ],
 
     setup_requires=[

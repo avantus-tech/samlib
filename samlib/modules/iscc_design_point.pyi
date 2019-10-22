@@ -5,19 +5,15 @@
 
 # VERSION: 0
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'ngcc_model': float,
+DataDict = TypedDict('DataDict', {
+    'ngcc_model': float,
         'q_pb_design': float,
         'pinch_point_cold': float,
         'pinch_point_hot': float,
@@ -29,7 +25,7 @@ else:
         'q_solar_max': float,
         'T_htf_cold': float,
         'W_dot_solar': float
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     ngcc_model: float = INPUT(label='1: NREL, 2: GE', type='NUMBER', required='*')
@@ -53,7 +49,7 @@ class Data(ssc.DataDict):
                  elev: float = ...,
                  HTF_code: float = ...,
                  field_fl_props: Matrix = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

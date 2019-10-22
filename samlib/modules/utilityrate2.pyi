@@ -5,19 +5,15 @@
 
 # VERSION: 1
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'analysis_period': float,
+DataDict = TypedDict('DataDict', {
+    'analysis_period': float,
         'hourly_gen': Array,
         'p_with_system': Array,
         'e_load': Array,
@@ -600,7 +596,7 @@ else:
         'charge_ec_oct': Array,
         'charge_ec_nov': Array,
         'charge_ec_dec': Array
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     analysis_period: float = INPUT(label='Number of years in analysis', units='years', type='NUMBER', required='*', constraints='INTEGER,POSITIVE')
@@ -1711,7 +1707,7 @@ class Data(ssc.DataDict):
                  ur_dc_dec_t5_ub: float = ...,
                  ur_dc_dec_t6_dc: float = ...,
                  ur_dc_dec_t6_ub: float = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

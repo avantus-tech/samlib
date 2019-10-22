@@ -5,19 +5,15 @@
 
 # VERSION: 0
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'HCEFrac': Array,
+DataDict = TypedDict('DataDict', {
+    'HCEFrac': Array,
         'PerfFac': Array,
         'RefMirrAper': Array,
         'HCE_A0': Array,
@@ -35,7 +31,7 @@ else:
         'HL': Array,
         'HL_weighted': float,
         'HL_weighted_m2': float
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     HCEFrac: Array = INPUT(label='Fraction of field that is this type of HCE', type='ARRAY', group='hce', required='*')
@@ -73,7 +69,7 @@ class Data(ssc.DataDict):
                  SfInTempD: float = ...,
                  ui_reference_ambient_temperature: float = ...,
                  ui_reference_direct_normal_irradiance: float = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

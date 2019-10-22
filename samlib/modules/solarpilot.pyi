@@ -5,19 +5,15 @@
 
 # VERSION: 0
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'solar_resource_file': str,
+DataDict = TypedDict('DataDict', {
+    'solar_resource_file': str,
         'helio_width': float,
         'helio_height': float,
         'helio_optical_error': float,
@@ -83,7 +79,7 @@ else:
         'cost_tower_tot': float,
         'cost_land_tot': float,
         'cost_site_tot': float
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     solar_resource_file: str = INPUT(label='Solar weather data file', type='STRING', group='SolarPILOT', required='?', constraints='LOCAL_FILE')
@@ -204,7 +200,7 @@ class Data(ssc.DataDict):
                  opt_algorithm: float = ...,
                  opt_flux_penalty: float = ...,
                  helio_positions_in: Matrix = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

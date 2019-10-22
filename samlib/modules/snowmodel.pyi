@@ -5,19 +5,15 @@
 
 # VERSION: 1
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'subarray1_poa_shaded': Array,
+DataDict = TypedDict('DataDict', {
+    'subarray1_poa_shaded': Array,
         'wspd': Array,
         'hourly_gen': Array,
         'tdry': Array,
@@ -32,7 +28,7 @@ else:
         'annual_energy_before_snow': float,
         'monthly_energy': Array,
         'annual_energy': float
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     subarray1_poa_shaded: Array = INPUT(label='Plane of Array Incidence', units='W/m^2', type='ARRAY', group='PV Snow Model', required='*', constraints='LENGTH=8760')
@@ -62,7 +58,7 @@ class Data(ssc.DataDict):
                  subarray1_nmody: float = ...,
                  subarray1_tilt: float = ...,
                  subarray1_track_mode: float = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

@@ -5,19 +5,15 @@
 
 # VERSION: 1
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'turbCapEx': float,
+DataDict = TypedDict('DataDict', {
+    'turbCapEx': float,
         'nTurb': float,
         'turbR': float,
         'rotorD': float,
@@ -279,7 +275,7 @@ else:
         'construction_finance_cost': float,
         'construction_finance_factor': float,
         'total_bos_cost': float
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     turbCapEx: float = INPUT(label='Turbine Capital Cost', units='$/kW', type='NUMBER', group='wobos', required='?=1605')
@@ -761,7 +757,7 @@ class Data(ssc.DataDict):
                  subTotM: float = ...,
                  subTotCost: float = ...,
                  moorCost: float = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

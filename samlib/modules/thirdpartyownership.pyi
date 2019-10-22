@@ -5,19 +5,15 @@
 
 # VERSION: 1
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'depr_fed_type': float,
+DataDict = TypedDict('DataDict', {
+    'depr_fed_type': float,
         'depr_fed_sl_years': float,
         'depr_fed_custom': Array,
         'depr_sta_type': float,
@@ -49,7 +45,7 @@ else:
         'year1_nte': float,
         'lnte_real': float,
         'lnte_nom': float
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     depr_fed_type: float = INPUT(label='Federal depreciation type', type='NUMBER', group='Depreciation', required='?=0', constraints='INTEGER,MIN=0,MAX=3', meta='0=none,1=macrs_half_year,2=sl,3=custom')
@@ -106,7 +102,7 @@ class Data(ssc.DataDict):
                  ppa_escalation: float = ...,
                  elec_cost_with_system: Array = ...,
                  elec_cost_without_system: Array = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

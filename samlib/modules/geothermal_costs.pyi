@@ -5,19 +5,15 @@
 
 # VERSION: 3
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'conversion_type': float,
+DataDict = TypedDict('DataDict', {
+    'conversion_type': float,
         'gross_output': float,
         'design_temp': float,
         'eff_secondlaw': float,
@@ -46,7 +42,7 @@ else:
         'lp_flash_pressure': float,
         'flash_count': float,
         'baseline_cost': float
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     conversion_type: float = INPUT(label='Conversion Type', type='NUMBER', group='GeoHourly', required='*', constraints='INTEGER')
@@ -108,7 +104,7 @@ class Data(ssc.DataDict):
                  hp_flash_pressure: float = ...,
                  lp_flash_pressure: float = ...,
                  flash_count: float = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

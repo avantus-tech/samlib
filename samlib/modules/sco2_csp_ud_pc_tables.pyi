@@ -5,19 +5,15 @@
 
 # VERSION: 0
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'htf': float,
+DataDict = TypedDict('DataDict', {
+    'htf': float,
         'htf_props': Matrix,
         'T_htf_hot_des': float,
         'dT_PHX_hot_approach': float,
@@ -179,7 +175,7 @@ else:
         'T_htf_ind': Matrix,
         'T_amb_ind': Matrix,
         'm_dot_htf_ND_ind': Matrix
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     htf: float = INPUT(label='Integer code for HTF used in PHX', type='NUMBER', required='*')
@@ -386,7 +382,7 @@ class Data(ssc.DataDict):
                  m_dot_htf_ND_low: float = ...,
                  m_dot_htf_ND_high: float = ...,
                  n_m_dot_htf_ND: float = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

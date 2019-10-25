@@ -5,19 +5,15 @@
 
 # VERSION: 1
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'celltype': str,
+DataDict = TypedDict('DataDict', {
+    'celltype': str,
         'Vmp': float,
         'Imp': float,
         'Voc': float,
@@ -33,7 +29,7 @@ else:
         'Rs': float,
         'Rsh': float,
         'Adj': float
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     celltype: str = INPUT(label='Cell technology type', units='monoSi,multiSi/polySi,cis,cigs,cdte,amorphous', type='STRING', group='6 Parameter Solver', required='*')
@@ -64,7 +60,7 @@ class Data(ssc.DataDict):
                  gamma_pmp: float = ...,
                  Nser: float = ...,
                  Tref: float = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

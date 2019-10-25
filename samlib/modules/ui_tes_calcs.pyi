@@ -5,19 +5,15 @@
 
 # VERSION: 0
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'W_dot_pb_des': float,
+DataDict = TypedDict('DataDict', {
+    'W_dot_pb_des': float,
         'eta_pb_des': float,
         'tes_hrs': float,
         'T_HTF_hot': float,
@@ -34,7 +30,7 @@ else:
         'd_tank': float,
         'q_dot_loss': float,
         'HTF_dens': float
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     W_dot_pb_des: float = INPUT(label='Power cycle output at design', units='MWe', type='NUMBER', required='*')
@@ -67,7 +63,7 @@ class Data(ssc.DataDict):
                  h_tank: float = ...,
                  tank_pairs: float = ...,
                  u_tank: float = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

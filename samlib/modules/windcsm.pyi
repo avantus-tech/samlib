@@ -5,19 +5,15 @@
 
 # VERSION: 1
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'turbine_class': float,
+DataDict = TypedDict('DataDict', {
+    'turbine_class': float,
         'turbine_user_exponent': float,
         'turbine_carbon_blades': float,
         'turbine_rotor_diameter': float,
@@ -51,7 +47,7 @@ else:
         'tower_mass': float,
         'tower_cost': float,
         'turbine_cost': float
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     turbine_class: float = INPUT(label='Turbine class', type='NUMBER', group='wind_csm', required='?=0', constraints='INTEGER,MIN=0,MAX=3')
@@ -100,7 +96,7 @@ class Data(ssc.DataDict):
                  hub_height: float = ...,
                  num_blades: float = ...,
                  num_bearings: float = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

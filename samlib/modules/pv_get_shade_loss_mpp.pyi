@@ -5,19 +5,15 @@
 
 # VERSION: 1
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'global_poa_irrad': Array,
+DataDict = TypedDict('DataDict', {
+    'global_poa_irrad': Array,
         'diffuse_irrad': Array,
         'str_shade_fracs': Matrix,
         'pv_cell_temp': Array,
@@ -30,7 +26,7 @@ else:
         't': Array,
         'S': Array,
         'shade_loss': Array
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     global_poa_irrad: Array = INPUT(label='Global POA irradiance', type='ARRAY', group='PV Shade Loss DB', required='*')
@@ -56,7 +52,7 @@ class Data(ssc.DataDict):
                  str_vmp_stc: Array = ...,
                  v_mppt_low: Array = ...,
                  v_mppt_high: Array = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

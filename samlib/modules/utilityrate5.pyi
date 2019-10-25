@@ -5,19 +5,15 @@
 
 # VERSION: 1
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'en_electricity_rates': float,
+DataDict = TypedDict('DataDict', {
+    'en_electricity_rates': float,
         'analysis_period': float,
         'system_use_lifetime_output': float,
         'TOU_demand_single_peak': float,
@@ -186,7 +182,7 @@ else:
         'monthly_tou_demand_peak_wo_sys': Matrix,
         'monthly_tou_demand_charge_w_sys': Matrix,
         'monthly_tou_demand_charge_wo_sys': Matrix
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     en_electricity_rates: float = INPUT(label='Optionally enable/disable electricity_rate', units='years', type='NUMBER', constraints='INTEGER,MIN=0,MAX=1')
@@ -386,7 +382,7 @@ class Data(ssc.DataDict):
                  ur_dc_sched_weekend: Matrix = ...,
                  ur_dc_tou_mat: Matrix = ...,
                  ur_dc_flat_mat: Matrix = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

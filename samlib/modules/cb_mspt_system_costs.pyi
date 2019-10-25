@@ -5,19 +5,15 @@
 
 # VERSION: 0
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'A_sf': float,
+DataDict = TypedDict('DataDict', {
+    'A_sf': float,
         'site_spec_cost': float,
         'heliostat_spec_cost': float,
         'csp.pt.cost.fixed_sf': float,
@@ -66,7 +62,7 @@ else:
         'total_indirect_cost': float,
         'total_installed_cost': float,
         'csp.pt.cost.installed_per_capacity': float
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     A_sf: float = INPUT(label='Total reflective solar field area', units='m2', type='NUMBER', group='heliostat', required='*')
@@ -152,7 +148,7 @@ class Data(ssc.DataDict):
                  csp_pt_cost_plm_fixed: float = ...,
                  sales_tax_frac: float = ...,
                  sales_tax_rate: float = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

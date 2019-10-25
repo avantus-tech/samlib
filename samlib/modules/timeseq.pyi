@@ -5,19 +5,15 @@
 
 # VERSION: 1
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'start_time': float,
+DataDict = TypedDict('DataDict', {
+    'start_time': float,
         'end_time': float,
         'time_step': float,
         'time': Array,
@@ -26,7 +22,7 @@ else:
         'day': Array,
         'hour': Array,
         'minute': Array
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     start_time: float = INPUT(label='Start time', units='seconds', type='NUMBER', group='Time Sequence', required='*', constraints='MIN=0,MAX=31536000', meta='0=jan1st 12am')
@@ -43,7 +39,7 @@ class Data(ssc.DataDict):
                  start_time: float = ...,
                  end_time: float = ...,
                  time_step: float = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

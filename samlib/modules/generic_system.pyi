@@ -5,19 +5,15 @@
 
 # VERSION: 1
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'spec_mode': float,
+DataDict = TypedDict('DataDict', {
+    'spec_mode': float,
         'derate': float,
         'system_capacity': float,
         'user_capacity_factor': float,
@@ -42,7 +38,7 @@ else:
         'adjust:hourly': Array,
         'adjust:periods': Matrix,
         'gen': Array
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     spec_mode: float = INPUT(label='Spec mode: 0=constant CF,1=profile', type='NUMBER', group='generic_system', required='*')
@@ -89,7 +85,7 @@ class Data(ssc.DataDict):
                  adjust_constant: float = ...,
                  adjust_hourly: Array = ...,
                  adjust_periods: Matrix = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

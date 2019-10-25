@@ -5,19 +5,15 @@
 
 # VERSION: 1
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'en_belpe': float,
+DataDict = TypedDict('DataDict', {
+    'en_belpe': float,
         'load': Array,
         'solar_resource_file': str,
         'floor_area': float,
@@ -40,7 +36,7 @@ else:
         'en_dry': float,
         'en_mels': float,
         'Monthly_util': Array
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     en_belpe: float = INPUT(label='Enable building load calculator', units='0/1', type='NUMBER', group='Load Profile Estimator', required='*', constraints='BOOLEAN')
@@ -91,7 +87,7 @@ class Data(ssc.DataDict):
                  en_dry: float = ...,
                  en_mels: float = ...,
                  Monthly_util: Array = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

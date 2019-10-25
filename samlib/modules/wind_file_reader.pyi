@@ -5,19 +5,15 @@
 
 # VERSION: 1
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'file_name': str,
+DataDict = TypedDict('DataDict', {
+    'file_name': str,
         'scan_header_only': float,
         'requested_ht': float,
         'interpolate': float,
@@ -36,7 +32,7 @@ else:
         'wind_direction': Array,
         'temperature': Array,
         'pressure': Array
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     file_name: str = INPUT(label='local weather file path', type='STRING', group='Weather Reader', required='*', constraints='LOCAL_FILE')
@@ -64,7 +60,7 @@ class Data(ssc.DataDict):
                  scan_header_only: float = ...,
                  requested_ht: float = ...,
                  interpolate: float = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

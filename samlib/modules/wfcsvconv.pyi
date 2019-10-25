@@ -5,23 +5,19 @@
 
 # VERSION: 1
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'input_file': str,
+DataDict = TypedDict('DataDict', {
+    'input_file': str,
         'output_file': str,
         'output_folder': str,
         'output_filename_format': str
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     input_file: str = INPUT(label='Input weather file name', type='STRING', group='Weather File Converter', required='*', meta='tmy2,tmy3,intl,epw,smw')
@@ -34,7 +30,7 @@ class Data(ssc.DataDict):
                  output_file: str = ...,
                  output_folder: str = ...,
                  output_filename_format: str = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

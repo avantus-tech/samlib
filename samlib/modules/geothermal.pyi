@@ -5,19 +5,15 @@
 
 # VERSION: 3
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'ui_calculations_only': float,
+DataDict = TypedDict('DataDict', {
+    'ui_calculations_only': float,
         'file_name': str,
         'resource_potential': float,
         'resource_type': float,
@@ -140,7 +136,7 @@ else:
         'adjust:constant': float,
         'adjust:hourly': Array,
         'adjust:periods': Matrix
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     ui_calculations_only: float = INPUT(label='If = 1, only run UI calculations', type='NUMBER', group='GeoHourly', required='*')
@@ -342,7 +338,7 @@ class Data(ssc.DataDict):
                  adjust_constant: float = ...,
                  adjust_hourly: Array = ...,
                  adjust_periods: Matrix = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

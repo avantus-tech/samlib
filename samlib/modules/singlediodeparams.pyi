@@ -5,19 +5,15 @@
 
 # VERSION: 1
 
+from mypy_extensions import TypedDict
 from typing import Any, Dict, Mapping
 from typing_extensions import Final
 
 from .. import ssc
 from ._util import *
 
-try:
-    from mypy_extensions import TypedDict
-except ImportError:
-    DataDict = Dict[str, Any]
-else:
-    DataDict = TypedDict('DataDict', {
-        'I': float,
+DataDict = TypedDict('DataDict', {
+    'I': float,
         'T': float,
         'alpha_isc': float,
         'Adj_ref': float,
@@ -31,7 +27,7 @@ else:
         'Io': float,
         'Rs': float,
         'Rsh': float
-    }, total=False)
+}, total=False)
 
 class Data(ssc.DataDict):
     I: float = INPUT(label='Irradiance', units='W/m2', type='NUMBER', group='Single Diode Model', required='*')
@@ -59,7 +55,7 @@ class Data(ssc.DataDict):
                  Io_ref: float = ...,
                  Rs_ref: float = ...,
                  Rsh_ref: float = ...) -> None: ...
-    def to_dict(self) -> DataDict: ...  # type: ignore
+    def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):
     def __init__(self) -> None: ...

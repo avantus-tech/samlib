@@ -131,7 +131,7 @@ ffibuilder.set_source('samlib._ssc_cffi', '#include "sscapi.h"',
 
 setup(
     name='samlib',
-    version='0.1.1+' + ssc_version,
+    version='0.1.2+' + ssc_version,
     python_requires='>=3.6',
 
     packages=find_packages(include=['samlib']),

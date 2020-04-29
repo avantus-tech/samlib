@@ -7,3 +7,4 @@ include LICENSE
 include MANIFEST.in
 include README.md
 include mypy.ini
+include build_ssc.py

@@ -1,7 +1,7 @@
 
 # This is a generated file
 
-"""levpartflip - Leveraged Partnership Flip Financial Model_"""
+"""merchantplant - Single Owner Financial Model_"""
 
 # VERSION: 1
 
@@ -13,18 +13,7 @@ from .. import ssc
 from ._util import *
 
 DataDict = TypedDict('DataDict', {
-    'ppa_soln_mode': float,
-        'ppa_soln_tolerance': float,
-        'ppa_soln_min': float,
-        'ppa_soln_max': float,
-        'ppa_soln_max_iterations': float,
-        'ppa_price_input': Array,
-        'ppa_escalation': float,
-        'lppa_real': float,
-        'lppa_nom': float,
-        'ppa': float,
-        'npv_ppa_revenue': float,
-        'analysis_period': float,
+    'analysis_period': float,
         'federal_tax_rate': Array,
         'state_tax_rate': Array,
         'cf_federal_tax_frac': Array,
@@ -317,8 +306,25 @@ DataDict = TypedDict('DataDict', {
         'wacc': float,
         'effective_tax_rate': float,
         'analysis_period_irr': float,
+        'en_batt': float,
+        'batt_meter_position': float,
+        'grid_to_batt': Array,
+        'ppa_gen': Array,
         'gen': Array,
         'degradation': Array,
+        'utility_bill_w_sys': Array,
+        'cf_utility_bill': Array,
+        'roe_input': Array,
+        'cf_return_on_equity': Array,
+        'cf_return_on_equity_input': Array,
+        'cf_return_on_equity_dollars': Array,
+        'cf_lcog_costs': Array,
+        'lcog_om': float,
+        'lcog_depr': float,
+        'lcog_loan_int': float,
+        'lcog_wc_int': float,
+        'lcog_roe': float,
+        'lcog': float,
         'loan_moratorium': float,
         'system_use_recapitalization': float,
         'system_recapitalization_cost': float,
@@ -326,117 +332,9 @@ DataDict = TypedDict('DataDict', {
         'system_lifetime_recapitalize': Array,
         'cf_recapitalization': Array,
         'system_use_lifetime_output': float,
-        'ppa_multiplier_model': float,
-        'dispatch_factors_ts': Array,
-        'ppa_multipliers': Array,
-        'dispatch_factor1': float,
-        'dispatch_factor2': float,
-        'dispatch_factor3': float,
-        'dispatch_factor4': float,
-        'dispatch_factor5': float,
-        'dispatch_factor6': float,
-        'dispatch_factor7': float,
-        'dispatch_factor8': float,
-        'dispatch_factor9': float,
-        'dispatch_sched_weekday': Matrix,
-        'dispatch_sched_weekend': Matrix,
-        'cf_energy_net_jan': Array,
-        'cf_revenue_jan': Array,
-        'cf_energy_net_feb': Array,
-        'cf_revenue_feb': Array,
-        'cf_energy_net_mar': Array,
-        'cf_revenue_mar': Array,
-        'cf_energy_net_apr': Array,
-        'cf_revenue_apr': Array,
-        'cf_energy_net_may': Array,
-        'cf_revenue_may': Array,
-        'cf_energy_net_jun': Array,
-        'cf_revenue_jun': Array,
-        'cf_energy_net_jul': Array,
-        'cf_revenue_jul': Array,
-        'cf_energy_net_aug': Array,
-        'cf_revenue_aug': Array,
-        'cf_energy_net_sep': Array,
-        'cf_revenue_sep': Array,
-        'cf_energy_net_oct': Array,
-        'cf_revenue_oct': Array,
-        'cf_energy_net_nov': Array,
-        'cf_revenue_nov': Array,
-        'cf_energy_net_dec': Array,
-        'cf_revenue_dec': Array,
-        'cf_energy_net_dispatch1': Array,
-        'cf_revenue_dispatch1': Array,
-        'cf_energy_net_dispatch2': Array,
-        'cf_revenue_dispatch2': Array,
-        'cf_energy_net_dispatch3': Array,
-        'cf_revenue_dispatch3': Array,
-        'cf_energy_net_dispatch4': Array,
-        'cf_revenue_dispatch4': Array,
-        'cf_energy_net_dispatch5': Array,
-        'cf_revenue_dispatch5': Array,
-        'cf_energy_net_dispatch6': Array,
-        'cf_revenue_dispatch6': Array,
-        'cf_energy_net_dispatch7': Array,
-        'cf_revenue_dispatch7': Array,
-        'cf_energy_net_dispatch8': Array,
-        'cf_revenue_dispatch8': Array,
-        'cf_energy_net_dispatch9': Array,
-        'cf_revenue_dispatch9': Array,
-        'firstyear_revenue_dispatch1': float,
-        'firstyear_revenue_dispatch2': float,
-        'firstyear_revenue_dispatch3': float,
-        'firstyear_revenue_dispatch4': float,
-        'firstyear_revenue_dispatch5': float,
-        'firstyear_revenue_dispatch6': float,
-        'firstyear_revenue_dispatch7': float,
-        'firstyear_revenue_dispatch8': float,
-        'firstyear_revenue_dispatch9': float,
-        'firstyear_energy_dispatch1': float,
-        'firstyear_energy_dispatch2': float,
-        'firstyear_energy_dispatch3': float,
-        'firstyear_energy_dispatch4': float,
-        'firstyear_energy_dispatch5': float,
-        'firstyear_energy_dispatch6': float,
-        'firstyear_energy_dispatch7': float,
-        'firstyear_energy_dispatch8': float,
-        'firstyear_energy_dispatch9': float,
-        'firstyear_energy_price1': float,
-        'firstyear_energy_price2': float,
-        'firstyear_energy_price3': float,
-        'firstyear_energy_price4': float,
-        'firstyear_energy_price5': float,
-        'firstyear_energy_price6': float,
-        'firstyear_energy_price7': float,
-        'firstyear_energy_price8': float,
-        'firstyear_energy_price9': float,
-        'cf_revenue_monthly_firstyear_TOD1': Array,
-        'cf_energy_net_monthly_firstyear_TOD1': Array,
-        'cf_revenue_monthly_firstyear_TOD2': Array,
-        'cf_energy_net_monthly_firstyear_TOD2': Array,
-        'cf_revenue_monthly_firstyear_TOD3': Array,
-        'cf_energy_net_monthly_firstyear_TOD3': Array,
-        'cf_revenue_monthly_firstyear_TOD4': Array,
-        'cf_energy_net_monthly_firstyear_TOD4': Array,
-        'cf_revenue_monthly_firstyear_TOD5': Array,
-        'cf_energy_net_monthly_firstyear_TOD5': Array,
-        'cf_revenue_monthly_firstyear_TOD6': Array,
-        'cf_energy_net_monthly_firstyear_TOD6': Array,
-        'cf_revenue_monthly_firstyear_TOD7': Array,
-        'cf_energy_net_monthly_firstyear_TOD7': Array,
-        'cf_revenue_monthly_firstyear_TOD8': Array,
-        'cf_energy_net_monthly_firstyear_TOD8': Array,
-        'cf_revenue_monthly_firstyear_TOD9': Array,
-        'cf_energy_net_monthly_firstyear_TOD9': Array,
         'total_installed_cost': float,
         'salvage_percentage': float,
         'construction_financing_cost': float,
-        'cost_dev_fee_percent': float,
-        'cost_equity_closing': float,
-        'tax_investor_equity_percent': float,
-        'tax_investor_preflip_cash_percent': float,
-        'tax_investor_postflip_cash_percent': float,
-        'tax_investor_preflip_tax_percent': float,
-        'tax_investor_postflip_tax_percent': float,
         'cost_debt_upfront': float,
         'cost_financing': float,
         'cost_prefinancing': float,
@@ -706,14 +604,18 @@ DataDict = TypedDict('DataDict', {
         'size_of_debt': float,
         'size_of_equity': float,
         'cf_length': float,
-        'ppa_price': float,
         'cf_energy_net': Array,
-        'cf_ppa_price': Array,
-        'cf_energy_value': Array,
+        'cf_thermal_value': Array,
         'cf_om_fixed_expense': Array,
         'cf_om_production_expense': Array,
         'cf_om_capacity_expense': Array,
         'cf_om_fuel_expense': Array,
+        'cf_om_fixed1_expense': Array,
+        'cf_om_production1_expense': Array,
+        'cf_om_capacity1_expense': Array,
+        'cf_om_fixed2_expense': Array,
+        'cf_om_production2_expense': Array,
+        'cf_om_capacity2_expense': Array,
         'cf_om_opt_fuel_1_expense': Array,
         'cf_om_opt_fuel_2_expense': Array,
         'cf_property_tax_assessed_value': Array,
@@ -732,8 +634,8 @@ DataDict = TypedDict('DataDict', {
         'cf_reserve_total': Array,
         'cf_reserve_interest': Array,
         'cf_funding_debtservice': Array,
-        'cf_funding_receivables': Array,
         'cf_funding_om': Array,
+        'cf_funding_receivables': Array,
         'cf_funding_equip1': Array,
         'cf_funding_equip2': Array,
         'cf_funding_equip3': Array,
@@ -774,68 +676,90 @@ DataDict = TypedDict('DataDict', {
         'cf_project_return_aftertax_cash': Array,
         'cf_project_return_aftertax': Array,
         'cf_project_return_aftertax_irr': Array,
+        'cf_project_return_aftertax_max_irr': Array,
         'cf_project_return_aftertax_npv': Array,
-        'cf_tax_investor_pretax': Array,
-        'cf_tax_investor_pretax_irr': Array,
-        'cf_tax_investor_pretax_npv': Array,
-        'cf_tax_investor_aftertax_cash': Array,
-        'cf_tax_investor_aftertax_itc': Array,
-        'cf_tax_investor_aftertax_ptc': Array,
-        'cf_tax_investor_aftertax_tax': Array,
-        'cf_tax_investor_aftertax': Array,
-        'cf_tax_investor_aftertax_irr': Array,
-        'cf_tax_investor_aftertax_npv': Array,
-        'cf_tax_investor_aftertax_max_irr': Array,
-        'tax_investor_aftertax_irr': float,
-        'tax_investor_aftertax_npv': float,
-        'tax_investor_pretax_irr': float,
-        'tax_investor_pretax_npv': float,
-        'sponsor_pretax_equity': float,
-        'sponsor_pretax_development': float,
-        'cf_sponsor_pretax_cash': Array,
-        'cf_sponsor_pretax': Array,
-        'cf_sponsor_pretax_irr': Array,
-        'cf_sponsor_pretax_npv': Array,
-        'sponsor_pretax_irr': float,
-        'sponsor_pretax_npv': float,
-        'sponsor_aftertax_equity': float,
-        'sponsor_aftertax_development': float,
-        'cf_sponsor_aftertax_cash': Array,
-        'cf_sponsor_aftertax': Array,
-        'cf_sponsor_aftertax_itc': Array,
-        'cf_sponsor_aftertax_ptc': Array,
-        'cf_sponsor_aftertax_tax': Array,
-        'cf_sponsor_aftertax_irr': Array,
-        'cf_sponsor_aftertax_npv': Array,
-        'sponsor_aftertax_irr': float,
-        'sponsor_aftertax_npv': float,
+        'project_return_aftertax_irr': float,
+        'project_return_aftertax_npv': float,
         'cf_annual_costs': Array,
         'npv_annual_costs': float,
         'adjusted_installed_cost': float,
         'min_dscr': float,
         'cf_pretax_dscr': Array,
-        'en_batt': float,
+        'system_pre_curtailment_kwac': Array,
+        'cf_energy_curtailed': Array,
+        'cf_curtailment_value': Array,
+        'cf_capacity_payment': Array,
+        'mp_enable_energy_market_revenue': float,
+        'mp_energy_market_revenue': Matrix,
+        'cf_energy_market_revenue': Array,
+        'mp_enable_ancserv1': float,
+        'mp_ancserv1_revenue': Matrix,
+        'cf_ancillary_services_1_revenue': Array,
+        'mp_enable_ancserv2': float,
+        'mp_ancserv2_revenue': Matrix,
+        'cf_ancillary_services_2_revenue': Array,
+        'mp_enable_ancserv3': float,
+        'mp_ancserv3_revenue': Matrix,
+        'cf_ancillary_services_3_revenue': Array,
+        'mp_enable_ancserv4': float,
+        'mp_ancserv4_revenue': Matrix,
+        'cf_ancillary_services_4_revenue': Array,
+        'npv_curtailment_revenue': float,
+        'npv_capacity_revenue': float,
+        'npv_energy_market_revenue': float,
+        'npv_ancillary_services_1_revenue': float,
+        'npv_ancillary_services_2_revenue': float,
+        'npv_ancillary_services_3_revenue': float,
+        'npv_ancillary_services_4_revenue': float,
+        'npv_fed_pbi_income': float,
+        'npv_sta_pbi_income': float,
+        'npv_uti_pbi_income': float,
+        'npv_oth_pbi_income': float,
+        'npv_salvage_value': float,
+        'npv_thermal_value': float,
+        'mp_energy_market_generated_revenue': Array,
+        'mp_ancillary_services1_generated_revenue': Array,
+        'mp_ancillary_services2_generated_revenue': Array,
+        'mp_ancillary_services3_generated_revenue': Array,
+        'mp_ancillary_services4_generated_revenue': Array,
+        'mp_energy_market_cleared_capacity': Array,
+        'mp_ancillary_services1_cleared_capacity': Array,
+        'mp_ancillary_services2_cleared_capacity': Array,
+        'mp_ancillary_services3_cleared_capacity': Array,
+        'mp_ancillary_services4_cleared_capacity': Array,
+        'mp_energy_market_price': Array,
+        'mp_ancillary_services1_price': Array,
+        'mp_ancillary_services2_price': Array,
+        'mp_ancillary_services3_price': Array,
+        'mp_ancillary_services4_price': Array,
+        'mp_total_cleared_capacity': Array,
         'batt_bank_replacement': Array,
         'batt_replacement_schedule': Array,
         'batt_replacement_option': float,
         'battery_per_kWh': float,
         'batt_computed_bank_capacity': float,
         'cf_battery_replacement_cost': Array,
-        'cf_battery_replacement_cost_schedule': Array
+        'cf_battery_replacement_cost_schedule': Array,
+        'fuelcell_replacement': Array,
+        'fuelcell_replacement_schedule': Array,
+        'en_fuelcell': float,
+        'fuelcell_replacement_option': float,
+        'fuelcell_per_kWh': float,
+        'fuelcell_computed_bank_capacity': float,
+        'cf_fuelcell_replacement_cost': Array,
+        'cf_fuelcell_replacement_cost_schedule': Array,
+        'cp_capacity_payment_esc': float,
+        'cp_capacity_payment_type': float,
+        'cp_capacity_payment_amount': Array,
+        'cp_capacity_credit_percent': Array,
+        'cp_system_nameplate': float,
+        'cp_battery_nameplate': float,
+        'grid_curtailment_price': Array,
+        'grid_curtailment_price_esc': float,
+        'annual_energy_pre_curtailment_ac': float
 }, total=False)
 
 class Data(ssc.DataDict):
-    ppa_soln_mode: float = INPUT(label='PPA solution mode', units='0/1', type='NUMBER', group='Revenue', required='?=0', constraints='INTEGER,MIN=0,MAX=1', meta='0=solve ppa,1=specify ppa')
-    ppa_soln_tolerance: float = INPUT(label='PPA solution tolerance', type='NUMBER', group='Revenue', required='?=1e-5')
-    ppa_soln_min: float = INPUT(label='PPA solution minimum ppa', units='cents/kWh', type='NUMBER', group='Revenue', required='?=0')
-    ppa_soln_max: float = INPUT(label='PPA solution maximum ppa', units='cents/kWh', type='NUMBER', group='Revenue', required='?=100')
-    ppa_soln_max_iterations: float = INPUT(label='PPA solution maximum number of iterations', type='NUMBER', group='Revenue', required='?=100', constraints='INTEGER,MIN=1')
-    ppa_price_input: Array = INPUT(label='PPA price in first year', units='$/kWh', type='ARRAY', group='Revenue', required='*')
-    ppa_escalation: float = INPUT(label='PPA escalation rate', units='%/year', type='NUMBER', group='Revenue', required='?=0')
-    lppa_real: Final[float] = OUTPUT(label='Levelized PPA price (real)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
-    lppa_nom: Final[float] = OUTPUT(label='Levelized PPA price (nominal)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
-    ppa: Final[float] = OUTPUT(label='PPA price (Year 1)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
-    npv_ppa_revenue: Final[float] = OUTPUT(label='Present value of PPA revenue', units='$', type='NUMBER', group='Metrics', required='*')
     analysis_period: float = INPUT(label='Analyis period', units='years', type='NUMBER', group='Financial Parameters', required='?=30', constraints='INTEGER,MIN=0,MAX=50')
     federal_tax_rate: Array = INPUT(label='Federal income tax rate', units='%', type='ARRAY', group='Financial Parameters', required='*')
     state_tax_rate: Array = INPUT(label='State income tax rate', units='%', type='ARRAY', group='Financial Parameters', required='*')
@@ -1129,130 +1053,39 @@ class Data(ssc.DataDict):
     wacc: Final[float] = OUTPUT(label='Weighted average cost of capital (WACC)', units='$', type='NUMBER', group='Metrics', required='*')
     effective_tax_rate: Final[float] = OUTPUT(label='Effective tax rate', units='%', type='NUMBER', group='Metrics', required='*')
     analysis_period_irr: Final[float] = OUTPUT(label='IRR at end of analysis period', units='%', type='NUMBER', group='Metrics', required='*')
+    en_batt: float = INPUT(label='Enable battery storage model', units='0/1', type='NUMBER', group='BatterySystem', required='?=0')
+    batt_meter_position: float = INPUT(label='Position of battery relative to electric meter', type='NUMBER', group='BatterySystem')
+    grid_to_batt: Array = INPUT(label='Electricity to battery from grid', units='kW', type='ARRAY', group='BatterySystem')
+    ppa_gen: Final[Array] = OUTPUT(label='Electricity used to calculate PPA revenue', units='kW', type='ARRAY', group='System Output')
     gen: Array = INPUT(label='Power generated by renewable resource', units='kW', type='ARRAY', group='System Output', required='*')
     degradation: Array = INPUT(label='Annual energy degradation', type='ARRAY', group='System Output', required='*')
-    loan_moratorium: float = INPUT(label='Loan moratorium period', units='years', type='NUMBER', group='Moratorium', required='?=0', constraints='INTEGER,MIN=0')
-    system_use_recapitalization: float = INOUT(label='Recapitalization expenses', units='0/1', type='NUMBER', group='Recapitalization', required='?=0', constraints='INTEGER,MIN=0', meta='0=None,1=Recapitalize')
-    system_recapitalization_cost: float = INPUT(label='Recapitalization cost', units='$', type='NUMBER', group='Recapitalization', required='?=0')
-    system_recapitalization_escalation: float = INPUT(label='Recapitalization escalation (above inflation)', units='%', type='NUMBER', group='Recapitalization', required='?=0', constraints='MIN=0,MAX=100')
-    system_lifetime_recapitalize: Array = INPUT(label='Recapitalization boolean', type='ARRAY', group='Recapitalization', required='?=0')
+    utility_bill_w_sys: Array = INPUT(label='Electricity bill with system', units='$', type='ARRAY', group='Utility Bill')
+    cf_utility_bill: Final[Array] = OUTPUT(label='Electricity purchase', units='$', type='ARRAY', constraints='LENGTH_EQUAL=cf_length')
+    roe_input: Array = INPUT(label='Return on equity', type='ARRAY', group='Financial Parameters', required='?=20')
+    cf_return_on_equity: Final[Array] = OUTPUT(label='Return on equity', units='$/kWh', type='ARRAY', group='Return on Equity', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_return_on_equity_input: Final[Array] = OUTPUT(label='Return on equity input', units='%', type='ARRAY', group='Return on Equity', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_return_on_equity_dollars: Final[Array] = OUTPUT(label='Return on equity dollars', units='$', type='ARRAY', group='Return on Equity', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_lcog_costs: Final[Array] = OUTPUT(label='Total LCOG costs', units='$', type='ARRAY', group='Return on Equity', required='*', constraints='LENGTH_EQUAL=cf_length')
+    lcog_om: Final[float] = OUTPUT(label='LCOG O and M', units='cents/kWh', type='NUMBER', group='Return on Equity', required='*')
+    lcog_depr: Final[float] = OUTPUT(label='LCOG depreciation', units='cents/kWh', type='NUMBER', group='Return on Equity', required='*')
+    lcog_loan_int: Final[float] = OUTPUT(label='LCOG loan interest', units='cents/kWh', type='NUMBER', group='Return on Equity', required='*')
+    lcog_wc_int: Final[float] = OUTPUT(label='LCOG working capital interest', units='cents/kWh', type='NUMBER', group='Return on Equity', required='*')
+    lcog_roe: Final[float] = OUTPUT(label='LCOG return on equity', units='cents/kWh', type='NUMBER', group='Return on Equity', required='*')
+    lcog: Final[float] = OUTPUT(label='LCOG Levelized cost of generation', units='cents/kWh', type='NUMBER', group='Return on Equity', required='*')
+    loan_moratorium: float = INPUT(label='Loan moratorium period', units='years', type='NUMBER', group='Financial Parameters', required='?=0', constraints='INTEGER,MIN=0')
+    system_use_recapitalization: float = INOUT(label='Recapitalization expenses', units='0/1', type='NUMBER', group='System Costs', required='?=0', constraints='INTEGER,MIN=0', meta='0=None,1=Recapitalize')
+    system_recapitalization_cost: float = INPUT(label='Recapitalization cost', units='$', type='NUMBER', group='System Costs', required='?=0')
+    system_recapitalization_escalation: float = INPUT(label='Recapitalization escalation (above inflation)', units='%', type='NUMBER', group='System Costs', required='?=0', constraints='MIN=0,MAX=100')
+    system_lifetime_recapitalize: Array = INPUT(label='Recapitalization boolean', type='ARRAY', group='System Costs', required='?=0')
     cf_recapitalization: Final[Array] = OUTPUT(label='Recapitalization operating expense', units='$', type='ARRAY', group='Recapitalization', required='*', constraints='LENGTH_EQUAL=cf_length')
-    system_use_lifetime_output: float = INPUT(label='Lifetime hourly system outputs', units='0/1', type='NUMBER', group='Time of Delivery', required='*', constraints='INTEGER,MIN=0', meta='0=hourly first year,1=hourly lifetime')
-    ppa_multiplier_model: float = INPUT(label='PPA multiplier model', units='0/1', type='NUMBER', group='Time of Delivery', required='?=0', constraints='INTEGER,MIN=0', meta='0=diurnal,1=timestep')
-    dispatch_factors_ts: Array = INPUT(label='Dispatch payment factor array', type='ARRAY', group='Time of Delivery', required='ppa_multiplier_model=1')
-    ppa_multipliers: Final[Array] = OUTPUT(label='TOD factors', type='ARRAY', group='Time of Delivery', required='*')
-    dispatch_factor1: float = INPUT(label='TOD factor for period 1', type='NUMBER', group='Time of Delivery', required='ppa_multiplier_model=0')
-    dispatch_factor2: float = INPUT(label='TOD factor for period 2', type='NUMBER', group='Time of Delivery', required='ppa_multiplier_model=0')
-    dispatch_factor3: float = INPUT(label='TOD factor for period 3', type='NUMBER', group='Time of Delivery', required='ppa_multiplier_model=0')
-    dispatch_factor4: float = INPUT(label='TOD factor for period 4', type='NUMBER', group='Time of Delivery', required='ppa_multiplier_model=0')
-    dispatch_factor5: float = INPUT(label='TOD factor for period 5', type='NUMBER', group='Time of Delivery', required='ppa_multiplier_model=0')
-    dispatch_factor6: float = INPUT(label='TOD factor for period 6', type='NUMBER', group='Time of Delivery', required='ppa_multiplier_model=0')
-    dispatch_factor7: float = INPUT(label='TOD factor for period 7', type='NUMBER', group='Time of Delivery', required='ppa_multiplier_model=0')
-    dispatch_factor8: float = INPUT(label='TOD factor for period 8', type='NUMBER', group='Time of Delivery', required='ppa_multiplier_model=0')
-    dispatch_factor9: float = INPUT(label='TOD factor for period 9', type='NUMBER', group='Time of Delivery', required='ppa_multiplier_model=0')
-    dispatch_sched_weekday: Matrix = INPUT(label='Diurnal weekday TOD periods', units='1..9', type='MATRIX', group='Time of Delivery', required='ppa_multiplier_model=0', meta='12 x 24 matrix')
-    dispatch_sched_weekend: Matrix = INPUT(label='Diurnal weekend TOD periods', units='1..9', type='MATRIX', group='Time of Delivery', required='ppa_multiplier_model=0', meta='12 x 24 matrix')
-    cf_energy_net_jan: Final[Array] = OUTPUT(label='Energy produced by year in January', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_jan: Final[Array] = OUTPUT(label='PPA revenue by year for January', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_feb: Final[Array] = OUTPUT(label='Energy produced by year in February', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_feb: Final[Array] = OUTPUT(label='PPA revenue by year for ebruary', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_mar: Final[Array] = OUTPUT(label='Energy produced by year in March', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_mar: Final[Array] = OUTPUT(label='PPA revenue by year for March', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_apr: Final[Array] = OUTPUT(label='Energy produced by year in April', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_apr: Final[Array] = OUTPUT(label='PPA revenue by year for April', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_may: Final[Array] = OUTPUT(label='Energy produced by year in May', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_may: Final[Array] = OUTPUT(label='PPA revenue by year for May', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_jun: Final[Array] = OUTPUT(label='Energy produced by year in June', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_jun: Final[Array] = OUTPUT(label='PPA revenue by year for June', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_jul: Final[Array] = OUTPUT(label='Energy produced by year in July', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_jul: Final[Array] = OUTPUT(label='PPA revenue by year for July', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_aug: Final[Array] = OUTPUT(label='Energy produced by year in August', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_aug: Final[Array] = OUTPUT(label='PPA revenue by year for August', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_sep: Final[Array] = OUTPUT(label='Energy produced by year in September', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_sep: Final[Array] = OUTPUT(label='PPA revenue by year for September', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_oct: Final[Array] = OUTPUT(label='Energy produced by year in October', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_oct: Final[Array] = OUTPUT(label='PPA revenue by year for October', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_nov: Final[Array] = OUTPUT(label='Energy produced by year in November', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_nov: Final[Array] = OUTPUT(label='PPA revenue by year for November', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dec: Final[Array] = OUTPUT(label='Energy produced by year in December', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dec: Final[Array] = OUTPUT(label='PPA revenue by year for December', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dispatch1: Final[Array] = OUTPUT(label='Energy produced by year in TOD period 1', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dispatch1: Final[Array] = OUTPUT(label='PPA revenue by year for TOD period 1', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dispatch2: Final[Array] = OUTPUT(label='Energy produced by year in TOD period 2', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dispatch2: Final[Array] = OUTPUT(label='PPA revenue by year for TOD period 2', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dispatch3: Final[Array] = OUTPUT(label='Energy produced by year in TOD period 3', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dispatch3: Final[Array] = OUTPUT(label='PPA revenue by year for TOD period 3', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dispatch4: Final[Array] = OUTPUT(label='Energy produced by year in TOD period 4', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dispatch4: Final[Array] = OUTPUT(label='PPA revenue by year for TOD period 4', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dispatch5: Final[Array] = OUTPUT(label='Energy produced by year in TOD period 5', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dispatch5: Final[Array] = OUTPUT(label='PPA revenue by year for TOD period 5', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dispatch6: Final[Array] = OUTPUT(label='Energy produced by year in TOD period 6', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dispatch6: Final[Array] = OUTPUT(label='PPA revenue by year for TOD period 6', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dispatch7: Final[Array] = OUTPUT(label='Energy produced by year in TOD period 7', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dispatch7: Final[Array] = OUTPUT(label='PPA revenue by year for TOD period 7', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dispatch8: Final[Array] = OUTPUT(label='Energy produced by year in TOD period 8', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dispatch8: Final[Array] = OUTPUT(label='PPA revenue by year for TOD period 8', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dispatch9: Final[Array] = OUTPUT(label='Energy produced by year in TOD period 9', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dispatch9: Final[Array] = OUTPUT(label='PPA revenue by year for TOD period 9', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    firstyear_revenue_dispatch1: Final[float] = OUTPUT(label='PPA Revenue in Year 1 TOD period 1', units='$', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_revenue_dispatch2: Final[float] = OUTPUT(label='PPA Revenue in Year 1 TOD period 2', units='$', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_revenue_dispatch3: Final[float] = OUTPUT(label='PPA Revenue in Year 1 TOD period 3', units='$', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_revenue_dispatch4: Final[float] = OUTPUT(label='PPA Revenue in Year 1 TOD period 4', units='$', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_revenue_dispatch5: Final[float] = OUTPUT(label='PPA Revenue in Year 1 TOD period 5', units='$', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_revenue_dispatch6: Final[float] = OUTPUT(label='PPA Revenue in Year 1 TOD period 6', units='$', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_revenue_dispatch7: Final[float] = OUTPUT(label='PPA Revenue in Year 1 TOD period 7', units='$', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_revenue_dispatch8: Final[float] = OUTPUT(label='PPA Revenue in Year 1 TOD period 8', units='$', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_revenue_dispatch9: Final[float] = OUTPUT(label='PPA Revenue in Year 1 TOD period 9', units='$', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_dispatch1: Final[float] = OUTPUT(label='Energy produced in Year 1 TOD period 1', units='kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_dispatch2: Final[float] = OUTPUT(label='Energy produced in Year 1 TOD period 2', units='kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_dispatch3: Final[float] = OUTPUT(label='Energy produced in Year 1 TOD period 3', units='kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_dispatch4: Final[float] = OUTPUT(label='Energy produced in Year 1 TOD period 4', units='kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_dispatch5: Final[float] = OUTPUT(label='Energy produced in Year 1 TOD period 5', units='kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_dispatch6: Final[float] = OUTPUT(label='Energy produced in Year 1 TOD period 6', units='kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_dispatch7: Final[float] = OUTPUT(label='Energy produced in Year 1 TOD period 7', units='kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_dispatch8: Final[float] = OUTPUT(label='Energy produced in Year 1 TOD period 8', units='kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_dispatch9: Final[float] = OUTPUT(label='Energy produced in Year 1 TOD period 9', units='kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_price1: Final[float] = OUTPUT(label='Power price in Year 1 TOD period 1', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_price2: Final[float] = OUTPUT(label='Power price in Year 1 TOD period 2', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_price3: Final[float] = OUTPUT(label='Power price in Year 1 TOD period 3', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_price4: Final[float] = OUTPUT(label='Power price in Year 1 TOD period 4', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_price5: Final[float] = OUTPUT(label='Power price in Year 1 TOD period 5', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_price6: Final[float] = OUTPUT(label='Power price in Year 1 TOD period 6', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_price7: Final[float] = OUTPUT(label='Power price in Year 1 TOD period 7', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_price8: Final[float] = OUTPUT(label='Power price in Year 1 TOD period 8', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_price9: Final[float] = OUTPUT(label='Power price in Year 1 TOD period 9', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_revenue_monthly_firstyear_TOD1: Final[Array] = OUTPUT(label='First year revenue from the system by month for TOD period 1', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_energy_net_monthly_firstyear_TOD1: Final[Array] = OUTPUT(label='First year energy from the system by month for TOD period 1', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_revenue_monthly_firstyear_TOD2: Final[Array] = OUTPUT(label='First year revenue from the system by month for TOD period 2', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_energy_net_monthly_firstyear_TOD2: Final[Array] = OUTPUT(label='First year energy from the system by month for TOD period 2', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_revenue_monthly_firstyear_TOD3: Final[Array] = OUTPUT(label='First year revenue from the system by month for TOD period 3', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_energy_net_monthly_firstyear_TOD3: Final[Array] = OUTPUT(label='First year energy from the system by month for TOD period 3', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_revenue_monthly_firstyear_TOD4: Final[Array] = OUTPUT(label='First year revenue from the system by month for TOD period 4', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_energy_net_monthly_firstyear_TOD4: Final[Array] = OUTPUT(label='First year energy from the system by month for TOD period 4', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_revenue_monthly_firstyear_TOD5: Final[Array] = OUTPUT(label='First year revenue from the system by month for TOD period 5', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_energy_net_monthly_firstyear_TOD5: Final[Array] = OUTPUT(label='First year energy from the system by month for TOD period 5', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_revenue_monthly_firstyear_TOD6: Final[Array] = OUTPUT(label='First year revenue from the system by month for TOD period 6', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_energy_net_monthly_firstyear_TOD6: Final[Array] = OUTPUT(label='First year energy from the system by month for TOD period 6', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_revenue_monthly_firstyear_TOD7: Final[Array] = OUTPUT(label='First year revenue from the system by month for TOD period 7', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_energy_net_monthly_firstyear_TOD7: Final[Array] = OUTPUT(label='First year energy from the system by month for TOD period 7', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_revenue_monthly_firstyear_TOD8: Final[Array] = OUTPUT(label='First year revenue from the system by month for TOD period 8', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_energy_net_monthly_firstyear_TOD8: Final[Array] = OUTPUT(label='First year energy from the system by month for TOD period 8', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_revenue_monthly_firstyear_TOD9: Final[Array] = OUTPUT(label='First year revenue from the system by month for TOD period 9', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_energy_net_monthly_firstyear_TOD9: Final[Array] = OUTPUT(label='First year energy from the system by month for TOD period 9', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
+    system_use_lifetime_output: float = INPUT(label='Lifetime hourly system outputs', units='0/1', type='NUMBER', group='Lifetime', required='*', constraints='INTEGER,MIN=0', meta='0=hourly first year,1=hourly lifetime')
     total_installed_cost: float = INPUT(label='Installed cost', units='$', type='NUMBER', group='System Costs', required='*')
     salvage_percentage: float = INPUT(label='Net pre-tax cash salvage value', units='%', type='NUMBER', group='Financial Parameters', required='?=10', constraints='MIN=0,MAX=100')
-    construction_financing_cost: float = INPUT(label='Construction financing total', units='$', type='NUMBER', group='Construction Financing', required='*')
-    cost_dev_fee_percent: float = INPUT(label='Development fee (% pre-financing cost)', units='%', type='NUMBER', group='Other Capital Costs', required='?=3', constraints='MIN=0,MAX=100')
-    cost_equity_closing: float = INPUT(label='Equity closing cost', units='$', type='NUMBER', group='Other Capital Costs', required='?=100000', constraints='MIN=0')
-    tax_investor_equity_percent: float = INPUT(label='Investor equity', units='%', type='NUMBER', group='IRR Targets', required='?=98', constraints='MIN=0,MAX=100')
-    tax_investor_preflip_cash_percent: float = INPUT(label='Investor pre-flip cash ', units='%', type='NUMBER', group='IRR Targets', required='?=98', constraints='MIN=0,MAX=100')
-    tax_investor_postflip_cash_percent: float = INPUT(label='Investor post-flip cash ', units='%', type='NUMBER', group='IRR Targets', required='?=15', constraints='MIN=0,MAX=100')
-    tax_investor_preflip_tax_percent: float = INPUT(label='Investor pre-flip tax benefit ', units='%', type='NUMBER', group='IRR Targets', required='?=98', constraints='MIN=0,MAX=100')
-    tax_investor_postflip_tax_percent: float = INPUT(label='Investor post-flip tax benefit ', units='%', type='NUMBER', group='IRR Targets', required='?=15', constraints='MIN=0,MAX=100')
+    construction_financing_cost: float = INPUT(label='Construction financing total', units='$', type='NUMBER', group='Financial Parameters', required='*')
     cost_debt_upfront: Final[float] = OUTPUT(label='Debt up-front fee', units='$', type='NUMBER', group='Intermediate Costs', required='?=0')
-    cost_financing: Final[float] = OUTPUT(label='Financing Cost', units='$', type='NUMBER', group='Intermediate Costs', required='*')
+    cost_financing: Final[float] = OUTPUT(label='Financing cost', units='$', type='NUMBER', group='Intermediate Costs', required='*')
     cost_prefinancing: Final[float] = OUTPUT(label='Total installed cost', units='$', type='NUMBER', group='Intermediate Costs', required='*')
-    cost_installed: Final[float] = OUTPUT(label='Net capital cost', type='NUMBER', group='Intermediate Costs', required='*')
+    cost_installed: Final[float] = OUTPUT(label='Net capital cost', units='$', type='NUMBER', group='Intermediate Costs', required='*')
     cost_installedperwatt: Final[float] = OUTPUT(label='Net capital cost per watt', units='$/W', type='NUMBER', group='Intermediate Costs', required='*')
     nominal_discount_rate: Final[float] = OUTPUT(label='Nominal discount rate', units='%', type='NUMBER', group='Intermediate Costs', required='*')
     prop_tax_assessed_value: Final[float] = OUTPUT(label='Assessed value of property for tax purposes', units='$', type='NUMBER', group='Intermediate Costs', required='*')
@@ -1262,8 +1095,8 @@ class Data(ssc.DataDict):
     depr_alloc_total: Final[float] = OUTPUT(label='Total depreciation federal and state allocation', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_percent_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS state percent of total depreciable basis', units='%', type='NUMBER', group='Depreciation', required='*')
     depr_alloc_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS depreciation federal and state allocation', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_ibi_reduc_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS state ibi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_cbi_reduc_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS state cbi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_ibi_reduc_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS state IBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_cbi_reduc_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS state CBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_prior_itc_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS state depreciation basis prior ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_sta_qual_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS depreciation state ITC adj qualifying costs', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_percent_qual_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS state percent of qualifying costs', units='%', type='NUMBER', group='Depreciation', required='*')
@@ -1271,15 +1104,15 @@ class Data(ssc.DataDict):
     itc_disallow_sta_percent_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS depreciation ITC basis disallowance from state percentage', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_fixed_amount_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS depreciation ITC basis from state fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_disallow_sta_fixed_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS depreciation ITC basis disallowance from state fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_itc_sta_reduction_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS state basis state ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_itc_fed_reduction_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS state basis federal ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_itc_sta_reduction_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS state basis state ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_itc_fed_reduction_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS state basis federal ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_after_itc_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS state depreciation basis after ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_first_year_bonus_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS state first year bonus depreciation', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS state depreciation basis', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_percent_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS state percent of total depreciable basis', units='%', type='NUMBER', group='Depreciation', required='*')
     depr_alloc_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS depreciation federal and state allocation', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_ibi_reduc_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS state ibi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_cbi_reduc_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS state cbi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_ibi_reduc_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS state IBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_cbi_reduc_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS state CBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_prior_itc_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS state depreciation basis prior ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_sta_qual_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS depreciation state ITC adj qualifying costs', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_percent_qual_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS state percent of qualifying costs', units='%', type='NUMBER', group='Depreciation', required='*')
@@ -1287,15 +1120,15 @@ class Data(ssc.DataDict):
     itc_disallow_sta_percent_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS depreciation ITC basis disallowance from state percentage', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_fixed_amount_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS depreciation ITC basis from state fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_disallow_sta_fixed_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS depreciation ITC basis disallowance from state fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_itc_sta_reduction_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS state basis state ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_itc_fed_reduction_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS state basis federal ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_itc_sta_reduction_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS state basis state ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_itc_fed_reduction_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS state basis federal ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_after_itc_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS state depreciation basis after ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_first_year_bonus_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS state first year bonus depreciation', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS state depreciation basis', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_percent_sl_5: Final[float] = OUTPUT(label='5-yr straight line state percent of total depreciable basis', units='%', type='NUMBER', group='Depreciation', required='*')
     depr_alloc_sl_5: Final[float] = OUTPUT(label='5-yr straight line depreciation federal and state allocation', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_ibi_reduc_sl_5: Final[float] = OUTPUT(label='5-yr straight line state ibi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_cbi_reduc_sl_5: Final[float] = OUTPUT(label='5-yr straight line state cbi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_ibi_reduc_sl_5: Final[float] = OUTPUT(label='5-yr straight line state IBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_cbi_reduc_sl_5: Final[float] = OUTPUT(label='5-yr straight line state CBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_prior_itc_sl_5: Final[float] = OUTPUT(label='5-yr straight line state depreciation basis prior ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_sta_qual_sl_5: Final[float] = OUTPUT(label='5-yr straight line depreciation state ITC adj qualifying costs', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_percent_qual_sl_5: Final[float] = OUTPUT(label='5-yr straight line state percent of qualifying costs', units='%', type='NUMBER', group='Depreciation', required='*')
@@ -1303,15 +1136,15 @@ class Data(ssc.DataDict):
     itc_disallow_sta_percent_sl_5: Final[float] = OUTPUT(label='5-yr straight line depreciation ITC basis disallowance from state percentage', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_fixed_amount_sl_5: Final[float] = OUTPUT(label='5-yr straight line depreciation ITC basis from state fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_disallow_sta_fixed_sl_5: Final[float] = OUTPUT(label='5-yr straight line depreciation ITC basis disallowance from state fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_itc_sta_reduction_sl_5: Final[float] = OUTPUT(label='5-yr straight line state basis state ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_itc_fed_reduction_sl_5: Final[float] = OUTPUT(label='5-yr straight line state basis federal ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_itc_sta_reduction_sl_5: Final[float] = OUTPUT(label='5-yr straight line state basis state ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_itc_fed_reduction_sl_5: Final[float] = OUTPUT(label='5-yr straight line state basis federal ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_after_itc_sl_5: Final[float] = OUTPUT(label='5-yr straight line state depreciation basis after ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_first_year_bonus_sl_5: Final[float] = OUTPUT(label='5-yr straight line state first year bonus depreciation', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_sl_5: Final[float] = OUTPUT(label='5-yr straight line state depreciation basis', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_percent_sl_15: Final[float] = OUTPUT(label='15-yr straight line state percent of total depreciable basis', units='%', type='NUMBER', group='Depreciation', required='*')
     depr_alloc_sl_15: Final[float] = OUTPUT(label='15-yr straight line depreciation federal and state allocation', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_ibi_reduc_sl_15: Final[float] = OUTPUT(label='15-yr straight line state ibi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_cbi_reduc_sl_15: Final[float] = OUTPUT(label='15-yr straight line state cbi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_ibi_reduc_sl_15: Final[float] = OUTPUT(label='15-yr straight line state IBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_cbi_reduc_sl_15: Final[float] = OUTPUT(label='15-yr straight line state CBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_prior_itc_sl_15: Final[float] = OUTPUT(label='15-yr straight line state depreciation basis prior ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_sta_qual_sl_15: Final[float] = OUTPUT(label='15-yr straight line depreciation state ITC adj qualifying costs', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_percent_qual_sl_15: Final[float] = OUTPUT(label='15-yr straight line state percent of qualifying costs', units='%', type='NUMBER', group='Depreciation', required='*')
@@ -1319,15 +1152,15 @@ class Data(ssc.DataDict):
     itc_disallow_sta_percent_sl_15: Final[float] = OUTPUT(label='15-yr straight line depreciation ITC basis disallowance from state percentage', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_fixed_amount_sl_15: Final[float] = OUTPUT(label='15-yr straight line depreciation ITC basis from state fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_disallow_sta_fixed_sl_15: Final[float] = OUTPUT(label='15-yr straight line depreciation ITC basis disallowance from state fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_itc_sta_reduction_sl_15: Final[float] = OUTPUT(label='15-yr straight line state basis state ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_itc_fed_reduction_sl_15: Final[float] = OUTPUT(label='15-yr straight line state basis federal ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_itc_sta_reduction_sl_15: Final[float] = OUTPUT(label='15-yr straight line state basis state ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_itc_fed_reduction_sl_15: Final[float] = OUTPUT(label='15-yr straight line state basis federal ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_after_itc_sl_15: Final[float] = OUTPUT(label='15-yr straight line state depreciation basis after ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_first_year_bonus_sl_15: Final[float] = OUTPUT(label='15-yr straight line state first year bonus depreciation', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_sl_15: Final[float] = OUTPUT(label='15-yr straight line state depreciation basis', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_percent_sl_20: Final[float] = OUTPUT(label='20-yr straight line state percent of total depreciable basis', units='%', type='NUMBER', group='Depreciation', required='*')
     depr_alloc_sl_20: Final[float] = OUTPUT(label='20-yr straight line depreciation federal and state allocation', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_ibi_reduc_sl_20: Final[float] = OUTPUT(label='20-yr straight line state ibi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_cbi_reduc_sl_20: Final[float] = OUTPUT(label='20-yr straight line state cbi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_ibi_reduc_sl_20: Final[float] = OUTPUT(label='20-yr straight line state IBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_cbi_reduc_sl_20: Final[float] = OUTPUT(label='20-yr straight line state CBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_prior_itc_sl_20: Final[float] = OUTPUT(label='20-yr straight line state depreciation basis prior ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_sta_qual_sl_20: Final[float] = OUTPUT(label='20-yr straight line depreciation state ITC adj qualifying costs', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_percent_qual_sl_20: Final[float] = OUTPUT(label='20-yr straight line state percent of qualifying costs', units='%', type='NUMBER', group='Depreciation', required='*')
@@ -1335,15 +1168,15 @@ class Data(ssc.DataDict):
     itc_disallow_sta_percent_sl_20: Final[float] = OUTPUT(label='20-yr straight line depreciation ITC basis disallowance from state percentage', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_fixed_amount_sl_20: Final[float] = OUTPUT(label='20-yr straight line depreciation ITC basis from state fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_disallow_sta_fixed_sl_20: Final[float] = OUTPUT(label='20-yr straight line depreciation ITC basis disallowance from state fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_itc_sta_reduction_sl_20: Final[float] = OUTPUT(label='20-yr straight line state basis state ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_itc_fed_reduction_sl_20: Final[float] = OUTPUT(label='20-yr straight line state basis federal ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_itc_sta_reduction_sl_20: Final[float] = OUTPUT(label='20-yr straight line state basis state ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_itc_fed_reduction_sl_20: Final[float] = OUTPUT(label='20-yr straight line state basis federal ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_after_itc_sl_20: Final[float] = OUTPUT(label='20-yr straight line state depreciation basis after ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_first_year_bonus_sl_20: Final[float] = OUTPUT(label='20-yr straight line state first year bonus depreciation', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_sl_20: Final[float] = OUTPUT(label='20-yr straight line state depreciation basis', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_percent_sl_39: Final[float] = OUTPUT(label='39-yr straight line state percent of total depreciable basis', units='%', type='NUMBER', group='Depreciation', required='*')
     depr_alloc_sl_39: Final[float] = OUTPUT(label='39-yr straight line depreciation federal and state allocation', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_ibi_reduc_sl_39: Final[float] = OUTPUT(label='39-yr straight line state ibi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_cbi_reduc_sl_39: Final[float] = OUTPUT(label='39-yr straight line state cbi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_ibi_reduc_sl_39: Final[float] = OUTPUT(label='39-yr straight line state IBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_cbi_reduc_sl_39: Final[float] = OUTPUT(label='39-yr straight line state CBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_prior_itc_sl_39: Final[float] = OUTPUT(label='39-yr straight line state depreciation basis prior ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_sta_qual_sl_39: Final[float] = OUTPUT(label='39-yr straight line depreciation state ITC adj qualifying costs', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_percent_qual_sl_39: Final[float] = OUTPUT(label='39-yr straight line state percent of qualifying costs', units='%', type='NUMBER', group='Depreciation', required='*')
@@ -1351,15 +1184,15 @@ class Data(ssc.DataDict):
     itc_disallow_sta_percent_sl_39: Final[float] = OUTPUT(label='39-yr straight line depreciation ITC basis disallowance from state percentage', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_fixed_amount_sl_39: Final[float] = OUTPUT(label='39-yr straight line depreciation ITC basis from state fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_disallow_sta_fixed_sl_39: Final[float] = OUTPUT(label='39-yr straight line depreciation ITC basis disallowance from state fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_itc_sta_reduction_sl_39: Final[float] = OUTPUT(label='39-yr straight line state basis state ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_itc_fed_reduction_sl_39: Final[float] = OUTPUT(label='39-yr straight line state basis federal ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_itc_sta_reduction_sl_39: Final[float] = OUTPUT(label='39-yr straight line state basis state ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_itc_fed_reduction_sl_39: Final[float] = OUTPUT(label='39-yr straight line state basis federal ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_after_itc_sl_39: Final[float] = OUTPUT(label='39-yr straight line state depreciation basis after ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_first_year_bonus_sl_39: Final[float] = OUTPUT(label='39-yr straight line state first year bonus depreciation', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_sl_39: Final[float] = OUTPUT(label='39-yr straight line state depreciation basis', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_percent_custom: Final[float] = OUTPUT(label='Custom straight line state percent of total depreciable basis', units='%', type='NUMBER', group='Depreciation', required='*')
     depr_alloc_custom: Final[float] = OUTPUT(label='Custom straight line depreciation federal and state allocation', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_ibi_reduc_custom: Final[float] = OUTPUT(label='Custom straight line state ibi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_cbi_reduc_custom: Final[float] = OUTPUT(label='Custom straight line state cbi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_ibi_reduc_custom: Final[float] = OUTPUT(label='Custom straight line state IBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_cbi_reduc_custom: Final[float] = OUTPUT(label='Custom straight line state CBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_prior_itc_custom: Final[float] = OUTPUT(label='Custom straight line state depreciation basis prior ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_sta_qual_custom: Final[float] = OUTPUT(label='Custom straight line depreciation state ITC adj qualifying costs', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_percent_qual_custom: Final[float] = OUTPUT(label='Custom straight line state percent of qualifying costs', units='%', type='NUMBER', group='Depreciation', required='*')
@@ -1367,14 +1200,14 @@ class Data(ssc.DataDict):
     itc_disallow_sta_percent_custom: Final[float] = OUTPUT(label='Custom straight line depreciation ITC basis disallowance from state percentage', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_fixed_amount_custom: Final[float] = OUTPUT(label='Custom straight line depreciation ITC basis from state fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_disallow_sta_fixed_custom: Final[float] = OUTPUT(label='Custom straight line depreciation ITC basis disallowance from state fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_itc_sta_reduction_custom: Final[float] = OUTPUT(label='Custom straight line state basis state ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_itc_fed_reduction_custom: Final[float] = OUTPUT(label='Custom straight line state basis federal ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_itc_sta_reduction_custom: Final[float] = OUTPUT(label='Custom straight line state basis state ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_itc_fed_reduction_custom: Final[float] = OUTPUT(label='Custom straight line state basis federal ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_after_itc_custom: Final[float] = OUTPUT(label='Custom straight line state depreciation basis after ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_first_year_bonus_custom: Final[float] = OUTPUT(label='Custom straight line state first year bonus depreciation', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_custom: Final[float] = OUTPUT(label='Custom straight line state depreciation basis', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_percent_total: Final[float] = OUTPUT(label='Total state percent of total depreciable basis', units='%', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_ibi_reduc_total: Final[float] = OUTPUT(label='Total state ibi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_cbi_reduc_total: Final[float] = OUTPUT(label='Total state cbi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_ibi_reduc_total: Final[float] = OUTPUT(label='Total state IBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_cbi_reduc_total: Final[float] = OUTPUT(label='Total state CBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_prior_itc_total: Final[float] = OUTPUT(label='Total state depreciation basis prior ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_sta_qual_total: Final[float] = OUTPUT(label='Total state ITC adj qualifying costs', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_percent_qual_total: Final[float] = OUTPUT(label='Total state percent of qualifying costs', units='%', type='NUMBER', group='Depreciation', required='*')
@@ -1382,16 +1215,16 @@ class Data(ssc.DataDict):
     itc_disallow_sta_percent_total: Final[float] = OUTPUT(label='Total depreciation ITC basis disallowance from state percentage', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_fixed_amount_total: Final[float] = OUTPUT(label='Total depreciation ITC basis from state fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_disallow_sta_fixed_total: Final[float] = OUTPUT(label='Total depreciation ITC basis disallowance from state fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_itc_sta_reduction_total: Final[float] = OUTPUT(label='Total state basis state ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_stabas_itc_fed_reduction_total: Final[float] = OUTPUT(label='Total state basis federal ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_itc_sta_reduction_total: Final[float] = OUTPUT(label='Total state basis state ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_stabas_itc_fed_reduction_total: Final[float] = OUTPUT(label='Total state basis federal ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_after_itc_total: Final[float] = OUTPUT(label='Total state depreciation basis after ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_first_year_bonus_total: Final[float] = OUTPUT(label='Total state first year bonus depreciation', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_stabas_total: Final[float] = OUTPUT(label='Total state depreciation basis', units='$', type='NUMBER', group='Depreciation', required='*')
-    itc_sta_percent_total: Final[float] = OUTPUT(label='State ITC percent total', units='$', type='NUMBER', group='Depreciation', required='*')
-    itc_sta_fixed_total: Final[float] = OUTPUT(label='State ITC fixed total', units='$', type='NUMBER', group='Depreciation', required='*')
+    itc_sta_percent_total: Final[float] = OUTPUT(label='State ITC percent total', units='$', type='NUMBER', group='Tax Credits', required='*')
+    itc_sta_fixed_total: Final[float] = OUTPUT(label='State ITC fixed total', units='$', type='NUMBER', group='Tax Credits', required='*')
     depr_fedbas_percent_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS federal percent of total depreciable basis', units='%', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_ibi_reduc_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS federal ibi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_cbi_reduc_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS federal cbi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_ibi_reduc_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS federal IBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_cbi_reduc_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS federal CBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_prior_itc_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS federal depreciation basis prior ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_fed_qual_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS depreciation federal ITC adj qualifying costs', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_percent_qual_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS federal percent of qualifying costs', units='%', type='NUMBER', group='Depreciation', required='*')
@@ -1399,14 +1232,14 @@ class Data(ssc.DataDict):
     itc_disallow_fed_percent_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS depreciation ITC basis disallowance from federal percentage', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_fixed_amount_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS depreciation ITC basis from federal fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_disallow_fed_fixed_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS depreciation ITC basis disallowance from federal fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_itc_sta_reduction_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS federal basis state ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_itc_fed_reduction_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS federal basis federal ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_itc_sta_reduction_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS federal basis state ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_itc_fed_reduction_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS federal basis federal ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_after_itc_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS federal depreciation basis after ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_first_year_bonus_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS federal first year bonus depreciation', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_macrs_5: Final[float] = OUTPUT(label='5-yr MACRS federal depreciation basis', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_percent_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS federal percent of total depreciable basis', units='%', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_ibi_reduc_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS federal ibi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_cbi_reduc_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS federal cbi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_ibi_reduc_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS federal IBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_cbi_reduc_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS federal CBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_prior_itc_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS federal depreciation basis prior ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_fed_qual_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS depreciation federal ITC adj qualifying costs', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_percent_qual_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS federal percent of qualifying costs', units='%', type='NUMBER', group='Depreciation', required='*')
@@ -1414,14 +1247,14 @@ class Data(ssc.DataDict):
     itc_disallow_fed_percent_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS depreciation ITC basis disallowance from federal percentage', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_fixed_amount_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS depreciation ITC basis from federal fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_disallow_fed_fixed_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS depreciation ITC basis disallowance from federal fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_itc_sta_reduction_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS federal basis state ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_itc_fed_reduction_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS federal basis federal ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_itc_sta_reduction_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS federal basis state ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_itc_fed_reduction_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS federal basis federal ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_after_itc_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS federal depreciation basis after ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_first_year_bonus_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS federal first year bonus depreciation', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_macrs_15: Final[float] = OUTPUT(label='15-yr MACRS federal depreciation basis', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_percent_sl_5: Final[float] = OUTPUT(label='5-yr straight line federal percent of total depreciable basis', units='%', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_ibi_reduc_sl_5: Final[float] = OUTPUT(label='5-yr straight line federal ibi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_cbi_reduc_sl_5: Final[float] = OUTPUT(label='5-yr straight line federal cbi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_ibi_reduc_sl_5: Final[float] = OUTPUT(label='5-yr straight line federal IBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_cbi_reduc_sl_5: Final[float] = OUTPUT(label='5-yr straight line federal CBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_prior_itc_sl_5: Final[float] = OUTPUT(label='5-yr straight line federal depreciation basis prior ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_fed_qual_sl_5: Final[float] = OUTPUT(label='5-yr straight line depreciation federal ITC adj qualifying costs', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_percent_qual_sl_5: Final[float] = OUTPUT(label='5-yr straight line federal percent of qualifying costs', units='%', type='NUMBER', group='Depreciation', required='*')
@@ -1429,14 +1262,14 @@ class Data(ssc.DataDict):
     itc_disallow_fed_percent_sl_5: Final[float] = OUTPUT(label='5-yr straight line depreciation ITC basis disallowance from federal percentage', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_fixed_amount_sl_5: Final[float] = OUTPUT(label='5-yr straight line depreciation ITC basis from federal fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_disallow_fed_fixed_sl_5: Final[float] = OUTPUT(label='5-yr straight line depreciation ITC basis disallowance from federal fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_itc_sta_reduction_sl_5: Final[float] = OUTPUT(label='5-yr straight line federal basis state ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_itc_fed_reduction_sl_5: Final[float] = OUTPUT(label='5-yr straight line federal basis federal ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_itc_sta_reduction_sl_5: Final[float] = OUTPUT(label='5-yr straight line federal basis state ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_itc_fed_reduction_sl_5: Final[float] = OUTPUT(label='5-yr straight line federal basis federal ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_after_itc_sl_5: Final[float] = OUTPUT(label='5-yr straight line federal depreciation basis after ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_first_year_bonus_sl_5: Final[float] = OUTPUT(label='5-yr straight line federal first year bonus depreciation', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_sl_5: Final[float] = OUTPUT(label='5-yr straight line federal depreciation basis', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_percent_sl_15: Final[float] = OUTPUT(label='15-yr straight line federal percent of total depreciable basis', units='%', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_ibi_reduc_sl_15: Final[float] = OUTPUT(label='15-yr straight line federal ibi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_cbi_reduc_sl_15: Final[float] = OUTPUT(label='15-yr straight line federal cbi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_ibi_reduc_sl_15: Final[float] = OUTPUT(label='15-yr straight line federal IBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_cbi_reduc_sl_15: Final[float] = OUTPUT(label='15-yr straight line federal CBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_prior_itc_sl_15: Final[float] = OUTPUT(label='15-yr straight line federal depreciation basis prior ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_fed_qual_sl_15: Final[float] = OUTPUT(label='15-yr straight line depreciation federal ITC adj qualifying costs', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_percent_qual_sl_15: Final[float] = OUTPUT(label='15-yr straight line federal percent of qualifying costs', units='%', type='NUMBER', group='Depreciation', required='*')
@@ -1444,14 +1277,14 @@ class Data(ssc.DataDict):
     itc_disallow_fed_percent_sl_15: Final[float] = OUTPUT(label='15-yr straight line depreciation ITC basis disallowance from federal percentage', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_fixed_amount_sl_15: Final[float] = OUTPUT(label='15-yr straight line depreciation ITC basis from federal fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_disallow_fed_fixed_sl_15: Final[float] = OUTPUT(label='15-yr straight line depreciation ITC basis disallowance from federal fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_itc_sta_reduction_sl_15: Final[float] = OUTPUT(label='15-yr straight line federal basis state ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_itc_fed_reduction_sl_15: Final[float] = OUTPUT(label='15-yr straight line federal basis federal ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_itc_sta_reduction_sl_15: Final[float] = OUTPUT(label='15-yr straight line federal basis state ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_itc_fed_reduction_sl_15: Final[float] = OUTPUT(label='15-yr straight line federal basis federal ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_after_itc_sl_15: Final[float] = OUTPUT(label='15-yr straight line federal depreciation basis after ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_first_year_bonus_sl_15: Final[float] = OUTPUT(label='15-yr straight line federal first year bonus depreciation', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_sl_15: Final[float] = OUTPUT(label='15-yr straight line federal depreciation basis', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_percent_sl_20: Final[float] = OUTPUT(label='20-yr straight line federal percent of total depreciable basis', units='%', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_ibi_reduc_sl_20: Final[float] = OUTPUT(label='20-yr straight line federal ibi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_cbi_reduc_sl_20: Final[float] = OUTPUT(label='20-yr straight line federal cbi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_ibi_reduc_sl_20: Final[float] = OUTPUT(label='20-yr straight line federal IBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_cbi_reduc_sl_20: Final[float] = OUTPUT(label='20-yr straight line federal CBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_prior_itc_sl_20: Final[float] = OUTPUT(label='20-yr straight line federal depreciation basis prior ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_fed_qual_sl_20: Final[float] = OUTPUT(label='20-yr straight line depreciation federal ITC adj qualifying costs', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_percent_qual_sl_20: Final[float] = OUTPUT(label='20-yr straight line federal percent of qualifying costs', units='%', type='NUMBER', group='Depreciation', required='*')
@@ -1459,14 +1292,14 @@ class Data(ssc.DataDict):
     itc_disallow_fed_percent_sl_20: Final[float] = OUTPUT(label='20-yr straight line depreciation ITC basis disallowance from federal percentage', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_fixed_amount_sl_20: Final[float] = OUTPUT(label='20-yr straight line depreciation ITC basis from federal fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_disallow_fed_fixed_sl_20: Final[float] = OUTPUT(label='20-yr straight line depreciation ITC basis disallowance from federal fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_itc_sta_reduction_sl_20: Final[float] = OUTPUT(label='20-yr straight line federal basis state ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_itc_fed_reduction_sl_20: Final[float] = OUTPUT(label='20-yr straight line federal basis federal ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_itc_sta_reduction_sl_20: Final[float] = OUTPUT(label='20-yr straight line federal basis state ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_itc_fed_reduction_sl_20: Final[float] = OUTPUT(label='20-yr straight line federal basis federal ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_after_itc_sl_20: Final[float] = OUTPUT(label='20-yr straight line federal depreciation basis after ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_first_year_bonus_sl_20: Final[float] = OUTPUT(label='20-yr straight line federal first year bonus depreciation', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_sl_20: Final[float] = OUTPUT(label='20-yr straight line federal depreciation basis', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_percent_sl_39: Final[float] = OUTPUT(label='39-yr straight line federal percent of total depreciable basis', units='%', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_ibi_reduc_sl_39: Final[float] = OUTPUT(label='39-yr straight line federal ibi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_cbi_reduc_sl_39: Final[float] = OUTPUT(label='39-yr straight line federal cbi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_ibi_reduc_sl_39: Final[float] = OUTPUT(label='39-yr straight line federal IBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_cbi_reduc_sl_39: Final[float] = OUTPUT(label='39-yr straight line federal CBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_prior_itc_sl_39: Final[float] = OUTPUT(label='39-yr straight line federal depreciation basis prior ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_fed_qual_sl_39: Final[float] = OUTPUT(label='39-yr straight line depreciation federal ITC adj qualifying costs', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_percent_qual_sl_39: Final[float] = OUTPUT(label='39-yr straight line federal percent of qualifying costs', units='%', type='NUMBER', group='Depreciation', required='*')
@@ -1474,14 +1307,14 @@ class Data(ssc.DataDict):
     itc_disallow_fed_percent_sl_39: Final[float] = OUTPUT(label='39-yr straight line depreciation ITC basis disallowance from federal percentage', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_fixed_amount_sl_39: Final[float] = OUTPUT(label='39-yr straight line depreciation ITC basis from federal fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_disallow_fed_fixed_sl_39: Final[float] = OUTPUT(label='39-yr straight line depreciation ITC basis disallowance from federal fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_itc_sta_reduction_sl_39: Final[float] = OUTPUT(label='39-yr straight line federal basis state ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_itc_fed_reduction_sl_39: Final[float] = OUTPUT(label='39-yr straight line federal basis federal ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_itc_sta_reduction_sl_39: Final[float] = OUTPUT(label='39-yr straight line federal basis state ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_itc_fed_reduction_sl_39: Final[float] = OUTPUT(label='39-yr straight line federal basis federal ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_after_itc_sl_39: Final[float] = OUTPUT(label='39-yr straight line federal depreciation basis after ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_first_year_bonus_sl_39: Final[float] = OUTPUT(label='39-yr straight line federal first year bonus depreciation', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_sl_39: Final[float] = OUTPUT(label='39-yr straight line federal depreciation basis', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_percent_custom: Final[float] = OUTPUT(label='Custom straight line federal percent of total depreciable basis', units='%', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_ibi_reduc_custom: Final[float] = OUTPUT(label='Custom straight line federal ibi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_cbi_reduc_custom: Final[float] = OUTPUT(label='Custom straight line federal cbi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_ibi_reduc_custom: Final[float] = OUTPUT(label='Custom straight line federal IBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_cbi_reduc_custom: Final[float] = OUTPUT(label='Custom straight line federal CBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_prior_itc_custom: Final[float] = OUTPUT(label='Custom straight line federal depreciation basis prior ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_fed_qual_custom: Final[float] = OUTPUT(label='Custom straight line depreciation federal ITC adj qualifying costs', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_percent_qual_custom: Final[float] = OUTPUT(label='Custom straight line federal percent of qualifying costs', units='%', type='NUMBER', group='Depreciation', required='*')
@@ -1489,14 +1322,14 @@ class Data(ssc.DataDict):
     itc_disallow_fed_percent_custom: Final[float] = OUTPUT(label='Custom straight line depreciation ITC basis disallowance from federal percentage', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_fixed_amount_custom: Final[float] = OUTPUT(label='Custom straight line depreciation ITC basis from federal fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_disallow_fed_fixed_custom: Final[float] = OUTPUT(label='Custom straight line depreciation ITC basis disallowance from federal fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_itc_sta_reduction_custom: Final[float] = OUTPUT(label='Custom straight line federal basis state ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_itc_fed_reduction_custom: Final[float] = OUTPUT(label='Custom straight line federal basis federal ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_itc_sta_reduction_custom: Final[float] = OUTPUT(label='Custom straight line federal basis state ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_itc_fed_reduction_custom: Final[float] = OUTPUT(label='Custom straight line federal basis federal ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_after_itc_custom: Final[float] = OUTPUT(label='Custom straight line federal depreciation basis after ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_first_year_bonus_custom: Final[float] = OUTPUT(label='Custom straight line federal first year bonus depreciation', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_custom: Final[float] = OUTPUT(label='Custom straight line federal depreciation basis', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_percent_total: Final[float] = OUTPUT(label='Total federal percent of total depreciable basis', units='%', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_ibi_reduc_total: Final[float] = OUTPUT(label='Total federal ibi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_cbi_reduc_total: Final[float] = OUTPUT(label='Total federal cbi reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_ibi_reduc_total: Final[float] = OUTPUT(label='Total federal IBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_cbi_reduc_total: Final[float] = OUTPUT(label='Total federal CBI reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_prior_itc_total: Final[float] = OUTPUT(label='Total federal depreciation basis prior ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_fed_qual_total: Final[float] = OUTPUT(label='Total federal ITC adj qualifying costs', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_percent_qual_total: Final[float] = OUTPUT(label='Total federal percent of qualifying costs', units='%', type='NUMBER', group='Depreciation', required='*')
@@ -1504,8 +1337,8 @@ class Data(ssc.DataDict):
     itc_disallow_fed_percent_total: Final[float] = OUTPUT(label='Total depreciation ITC basis disallowance from federal percentage', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_fixed_amount_total: Final[float] = OUTPUT(label='Total depreciation ITC basis from federal fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
     itc_disallow_fed_fixed_total: Final[float] = OUTPUT(label='Total depreciation ITC basis disallowance from federal fixed amount', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_itc_sta_reduction_total: Final[float] = OUTPUT(label='Total federal basis state ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
-    depr_fedbas_itc_fed_reduction_total: Final[float] = OUTPUT(label='Total federal basis federal ITC reduciton', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_itc_sta_reduction_total: Final[float] = OUTPUT(label='Total federal basis state ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
+    depr_fedbas_itc_fed_reduction_total: Final[float] = OUTPUT(label='Total federal basis federal ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_after_itc_total: Final[float] = OUTPUT(label='Total federal depreciation basis after ITC reduction', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_first_year_bonus_total: Final[float] = OUTPUT(label='Total federal first year bonus depreciation', units='$', type='NUMBER', group='Depreciation', required='*')
     depr_fedbas_total: Final[float] = OUTPUT(label='Total federal depreciation basis', units='$', type='NUMBER', group='Depreciation', required='*')
@@ -1513,19 +1346,23 @@ class Data(ssc.DataDict):
     itc_fed_fixed_total: Final[float] = OUTPUT(label='Federal ITC fixed total', units='$', type='NUMBER', group='Tax Credits', required='*')
     depr_stabas_method: float = INPUT(label='Method of state depreciation reduction', type='NUMBER', group='Depreciation', required='?=0', constraints='INTEGER,MIN=0,MAX=1', meta='0=5yr MACRS,1=Proportional')
     depr_fedbas_method: float = INPUT(label='Method of federal depreciation reduction', type='NUMBER', group='Depreciation', required='?=0', constraints='INTEGER,MIN=0,MAX=1', meta='0=5yr MACRS,1=Proportional')
-    cash_for_debt_service: Final[float] = OUTPUT(label='Cash available for debt service', units='$', type='NUMBER', group='Debt Sizing', required='*')
-    pv_cafds: Final[float] = OUTPUT(label='Present value of cash available for debt service', units='$', type='NUMBER', group='Debt Sizing', required='*')
-    size_of_debt: Final[float] = OUTPUT(label='Total debt', type='NUMBER', group='Debt Sizing', required='*')
-    size_of_equity: Final[float] = OUTPUT(label='Total equity', type='NUMBER', group='Debt Sizing', required='*')
-    cf_length: Final[float] = OUTPUT(label='Number of periods in cashflow', type='NUMBER', group='Cash Flow', required='*', constraints='INTEGER')
-    ppa_price: Final[float] = OUTPUT(label='Initial year PPA price', units='cents/kWh', type='NUMBER', group='PPA Price', required='*')
+    cash_for_debt_service: Final[float] = OUTPUT(label='Cash available for debt service (CAFDS)', units='$', type='NUMBER', group='Debt Sizing', required='*')
+    pv_cafds: Final[float] = OUTPUT(label='Present value of CAFDS', units='$', type='NUMBER', group='Debt Sizing', required='*')
+    size_of_debt: Final[float] = OUTPUT(label='Size of debt', units='$', type='NUMBER', group='Debt Sizing', required='*')
+    size_of_equity: Final[float] = OUTPUT(label='Equity', units='$', type='NUMBER', group='Debt Sizing', required='*')
+    cf_length: Final[float] = OUTPUT(label='Number of periods in cashflow', type='NUMBER', group='Metrics', required='*', constraints='INTEGER')
     cf_energy_net: Final[Array] = OUTPUT(label='Energy produced', units='kWh', type='ARRAY', group='Cash Flow Revenues', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_ppa_price: Final[Array] = OUTPUT(label='PPA price', units='cents/kWh', type='ARRAY', group='Cash Flow Revenues', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_value: Final[Array] = OUTPUT(label='PPA revenue to project', units='$', type='ARRAY', group='Cash Flow Revenues', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_thermal_value: Final[Array] = OUTPUT(label='Thermal revenue', units='$', type='ARRAY', group='Cash Flow Revenues', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_om_fixed_expense: Final[Array] = OUTPUT(label='O&M fixed expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_om_production_expense: Final[Array] = OUTPUT(label='O&M production-based expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_om_capacity_expense: Final[Array] = OUTPUT(label='O&M capacity-based expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_om_fuel_expense: Final[Array] = OUTPUT(label='O&M fuel expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_om_fixed1_expense: Final[Array] = OUTPUT(label='Battery fixed expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_om_production1_expense: Final[Array] = OUTPUT(label='Battery production-based expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_om_capacity1_expense: Final[Array] = OUTPUT(label='Battery capacity-based expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_om_fixed2_expense: Final[Array] = OUTPUT(label='Fuel cell fixed expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_om_production2_expense: Final[Array] = OUTPUT(label='Fuel cell production-based expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_om_capacity2_expense: Final[Array] = OUTPUT(label='Fuel cell capacity-based expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_om_opt_fuel_1_expense: Final[Array] = OUTPUT(label='O&M biomass feedstock expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_om_opt_fuel_2_expense: Final[Array] = OUTPUT(label='O&M coal feedstock expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_property_tax_assessed_value: Final[Array] = OUTPUT(label='Property tax net assessed value', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
@@ -1533,28 +1370,28 @@ class Data(ssc.DataDict):
     cf_insurance_expense: Final[Array] = OUTPUT(label='Insurance expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_operating_expenses: Final[Array] = OUTPUT(label='Total operating expenses', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_net_salvage_value: Final[Array] = OUTPUT(label='Salvage value', units='$', type='ARRAY', group='Cash Flow Revenues', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_total_revenue: Final[Array] = OUTPUT(label='Total revenue to project', units='$', type='ARRAY', group='Cash Flow Revenues', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_total_revenue: Final[Array] = OUTPUT(label='Total revenue', units='$', type='ARRAY', group='Cash Flow Revenues', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_ebitda: Final[Array] = OUTPUT(label='EBITDA', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_reserve_debtservice: Final[Array] = OUTPUT(label='Reserve account debt service', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_reserve_om: Final[Array] = OUTPUT(label='Reserve account working capital', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_reserve_receivables: Final[Array] = OUTPUT(label='Reserve account receivables', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_reserve_equip1: Final[Array] = OUTPUT(label='Reserve account major equipment 1', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_reserve_equip2: Final[Array] = OUTPUT(label='Reserve account major equipment 2', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_reserve_equip3: Final[Array] = OUTPUT(label='Reserve account major equipment 3', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_reserve_total: Final[Array] = OUTPUT(label='Reserve account total reserves', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_reserve_interest: Final[Array] = OUTPUT(label='Interest earned on reserve accounts', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_funding_debtservice: Final[Array] = OUTPUT(label='Reserve funding debt service', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_funding_receivables: Final[Array] = OUTPUT(label='Reserve funding receivables', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_funding_om: Final[Array] = OUTPUT(label='Reserve funding working capital', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_funding_equip1: Final[Array] = OUTPUT(label='Reserve funding major equipment 1', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_funding_equip2: Final[Array] = OUTPUT(label='Reserve funding major equipment 2', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_funding_equip3: Final[Array] = OUTPUT(label='Reserve funding major equipment 3', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_disbursement_debtservice: Final[Array] = OUTPUT(label='Reserve disbursement debt service', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_disbursement_om: Final[Array] = OUTPUT(label='Reserve disbursement working capital', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_disbursement_receivables: Final[Array] = OUTPUT(label='Reserve disbursement receivables', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_disbursement_equip1: Final[Array] = OUTPUT(label='Reserve disbursement major equipment 1', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_disbursement_equip2: Final[Array] = OUTPUT(label='Reserve disbursement major equipment 2', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_disbursement_equip3: Final[Array] = OUTPUT(label='Reserve disbursement major equipment 3', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_reserve_debtservice: Final[Array] = OUTPUT(label='Reserves debt service balance', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_reserve_om: Final[Array] = OUTPUT(label='Reserves working capital balance ', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_reserve_receivables: Final[Array] = OUTPUT(label='Reserves receivables balance', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_reserve_equip1: Final[Array] = OUTPUT(label='Reserves major equipment 1 balance', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_reserve_equip2: Final[Array] = OUTPUT(label='Reserves major equipment 2 balance', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_reserve_equip3: Final[Array] = OUTPUT(label='Reserves major equipment 3 balance', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_reserve_total: Final[Array] = OUTPUT(label='Reserves total reserves balance', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_reserve_interest: Final[Array] = OUTPUT(label='Interest earned on reserves', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_funding_debtservice: Final[Array] = OUTPUT(label='Reserves debt service funding', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_funding_om: Final[Array] = OUTPUT(label='Reserves working capital funding', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_funding_receivables: Final[Array] = OUTPUT(label='Reserves receivables funding', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_funding_equip1: Final[Array] = OUTPUT(label='Reserves major equipment 1 funding', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_funding_equip2: Final[Array] = OUTPUT(label='Reserves major equipment 2 funding', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_funding_equip3: Final[Array] = OUTPUT(label='Reserves major equipment 3 funding', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_disbursement_debtservice: Final[Array] = OUTPUT(label='Reserves debt service disbursement ', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_disbursement_om: Final[Array] = OUTPUT(label='Reserves working capital disbursement', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_disbursement_receivables: Final[Array] = OUTPUT(label='Reserves receivables disbursement', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_disbursement_equip1: Final[Array] = OUTPUT(label='Reserves major equipment 1 disbursement', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_disbursement_equip2: Final[Array] = OUTPUT(label='Reserves major equipment 2 disbursement', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_disbursement_equip3: Final[Array] = OUTPUT(label='Reserves major equipment 3 disbursement', units='$', type='ARRAY', group='Cash Flow Reserves', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_cash_for_ds: Final[Array] = OUTPUT(label='Cash available for debt service (CAFDS)', units='$', type='ARRAY', group='Cash Flow Debt Sizing', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_pv_interest_factor: Final[Array] = OUTPUT(label='Present value interest factor for CAFDS', type='ARRAY', group='Cash Flow Debt Repayment', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_pv_cash_for_ds: Final[Array] = OUTPUT(label='Present value of CAFDS', units='$', type='ARRAY', group='Cash Flow Debt Sizing', required='*', constraints='LENGTH_EQUAL=cf_length')
@@ -1563,70 +1400,86 @@ class Data(ssc.DataDict):
     cf_debt_payment_interest: Final[Array] = OUTPUT(label='Debt interest payment', units='$', type='ARRAY', group='Cash Flow Debt Repayment', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_debt_payment_principal: Final[Array] = OUTPUT(label='Debt principal payment', units='$', type='ARRAY', group='Cash Flow Debt Repayment', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_debt_payment_total: Final[Array] = OUTPUT(label='Debt total payment', units='$', type='ARRAY', group='Cash Flow Debt Repayment', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_operating_activities: Final[Array] = OUTPUT(label='Project cash flow from operating activities', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    purchase_of_property: Final[float] = OUTPUT(label='Purchase of property', units='$', type='NUMBER', group='Cash Flow Pre Tax', required='*')
-    cf_project_dsra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease debt service', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_wcra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease working capital', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_receivablesra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease receivables', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_me1ra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease major equipment 1', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_me2ra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease major equipment 2', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_me3ra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease major equipment 3', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_ra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease total reserve account', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_me1cs: Final[Array] = OUTPUT(label='Reserve capital spending major equipment 1', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_me2cs: Final[Array] = OUTPUT(label='Reserve capital spending major equipment 2', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_me3cs: Final[Array] = OUTPUT(label='Reserve capital spending major equipment 3', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_mecs: Final[Array] = OUTPUT(label='Reserve capital spending major equipment total', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_investing_activities: Final[Array] = OUTPUT(label='Project cash flow from investing activities', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    issuance_of_equity: Final[float] = OUTPUT(label='Issuance of equity', units='$', type='NUMBER', group='Cash Flow Pre Tax', required='*')
-    cf_project_financing_activities: Final[Array] = OUTPUT(label='Project cash flow from financing activities', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_pretax_cashflow: Final[Array] = OUTPUT(label='Total project pre-tax cash flow', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_return_pretax: Final[Array] = OUTPUT(label='Total project pre-tax returns', units='$', type='ARRAY', group='Cash Flow Pre Tax Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_return_pretax_irr: Final[Array] = OUTPUT(label='Project pre-tax cumulative IRR', units='%', type='ARRAY', group='Cash Flow Pre Tax Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_return_pretax_npv: Final[Array] = OUTPUT(label='Project pre-tax cumulative NPV', units='$', type='ARRAY', group='Cash Flow Pre Tax Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_return_aftertax_cash: Final[Array] = OUTPUT(label='Total project operating cash', units='$', type='ARRAY', group='Cash Flow After Tax Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_return_aftertax: Final[Array] = OUTPUT(label='Total project after-tax returns', units='$', type='ARRAY', group='Cash Flow After Tax Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_return_aftertax_irr: Final[Array] = OUTPUT(label='Project after-tax cumulative IRR', units='%', type='ARRAY', group='Cash Flow After Tax Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_return_aftertax_npv: Final[Array] = OUTPUT(label='Project after-tax cumulative NPV', units='$', type='ARRAY', group='Cash Flow After Tax Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_tax_investor_pretax: Final[Array] = OUTPUT(label='Investor pre-tax returns', units='$', type='ARRAY', group='Cash Flow Tax Investor Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_tax_investor_pretax_irr: Final[Array] = OUTPUT(label='Investor pre-tax cumulative IRR', units='%', type='ARRAY', group='Cash Flow Tax Investor Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_tax_investor_pretax_npv: Final[Array] = OUTPUT(label='Investor pre-tax cumulative NPV', units='$', type='ARRAY', group='Cash Flow Tax Investor Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_tax_investor_aftertax_cash: Final[Array] = OUTPUT(label='Investor operating cash', units='$', type='ARRAY', group='Cash Flow Tax Investor Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_tax_investor_aftertax_itc: Final[Array] = OUTPUT(label='Investor share of ITC', units='$', type='ARRAY', group='Cash Flow Tax Investor Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_tax_investor_aftertax_ptc: Final[Array] = OUTPUT(label='Investor share of PTC', units='$', type='ARRAY', group='Cash Flow Tax Investor Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_tax_investor_aftertax_tax: Final[Array] = OUTPUT(label='Investor share of tax benefit (liability)', units='$', type='ARRAY', group='Cash Flow Tax Investor Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_tax_investor_aftertax: Final[Array] = OUTPUT(label='Investor after-tax returns', units='$', type='ARRAY', group='Cash Flow Tax Investor Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_tax_investor_aftertax_irr: Final[Array] = OUTPUT(label='Investor after-tax cumulative IRR', units='%', type='ARRAY', group='Cash Flow Tax Investor Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_tax_investor_aftertax_npv: Final[Array] = OUTPUT(label='Investor after-tax cumulative NPV', units='$', type='ARRAY', group='Cash Flow Tax Investor Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_tax_investor_aftertax_max_irr: Final[Array] = OUTPUT(label='Investor after-tax maximum IRR', units='%', type='ARRAY', group='Cash Flow Tax Investor Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    tax_investor_aftertax_irr: Final[float] = OUTPUT(label='Investor after-tax IRR at end of project', units='%', type='NUMBER', group='Cash Flow Tax Investor Returns', required='*')
-    tax_investor_aftertax_npv: Final[float] = OUTPUT(label='Investor after-tax NPV', units='$', type='NUMBER', group='Cash Flow Tax Investor Returns', required='*')
-    tax_investor_pretax_irr: Final[float] = OUTPUT(label='Investor pre-tax IRR at end of project', units='%', type='NUMBER', group='Cash Flow Tax Investor Returns', required='*')
-    tax_investor_pretax_npv: Final[float] = OUTPUT(label='Iinvestor pre-tax NPV', units='$', type='NUMBER', group='Cash Flow Tax Investor Returns', required='*')
-    sponsor_pretax_equity: Final[float] = OUTPUT(label='Developer equity investment', units='$', type='NUMBER', group='Cash Flow Developer Returns', required='*')
-    sponsor_pretax_development: Final[float] = OUTPUT(label='Development fee', units='$', type='NUMBER', group='Cash Flow Developer Returns', required='*')
-    cf_sponsor_pretax_cash: Final[Array] = OUTPUT(label='Developer operating cash', units='$', type='ARRAY', group='Cash Flow Developer Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_sponsor_pretax: Final[Array] = OUTPUT(label='Developer pre-tax returns', units='$', type='ARRAY', group='Cash Flow Developer Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_sponsor_pretax_irr: Final[Array] = OUTPUT(label='Developer pre-tax cumulative IRR', units='%', type='ARRAY', group='Cash Flow Developer Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_sponsor_pretax_npv: Final[Array] = OUTPUT(label='Developer pre-tax cumulative NPV', units='$', type='ARRAY', group='Cash Flow Developer Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    sponsor_pretax_irr: Final[float] = OUTPUT(label='Developer pre-tax IRR at end of project', units='%', type='NUMBER', group='Cash Flow Developer Returns', required='*')
-    sponsor_pretax_npv: Final[float] = OUTPUT(label='Developer pre-tax NPV', units='$', type='NUMBER', group='Cash Flow Developer Returns', required='*')
-    sponsor_aftertax_equity: Final[float] = OUTPUT(label='Developer equity investment', units='$', type='NUMBER', group='Cash Flow Developer Returns', required='*')
-    sponsor_aftertax_development: Final[float] = OUTPUT(label='Developer after-tax development fee', units='$', type='NUMBER', group='Cash Flow Developer Returns', required='*')
-    cf_sponsor_aftertax_cash: Final[Array] = OUTPUT(label='Developer operating cash', units='$', type='ARRAY', group='Cash Flow Developer Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_sponsor_aftertax: Final[Array] = OUTPUT(label='Developer after-tax returns', units='$', type='ARRAY', group='Cash Flow Developer Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_sponsor_aftertax_itc: Final[Array] = OUTPUT(label='Developer share of ITC', units='$', type='ARRAY', group='Cash Flow Developer Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_sponsor_aftertax_ptc: Final[Array] = OUTPUT(label='Developer share of PTC', units='$', type='ARRAY', group='Cash Flow Developer Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_sponsor_aftertax_tax: Final[Array] = OUTPUT(label='Developer share of tax benefit/(liability)', units='$', type='ARRAY', group='Cash Flow Developer Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_sponsor_aftertax_irr: Final[Array] = OUTPUT(label='Developer after-tax cumulative IRR', units='%', type='ARRAY', group='Cash Flow Developer Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_sponsor_aftertax_npv: Final[Array] = OUTPUT(label='Developer after-tax cumulative NPV', units='$', type='ARRAY', group='Cash Flow Developer Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    sponsor_aftertax_irr: Final[float] = OUTPUT(label='Developer after-tax IRR at end of project', units='%', type='NUMBER', group='Cash Flow Developer Returns', required='*')
-    sponsor_aftertax_npv: Final[float] = OUTPUT(label='Developer after-tax NPV', units='$', type='NUMBER', group='Cash Flow Developer Returns', required='*')
+    cf_project_operating_activities: Final[Array] = OUTPUT(label='Cash flow from operating activities', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    purchase_of_property: Final[float] = OUTPUT(label='Purchase of property', units='$', type='NUMBER', group='Cash Flow Total and Returns', required='*')
+    cf_project_dsra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease debt service ', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_wcra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease working capital', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_receivablesra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease receivables', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_me1ra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease major equipment 1', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_me2ra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease major equipment 2', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_me3ra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease major equipment 3', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_ra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease total reserve account', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_me1cs: Final[Array] = OUTPUT(label='Reserve capital spending major equipment 1', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_me2cs: Final[Array] = OUTPUT(label='Reserve capital spending major equipment 2', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_me3cs: Final[Array] = OUTPUT(label='Reserve capital spending major equipment 3', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_mecs: Final[Array] = OUTPUT(label='Reserve capital spending major equipment total', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_investing_activities: Final[Array] = OUTPUT(label='Cash flow from investing activities', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    issuance_of_equity: Final[float] = OUTPUT(label='Issuance of equity', units='$', type='NUMBER', group='TCash Flow Total and Returnsotal Cash Flow and Returns', required='*')
+    cf_project_financing_activities: Final[Array] = OUTPUT(label='Cash flow from financing activities', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_pretax_cashflow: Final[Array] = OUTPUT(label='Total pre-tax cash flow', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_return_pretax: Final[Array] = OUTPUT(label='Total pre-tax returns', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_return_pretax_irr: Final[Array] = OUTPUT(label='Pre-tax cumulative IRR', units='%', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_return_pretax_npv: Final[Array] = OUTPUT(label='Pre-tax cumulative NPV', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_return_aftertax_cash: Final[Array] = OUTPUT(label='Total after-tax cash returns', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_return_aftertax: Final[Array] = OUTPUT(label='Total after-tax returns', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_return_aftertax_irr: Final[Array] = OUTPUT(label='After-tax cumulative IRR', units='%', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_return_aftertax_max_irr: Final[Array] = OUTPUT(label='After-tax maximum IRR', units='%', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_return_aftertax_npv: Final[Array] = OUTPUT(label='After-tax cumulative NPV', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    project_return_aftertax_irr: Final[float] = OUTPUT(label='Internal rate of return (after-tax)', units='%', type='NUMBER', group='Metrics', required='*')
+    project_return_aftertax_npv: Final[float] = OUTPUT(label='Net present value (after-tax)', units='$', type='NUMBER', group='Metrics', required='*')
     cf_annual_costs: Final[Array] = OUTPUT(label='Annual costs', units='$', type='ARRAY', group='LCOE calculations', required='*', constraints='LENGTH_EQUAL=cf_length')
     npv_annual_costs: Final[float] = OUTPUT(label='Present value of annual costs', units='$', type='NUMBER', group='LCOE calculations', required='*')
     adjusted_installed_cost: Final[float] = OUTPUT(label='Initial cost less cash incentives', units='$', type='NUMBER', required='*')
     min_dscr: Final[float] = OUTPUT(label='Minimum DSCR', type='NUMBER', group='DSCR')
-    cf_pretax_dscr: Final[Array] = OUTPUT(label='Pre-tax DSCR', type='ARRAY', group='DSCR', required='*', constraints='LENGTH_EQUAL=cf_length')
-    en_batt: float = INPUT(label='Enable battery storage model', units='0/1', type='NUMBER', group='BatterySystem', required='?=0')
+    cf_pretax_dscr: Final[Array] = OUTPUT(label='DSCR (pre-tax)', type='ARRAY', group='DSCR', required='*', constraints='LENGTH_EQUAL=cf_length')
+    system_pre_curtailment_kwac: Array = INPUT(label='System power before grid curtailment', units='kW', type='ARRAY', group='System Output', meta='System generation')
+    cf_energy_curtailed: Final[Array] = OUTPUT(label='Curtailed energy', units='kWh', type='ARRAY', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_curtailment_value: Final[Array] = OUTPUT(label='Curtailment payment revenue', units='$', type='ARRAY', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_capacity_payment: Final[Array] = OUTPUT(label='Capacity payment revenue', units='$', type='ARRAY', required='*', constraints='LENGTH_EQUAL=cf_length')
+    mp_enable_energy_market_revenue: float = INPUT(label='Enable energy market revenue', units='0/1', type='NUMBER', group='Revenue', required='*', constraints='INTEGER,MIN=0,MAX=1')
+    mp_energy_market_revenue: Matrix = INPUT(label='Energy market revenue input', type='MATRIX', group='Revenue', required='*', meta='Lifetime x 2[Cleared Capacity(MW),Price($/MWh)]')
+    cf_energy_market_revenue: Final[Array] = OUTPUT(label='Energy market revenue', units='$', type='ARRAY', group='Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
+    mp_enable_ancserv1: float = INPUT(label='Enable ancillary services 1 Revenue', units='0/1', type='NUMBER', group='Revenue', required='*', constraints='INTEGER,MIN=0,MAX=1')
+    mp_ancserv1_revenue: Matrix = INPUT(label='Ancillary services 1 revenue input', type='MATRIX', group='Revenue', required='*', meta='Lifetime x 2[Cleared Capacity(MW),Price($/MWh)]')
+    cf_ancillary_services_1_revenue: Final[Array] = OUTPUT(label='Ancillary services 1 revenue', units='$', type='ARRAY', group='Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
+    mp_enable_ancserv2: float = INPUT(label='Enable ancillary services 2 Revenue', units='0/1', type='NUMBER', group='Revenue', required='*', constraints='INTEGER,MIN=0,MAX=1')
+    mp_ancserv2_revenue: Matrix = INPUT(label='Ancillary services 2 revenue input', type='MATRIX', group='Revenue', required='*', meta='Lifetime x 2[Cleared Capacity(MW),Price($/MWh)]')
+    cf_ancillary_services_2_revenue: Final[Array] = OUTPUT(label='Ancillary services 2 revenue', units='$', type='ARRAY', group='Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
+    mp_enable_ancserv3: float = INPUT(label='Enable ancillary services 3 Revenue', units='0/1', type='NUMBER', group='Revenue', required='*', constraints='INTEGER,MIN=0,MAX=1')
+    mp_ancserv3_revenue: Matrix = INPUT(label='Ancillary services 3 revenue input', type='MATRIX', group='Revenue', required='*', meta='Lifetime x 2 [Cleared Capacity(MW),Price($/MWh)]')
+    cf_ancillary_services_3_revenue: Final[Array] = OUTPUT(label='Ancillary services 3 revenue', units='$', type='ARRAY', group='Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
+    mp_enable_ancserv4: float = INPUT(label='Enable ancillary services 4 Revenue', units='0/1', type='NUMBER', group='Revenue', required='*', constraints='INTEGER,MIN=0,MAX=1')
+    mp_ancserv4_revenue: Matrix = INPUT(label='Ancillary services 4 revenue input', type='MATRIX', group='Revenue', required='*', meta='Lifetime x 2 [Cleared Capacity(MW),Price($/MWh)]')
+    cf_ancillary_services_4_revenue: Final[Array] = OUTPUT(label='Ancillary services 4 revenue', units='$', type='ARRAY', group='Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
+    npv_curtailment_revenue: Final[float] = OUTPUT(label='Present value of curtailment payment revenue', units='$', type='NUMBER', group='Metrics', required='*')
+    npv_capacity_revenue: Final[float] = OUTPUT(label='Present value of capacity payment revenue', units='$', type='NUMBER', group='Metrics', required='*')
+    npv_energy_market_revenue: Final[float] = OUTPUT(label='Present value of energy market revenue', units='$', type='NUMBER', group='Metrics', required='*')
+    npv_ancillary_services_1_revenue: Final[float] = OUTPUT(label='Present value of ancillary services 1 revenue', units='$', type='NUMBER', group='Metrics', required='*')
+    npv_ancillary_services_2_revenue: Final[float] = OUTPUT(label='Present value of ancillary services 2 revenue', units='$', type='NUMBER', group='Metrics', required='*')
+    npv_ancillary_services_3_revenue: Final[float] = OUTPUT(label='Present value of ancillary services 3 revenue', units='$', type='NUMBER', group='Metrics', required='*')
+    npv_ancillary_services_4_revenue: Final[float] = OUTPUT(label='Present value of ancillary services 4 revenue', units='$', type='NUMBER', group='Metrics', required='*')
+    npv_fed_pbi_income: Final[float] = OUTPUT(label='Present value of federal PBI income', units='$', type='NUMBER', group='Metrics', required='*')
+    npv_sta_pbi_income: Final[float] = OUTPUT(label='Present value of state PBI income', units='$', type='NUMBER', group='Metrics', required='*')
+    npv_uti_pbi_income: Final[float] = OUTPUT(label='Present value of utility PBI income', units='$', type='NUMBER', group='Metrics', required='*')
+    npv_oth_pbi_income: Final[float] = OUTPUT(label='Present value of other PBI income', units='$', type='NUMBER', group='Metrics', required='*')
+    npv_salvage_value: Final[float] = OUTPUT(label='Present value of salvage value', units='$', type='NUMBER', group='Metrics', required='*')
+    npv_thermal_value: Final[float] = OUTPUT(label='Present value of thermal value', units='$', type='NUMBER', group='Metrics', required='*')
+    mp_energy_market_generated_revenue: Final[Array] = OUTPUT(label='Energy market generated revenue', units='$', type='ARRAY', required='*')
+    mp_ancillary_services1_generated_revenue: Final[Array] = OUTPUT(label='Ancillary services 1 generated revenue', units='$', type='ARRAY', required='*')
+    mp_ancillary_services2_generated_revenue: Final[Array] = OUTPUT(label='Ancillary services 2 generated revenue', units='$', type='ARRAY', required='*')
+    mp_ancillary_services3_generated_revenue: Final[Array] = OUTPUT(label='Ancillary services 3 generated revenue', units='$', type='ARRAY', required='*')
+    mp_ancillary_services4_generated_revenue: Final[Array] = OUTPUT(label='Ancillary services 4 generated revenue', units='$', type='ARRAY', required='*')
+    mp_energy_market_cleared_capacity: Final[Array] = OUTPUT(label='Energy market cleared capacity', units='MW', type='ARRAY', required='*')
+    mp_ancillary_services1_cleared_capacity: Final[Array] = OUTPUT(label='Ancillary services 1 cleared capacity', units='MW', type='ARRAY', required='*')
+    mp_ancillary_services2_cleared_capacity: Final[Array] = OUTPUT(label='Ancillary services 2 cleared capacity', units='MW', type='ARRAY', required='*')
+    mp_ancillary_services3_cleared_capacity: Final[Array] = OUTPUT(label='Ancillary services 3 cleared capacity', units='MW', type='ARRAY', required='*')
+    mp_ancillary_services4_cleared_capacity: Final[Array] = OUTPUT(label='Ancillary services 4 cleared capacity', units='MW', type='ARRAY', required='*')
+    mp_energy_market_price: Final[Array] = OUTPUT(label='Energy market price', units='$/MWh', type='ARRAY', required='*')
+    mp_ancillary_services1_price: Final[Array] = OUTPUT(label='Ancillary services 1 generated price', units='$/MWh', type='ARRAY', required='*')
+    mp_ancillary_services2_price: Final[Array] = OUTPUT(label='Ancillary services 2 generated price', units='$/MWh', type='ARRAY', required='*')
+    mp_ancillary_services3_price: Final[Array] = OUTPUT(label='Ancillary services 3 generated price', units='$/MWh', type='ARRAY', required='*')
+    mp_ancillary_services4_price: Final[Array] = OUTPUT(label='Ancillary services 4 generated price', units='$/MWh', type='ARRAY', required='*')
+    mp_total_cleared_capacity: Final[Array] = OUTPUT(label='Total cleared capacity', units='MW', type='ARRAY', required='*')
     batt_bank_replacement: Array = INPUT(label='Battery bank replacements per year', units='number/year', type='ARRAY', group='BatterySystem')
     batt_replacement_schedule: Array = INPUT(label='Battery bank replacements per year (user specified)', units='number/year', type='ARRAY', group='BatterySystem')
     batt_replacement_option: float = INPUT(label='Enable battery replacement?', units='0=none,1=capacity based,2=user schedule', type='NUMBER', group='BatterySystem', required='?=0', constraints='INTEGER,MIN=0,MAX=2')
@@ -1634,15 +1487,25 @@ class Data(ssc.DataDict):
     batt_computed_bank_capacity: float = INPUT(label='Battery bank capacity', units='kWh', type='NUMBER', group='BatterySystem', required='?=0.0')
     cf_battery_replacement_cost: Final[Array] = OUTPUT(label='Battery replacement cost', units='$', type='ARRAY', group='Cash Flow', required='*')
     cf_battery_replacement_cost_schedule: Final[Array] = OUTPUT(label='Battery replacement cost schedule', units='$/kWh', type='ARRAY', group='Cash Flow', required='*')
+    fuelcell_replacement: Array = INPUT(label='Fuel cell replacements per year', units='number/year', type='ARRAY', group='Fuel Cell')
+    fuelcell_replacement_schedule: Array = INPUT(label='Fuel cell replacements per year (user specified)', units='number/year', type='ARRAY', group='Fuel Cell')
+    en_fuelcell: float = INPUT(label='Enable fuel cell storage model', units='0/1', type='NUMBER', group='Fuel Cell', required='?=0')
+    fuelcell_replacement_option: float = INPUT(label='Enable fuel cell replacement?', units='0=none,1=capacity based,2=user schedule', type='NUMBER', group='Fuel Cell', required='?=0', constraints='INTEGER,MIN=0,MAX=2')
+    fuelcell_per_kWh: float = INPUT(label='Fuel cell cost', units='$/kWh', type='NUMBER', group='Fuel Cell', required='?=0.0')
+    fuelcell_computed_bank_capacity: float = INPUT(label='Fuel cell capacity', units='kWh', type='NUMBER', group='Fuel Cell', required='?=0.0')
+    cf_fuelcell_replacement_cost: Final[Array] = OUTPUT(label='Fuel cell replacement cost', units='$', type='ARRAY', group='Cash Flow', required='*')
+    cf_fuelcell_replacement_cost_schedule: Final[Array] = OUTPUT(label='Fuel cell replacement cost schedule', units='$/kW', type='ARRAY', group='Cash Flow', required='*')
+    cp_capacity_payment_esc: float = INPUT(label='Capacity payment escalation', units='%/year', type='NUMBER', group='Capacity Payments', required='*')
+    cp_capacity_payment_type: float = INPUT(label='Capacity payment type', type='NUMBER', group='Capacity Payments', required='*', constraints='INTEGER,MIN=0,MAX=1', meta='0=Energy basis,1=Fixed amount')
+    cp_capacity_payment_amount: Array = INPUT(label='Capacity payment amount', units='$ or $/MW', type='ARRAY', group='Capacity Payments', required='*')
+    cp_capacity_credit_percent: Array = INPUT(label='Capacity credit (eligible portion of nameplate)', units='%', type='ARRAY', group='Capacity Payments', required='cp_capacity_payment_type=0')
+    cp_system_nameplate: float = INPUT(label='System nameplate', units='MW', type='NUMBER', group='Capacity Payments', required='cp_capacity_payment_type=0', constraints='MIN=0')
+    cp_battery_nameplate: float = INPUT(label='Battery nameplate', units='MW', type='NUMBER', group='Capacity Payments', required='cp_capacity_payment_type=0', constraints='MIN=0')
+    grid_curtailment_price: Array = INPUT(label='Curtailment price', units='$/kWh', type='ARRAY', group='GridLimits', required='?=0')
+    grid_curtailment_price_esc: float = INPUT(label='Curtailment price escalation', units='%', type='NUMBER', group='GridLimits', required='?=0')
+    annual_energy_pre_curtailment_ac: float = INPUT(label='Annual Energy AC pre-curtailment (year 1)', units='kWh', type='NUMBER', group='System Output', required='?=0')
 
     def __init__(self, *args: Mapping[str, Any],
-                 ppa_soln_mode: float = ...,
-                 ppa_soln_tolerance: float = ...,
-                 ppa_soln_min: float = ...,
-                 ppa_soln_max: float = ...,
-                 ppa_soln_max_iterations: float = ...,
-                 ppa_price_input: Array = ...,
-                 ppa_escalation: float = ...,
                  analysis_period: float = ...,
                  federal_tax_rate: Array = ...,
                  state_tax_rate: Array = ...,
@@ -1857,45 +1720,55 @@ class Data(ssc.DataDict):
                  pbi_sta_for_ds: float = ...,
                  pbi_uti_for_ds: float = ...,
                  pbi_oth_for_ds: float = ...,
+                 en_batt: float = ...,
+                 batt_meter_position: float = ...,
+                 grid_to_batt: Array = ...,
                  gen: Array = ...,
                  degradation: Array = ...,
+                 utility_bill_w_sys: Array = ...,
+                 roe_input: Array = ...,
                  loan_moratorium: float = ...,
                  system_use_recapitalization: float = ...,
                  system_recapitalization_cost: float = ...,
                  system_recapitalization_escalation: float = ...,
                  system_lifetime_recapitalize: Array = ...,
                  system_use_lifetime_output: float = ...,
-                 ppa_multiplier_model: float = ...,
-                 dispatch_factors_ts: Array = ...,
-                 dispatch_factor1: float = ...,
-                 dispatch_factor2: float = ...,
-                 dispatch_factor3: float = ...,
-                 dispatch_factor4: float = ...,
-                 dispatch_factor5: float = ...,
-                 dispatch_factor6: float = ...,
-                 dispatch_factor7: float = ...,
-                 dispatch_factor8: float = ...,
-                 dispatch_factor9: float = ...,
-                 dispatch_sched_weekday: Matrix = ...,
-                 dispatch_sched_weekend: Matrix = ...,
                  total_installed_cost: float = ...,
                  salvage_percentage: float = ...,
                  construction_financing_cost: float = ...,
-                 cost_dev_fee_percent: float = ...,
-                 cost_equity_closing: float = ...,
-                 tax_investor_equity_percent: float = ...,
-                 tax_investor_preflip_cash_percent: float = ...,
-                 tax_investor_postflip_cash_percent: float = ...,
-                 tax_investor_preflip_tax_percent: float = ...,
-                 tax_investor_postflip_tax_percent: float = ...,
                  depr_stabas_method: float = ...,
                  depr_fedbas_method: float = ...,
-                 en_batt: float = ...,
+                 system_pre_curtailment_kwac: Array = ...,
+                 mp_enable_energy_market_revenue: float = ...,
+                 mp_energy_market_revenue: Matrix = ...,
+                 mp_enable_ancserv1: float = ...,
+                 mp_ancserv1_revenue: Matrix = ...,
+                 mp_enable_ancserv2: float = ...,
+                 mp_ancserv2_revenue: Matrix = ...,
+                 mp_enable_ancserv3: float = ...,
+                 mp_ancserv3_revenue: Matrix = ...,
+                 mp_enable_ancserv4: float = ...,
+                 mp_ancserv4_revenue: Matrix = ...,
                  batt_bank_replacement: Array = ...,
                  batt_replacement_schedule: Array = ...,
                  batt_replacement_option: float = ...,
                  battery_per_kWh: float = ...,
-                 batt_computed_bank_capacity: float = ...) -> None: ...
+                 batt_computed_bank_capacity: float = ...,
+                 fuelcell_replacement: Array = ...,
+                 fuelcell_replacement_schedule: Array = ...,
+                 en_fuelcell: float = ...,
+                 fuelcell_replacement_option: float = ...,
+                 fuelcell_per_kWh: float = ...,
+                 fuelcell_computed_bank_capacity: float = ...,
+                 cp_capacity_payment_esc: float = ...,
+                 cp_capacity_payment_type: float = ...,
+                 cp_capacity_payment_amount: Array = ...,
+                 cp_capacity_credit_percent: Array = ...,
+                 cp_system_nameplate: float = ...,
+                 cp_battery_nameplate: float = ...,
+                 grid_curtailment_price: Array = ...,
+                 grid_curtailment_price_esc: float = ...,
+                 annual_energy_pre_curtailment_ac: float = ...) -> None: ...
     def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):

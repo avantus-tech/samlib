@@ -280,7 +280,7 @@ DataDict = TypedDict('DataDict', {
 class Data(ssc.DataDict):
     turbCapEx: float = INPUT(label='Turbine Capital Cost', units='$/kW', type='NUMBER', group='wobos', required='?=1605')
     nTurb: float = INPUT(label='Number of Turbines', type='NUMBER', group='wobos', required='?=20', constraints='MIN=2,MAX=200')
-    turbR: float = INPUT(label='Turbine Rating', units='MW', type='NUMBER', group='wobos', required='?=5', constraints='MIN=1,MAX=10')
+    turbR: float = INPUT(label='Turbine Rating', units='MW', type='NUMBER', group='wobos', required='?=5', constraints='MIN=1,MAX=15')
     rotorD: float = INPUT(label='Rotor Diameter', units='m', type='NUMBER', group='wobos', required='?=120')
     hubH: float = INPUT(label='Hub Height', units='m', type='NUMBER', group='wobos', required='?=90')
     waterD: float = INPUT(label='Max Water Depth', units='m', type='NUMBER', group='wobos', required='?=30', constraints='MIN=3,MAX=1000')

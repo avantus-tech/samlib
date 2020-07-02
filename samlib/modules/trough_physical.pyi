@@ -1,7 +1,7 @@
 
 # This is a generated file
 
-"""trough_physical_process_heat - Physical trough process heat applications"""
+"""trough_physical - Physical trough applications"""
 
 # VERSION: 1
 
@@ -14,42 +14,36 @@ from ._util import *
 
 DataDict = TypedDict('DataDict', {
     'file_name': str,
-        'solar_resource_data': Table,
-        'track_mode': float,
-        'tilt': float,
-        'azimuth': float,
-        'I_bn_des': float,
-        'solar_mult': float,
-        'T_loop_in_des': float,
-        'T_loop_out': float,
-        'q_pb_design': float,
-        'tshours': float,
         'nSCA': float,
         'nHCEt': float,
         'nColt': float,
         'nHCEVar': float,
         'nLoops': float,
+        'FieldConfig': float,
+        'include_fixed_power_block_runner': float,
+        'L_power_block_piping': float,
         'eta_pump': float,
+        'Fluid': float,
+        'accept_loc': float,
         'HDR_rough': float,
         'theta_stow': float,
         'theta_dep': float,
         'Row_Distance': float,
-        'FieldConfig': float,
-        'is_model_heat_sink_piping': float,
-        'L_heat_sink_piping': float,
+        'T_loop_in_des': float,
+        'T_loop_out': float,
         'm_dot_htfmin': float,
         'm_dot_htfmax': float,
-        'Fluid': float,
-        'wind_stow_speed': float,
         'field_fl_props': Matrix,
         'T_fp': float,
+        'I_bn_des': float,
         'Pipe_hl_coef': float,
         'SCA_drives_elec': float,
-        'water_usage_per_wash': float,
-        'washing_frequency': float,
+        'tilt': float,
+        'azimuth': float,
+        'wind_stow_speed': float,
         'accept_mode': float,
         'accept_init': float,
-        'accept_loc': float,
+        'solar_mult': float,
         'mc_bal_hot': float,
         'mc_bal_cold': float,
         'mc_bal_sca': float,
@@ -104,16 +98,47 @@ DataDict = TypedDict('DataDict', {
         'Design_loss': Matrix,
         'SCAInfoArray': Matrix,
         'SCADefocusArray': Array,
+        'rec_su_delay': float,
+        'rec_qf_delay': float,
+        'p_start': float,
+        'pc_config': float,
+        'P_ref': float,
+        'eta_ref': float,
+        'cycle_max_frac': float,
+        'cycle_cutoff_frac': float,
+        'q_sby_frac': float,
+        'startup_time': float,
+        'startup_frac': float,
         'pb_pump_coef': float,
-        'init_hot_htf_percent': float,
+        'dT_cw_ref': float,
+        'T_amb_des': float,
+        'P_boil': float,
+        'CT': float,
+        'tech_type': float,
+        'T_approach': float,
+        'T_ITD_des': float,
+        'P_cond_ratio': float,
+        'pb_bd_frac': float,
+        'P_cond_min': float,
+        'n_pl_inc': float,
+        'F_wc': Array,
+        'ud_f_W_dot_cool_des': float,
+        'ud_m_dot_water_cool_des': float,
+        'ud_ind_od': Matrix,
+        'store_fluid': float,
+        'store_fl_props': Matrix,
+        'is_hx': float,
+        'tshours': float,
         'h_tank': float,
-        'cold_tank_max_heat': float,
         'u_tank': float,
         'tank_pairs': float,
-        'cold_tank_Thtr': float,
-        'h_tank_min': float,
         'hot_tank_Thtr': float,
         'hot_tank_max_heat': float,
+        'cold_tank_Thtr': float,
+        'cold_tank_max_heat': float,
+        'dt_hot': float,
+        'h_tank_min': float,
+        'init_hot_htf_percent': float,
         'weekday_schedule': Matrix,
         'weekend_schedule': Matrix,
         'dispatch_sched_weekday': Matrix,
@@ -159,6 +184,9 @@ DataDict = TypedDict('DataDict', {
         'pb_fixed_par': float,
         'bop_array': Array,
         'aux_array': Array,
+        'gross_net_conversion_factor': float,
+        'water_usage_per_wash': float,
+        'washing_frequency': float,
         'calc_design_pipe_vals': float,
         'V_hdr_cold_max': float,
         'V_hdr_cold_min': float,
@@ -184,6 +212,18 @@ DataDict = TypedDict('DataDict', {
         'sf_hdr_diams': Matrix,
         'sf_hdr_wallthicks': Matrix,
         'sf_hdr_lengths': Matrix,
+        'tanks_in_parallel': float,
+        'has_hot_tank_bypass': float,
+        'T_tank_hot_inlet_min': float,
+        'tes_pump_coef': float,
+        'V_tes_des': float,
+        'custom_tes_p_loss': float,
+        'k_tes_loss_coeffs': Matrix,
+        'custom_tes_pipe_sizes': float,
+        'tes_diams': Matrix,
+        'tes_wallthicks': Matrix,
+        'tes_lengths': Matrix,
+        'DP_SGS': float,
         'time_hr': Array,
         'month': Array,
         'hour_day': Array,
@@ -192,8 +232,10 @@ DataDict = TypedDict('DataDict', {
         'beam': Array,
         'tdry': Array,
         'twet': Array,
+        'rh': Array,
         'wspd': Array,
         'pres': Array,
+        'defocus': Array,
         'Theta_ave': Array,
         'CosTh_ave': Array,
         'IAM_ave': Array,
@@ -221,11 +263,33 @@ DataDict = TypedDict('DataDict', {
         'deltaP_field': Array,
         'W_dot_sca_track': Array,
         'W_dot_field_pump': Array,
-        'q_dot_to_heat_sink': Array,
-        'W_dot_pc_pump': Array,
-        'm_dot_htf_heat_sink': Array,
-        'T_heat_sink_in': Array,
-        'T_heat_sink_out': Array,
+        'pipe_header_diams': Array,
+        'pipe_header_wallthk': Array,
+        'pipe_header_lengths': Array,
+        'pipe_header_expansions': Array,
+        'pipe_header_mdot_dsn': Array,
+        'pipe_header_vel_dsn': Array,
+        'pipe_header_T_dsn': Array,
+        'pipe_header_P_dsn': Array,
+        'pipe_runner_diams': Array,
+        'pipe_runner_wallthk': Array,
+        'pipe_runner_lengths': Array,
+        'pipe_runner_expansions': Array,
+        'pipe_runner_mdot_dsn': Array,
+        'pipe_runner_vel_dsn': Array,
+        'pipe_runner_T_dsn': Array,
+        'pipe_runner_P_dsn': Array,
+        'pipe_loop_T_dsn': Array,
+        'pipe_loop_P_dsn': Array,
+        'eta': Array,
+        'q_pb': Array,
+        'm_dot_pc': Array,
+        'q_dot_pc_startup': Array,
+        'P_cycle': Array,
+        'T_pc_in': Array,
+        'T_pc_out': Array,
+        'm_dot_water_pc': Array,
+        'q_pc_startup': Array,
         'tank_losses': Array,
         'q_tes_heater': Array,
         'T_tes_hot': Array,
@@ -235,64 +299,104 @@ DataDict = TypedDict('DataDict', {
         'e_ch_tes': Array,
         'm_dot_tes_dc': Array,
         'm_dot_tes_ch': Array,
-        'W_dot_parasitic_tot': Array,
         'op_mode_1': Array,
         'op_mode_2': Array,
         'op_mode_3': Array,
         'm_dot_balance': Array,
         'q_balance': Array,
+        'monthly_energy': Array,
         'annual_energy': float,
-        'annual_gross_energy': float,
         'annual_thermal_consumption': float,
-        'annual_electricity_consumption': float,
         'annual_total_water_use': float,
         'annual_field_freeze_protection': float,
         'annual_tes_freeze_protection': float,
+        'n_op_modes': Array,
+        'tou_value': Array,
+        'pricing_mult': Array,
+        'q_dot_pc_sb': Array,
+        'q_dot_pc_min': Array,
+        'q_dot_pc_target': Array,
+        'q_dot_pc_max': Array,
+        'is_rec_su_allowed': Array,
+        'is_pc_su_allowed': Array,
+        'is_pc_sb_allowed': Array,
+        'q_dot_est_cr_su': Array,
+        'q_dot_est_cr_on': Array,
+        'q_dot_est_tes_dc': Array,
+        'q_dot_est_tes_ch': Array,
+        'operating_modes_a': Array,
+        'operating_modes_b': Array,
+        'operating_modes_c': Array,
+        'disp_solve_state': Array,
+        'disp_solve_iter': Array,
+        'disp_objective': Array,
+        'disp_obj_relax': Array,
+        'disp_qsf_expected': Array,
+        'disp_qsfprod_expected': Array,
+        'disp_qsfsu_expected': Array,
+        'disp_tes_expected': Array,
+        'disp_pceff_expected': Array,
+        'disp_thermeff_expected': Array,
+        'disp_qpbsu_expected': Array,
+        'disp_wpb_expected': Array,
+        'disp_rev_expected': Array,
+        'disp_presolve_nconstr': Array,
+        'disp_presolve_nvar': Array,
+        'disp_solve_time': Array,
+        'htf_pump_power': Array,
+        'P_cooling_tower_tot': Array,
+        'P_fixed': Array,
+        'P_plant_balance_tot': Array,
+        'P_out_net': Array,
+        'gen': Array,
+        'annual_W_cycle_gross': float,
+        'conversion_factor': float,
         'capacity_factor': float,
         'kwh_per_kw': float,
+        'recirculating': Array,
+        'pipe_tes_diams': Array,
+        'pipe_tes_wallthk': Array,
+        'pipe_tes_mdot_dsn': Array,
+        'pipe_tes_vel_dsn': Array,
+        'pipe_tes_T_dsn': Array,
+        'pipe_tes_P_dsn': Array,
         'adjust:constant': float,
         'adjust:hourly': Array,
         'adjust:periods': Matrix
 }, total=False)
 
 class Data(ssc.DataDict):
-    file_name: str = INPUT(label='Local weather file with path', units='none', type='STRING', group='Weather', required='*', constraints='LOCAL_FILE')
-    solar_resource_data: Table = INPUT(label='Weather resource data in memory', type='TABLE', group='Weather', required='?')
-    track_mode: float = INPUT(label='Tracking mode', units='none', type='NUMBER', group='Weather', required='*')
-    tilt: float = INPUT(label='Tilt angle of surface/axis', units='none', type='NUMBER', group='Weather', required='*')
-    azimuth: float = INPUT(label='Azimuth angle of surface/axis', units='none', type='NUMBER', group='Weather', required='*')
-    I_bn_des: float = INPUT(label='Solar irradiation at design', units='C', type='NUMBER', group='solar_field', required='*')
-    solar_mult: float = INPUT(label='Solar multiple', units='none', type='NUMBER', group='solar_field', required='*')
-    T_loop_in_des: float = INPUT(label='Design loop inlet temperature', units='C', type='NUMBER', group='solar_field', required='*')
-    T_loop_out: float = INPUT(label='Target loop outlet temperature', units='C', type='NUMBER', group='solar_field', required='*')
-    q_pb_design: float = INPUT(label='Design heat input to power block', units='MWt', type='NUMBER', group='controller', required='*')
-    tshours: float = INPUT(label='Equivalent full-load thermal storage hours', units='hr', type='NUMBER', group='system_design', required='*')
+    file_name: str = INPUT(label='Local weather file with path', units='none', type='STRING', group='weather', required='*', constraints='LOCAL_FILE')
     nSCA: float = INPUT(label='Number of SCAs in a loop', units='none', type='NUMBER', group='solar_field', required='*')
     nHCEt: float = INPUT(label='Number of HCE types', units='none', type='NUMBER', group='solar_field', required='*')
     nColt: float = INPUT(label='Number of collector types', units='none', type='NUMBER', group='solar_field', required='*', meta='constant=4')
     nHCEVar: float = INPUT(label='Number of HCE variants per type', units='none', type='NUMBER', group='solar_field', required='*')
     nLoops: float = INPUT(label='Number of loops in the field', units='none', type='NUMBER', group='solar_field', required='*')
+    FieldConfig: float = INPUT(label='Number of subfield headers', units='none', type='NUMBER', group='solar_field', required='*')
+    include_fixed_power_block_runner: float = INPUT(label='Should model consider piping through power block?', units='none', type='NUMBER', group='solar_field', required='*')
+    L_power_block_piping: float = INPUT(label='Length of piping (full mass flow) through heat sink (if applicable)', units='none', type='NUMBER', group='solar_field', required='*')
     eta_pump: float = INPUT(label='HTF pump efficiency', units='none', type='NUMBER', group='solar_field', required='*')
+    Fluid: float = INPUT(label='Field HTF fluid ID number', units='none', type='NUMBER', group='solar_field', required='*')
+    accept_loc: float = INPUT(label='In acceptance testing mode - temperature sensor location', units='1/2', type='NUMBER', group='solar_field', required='*', meta='hx/loop')
     HDR_rough: float = INPUT(label='Header pipe roughness', units='m', type='NUMBER', group='solar_field', required='*')
     theta_stow: float = INPUT(label='Stow angle', units='deg', type='NUMBER', group='solar_field', required='*')
     theta_dep: float = INPUT(label='Deploy angle', units='deg', type='NUMBER', group='solar_field', required='*')
     Row_Distance: float = INPUT(label='Spacing between rows (centerline to centerline)', units='m', type='NUMBER', group='solar_field', required='*')
-    FieldConfig: float = INPUT(label='Number of subfield headers', units='none', type='NUMBER', group='solar_field', required='*')
-    is_model_heat_sink_piping: float = INPUT(label='Should model consider piping through heat sink?', units='none', type='NUMBER', group='solar_field', required='*')
-    L_heat_sink_piping: float = INPUT(label='Length of piping (full mass flow) through heat sink (if applicable)', units='none', type='NUMBER', group='solar_field', required='*')
+    T_loop_in_des: float = INPUT(label='Design loop inlet temperature', units='C', type='NUMBER', group='solar_field', required='*')
+    T_loop_out: float = INPUT(label='Target loop outlet temperature', units='C', type='NUMBER', group='solar_field', required='*')
     m_dot_htfmin: float = INPUT(label='Minimum loop HTF flow rate', units='kg/s', type='NUMBER', group='solar_field', required='*')
     m_dot_htfmax: float = INPUT(label='Maximum loop HTF flow rate', units='kg/s', type='NUMBER', group='solar_field', required='*')
-    Fluid: float = INPUT(label='Field HTF fluid ID number', units='none', type='NUMBER', group='solar_field', required='*')
-    wind_stow_speed: float = INPUT(label='Trough wind stow speed', units='m/s', type='NUMBER', group='solar_field', required='?=50')
-    field_fl_props: Matrix = INPUT(label='User defined field fluid property data', units='-', type='MATRIX', group='controller', required='*')
+    field_fl_props: Matrix = INPUT(label='User defined field fluid property data', units='-', type='MATRIX', group='solar_field', required='*')
     T_fp: float = INPUT(label='Freeze protection temperature (heat trace activation temperature)', units='none', type='NUMBER', group='solar_field', required='*')
+    I_bn_des: float = INPUT(label='Solar irradiation at design', units='C', type='NUMBER', group='solar_field', required='*')
     Pipe_hl_coef: float = INPUT(label='Loss coefficient from the header, runner pipe, and non-HCE piping', units='m/s', type='NUMBER', group='solar_field', required='*')
     SCA_drives_elec: float = INPUT(label='Tracking power, in Watts per SCA drive', units='W/m2-K', type='NUMBER', group='solar_field', required='*')
-    water_usage_per_wash: float = INPUT(label='Water usage per wash', units='L/m2_aper', type='NUMBER', group='solar_field', required='*')
-    washing_frequency: float = INPUT(label='Mirror washing frequency', units='-/year', type='NUMBER', group='solar_field', required='*')
+    tilt: float = INPUT(label='Tilt angle of surface/axis', units='none', type='NUMBER', group='solar_field', required='*')
+    azimuth: float = INPUT(label='Azimuth angle of surface/axis', units='none', type='NUMBER', group='solar_field', required='*')
+    wind_stow_speed: float = INPUT(label='Trough wind stow speed', units='m/s', type='NUMBER', group='solar_field', required='?=50')
     accept_mode: float = INPUT(label='Acceptance testing mode?', units='0/1', type='NUMBER', group='solar_field', required='*', meta='no/yes')
     accept_init: float = INPUT(label='In acceptance testing mode - require steady-state startup', units='none', type='NUMBER', group='solar_field', required='*')
-    accept_loc: float = INPUT(label='In acceptance testing mode - temperature sensor location', units='1/2', type='NUMBER', group='solar_field', required='*', meta='hx/loop')
+    solar_mult: float = INPUT(label='Solar multiple', units='none', type='NUMBER', group='solar_field', required='*')
     mc_bal_hot: float = INPUT(label='Heat capacity of the balance of plant on the hot side', units='kWht/K-MWt', type='NUMBER', group='solar_field', required='*', meta='none')
     mc_bal_cold: float = INPUT(label='Heat capacity of the balance of plant on the cold side', units='kWht/K-MWt', type='NUMBER', group='solar_field', required='*')
     mc_bal_sca: float = INPUT(label='Non-HTF heat capacity associated with each SCA - per meter basis', units='Wht/K-m', type='NUMBER', group='solar_field', required='*')
@@ -316,7 +420,7 @@ class Data(ssc.DataDict):
     D_5: Matrix = INPUT(label='Outer glass envelope diameter ', units='m', type='MATRIX', group='solar_field', required='*')
     D_p: Matrix = INPUT(label='Diameter of the absorber flow plug (optional) ', units='m', type='MATRIX', group='solar_field', required='*')
     Flow_type: Matrix = INPUT(label='Flow type through the absorber', units='none', type='MATRIX', group='solar_field', required='*')
-    Rough: Matrix = INPUT(label='Roughness of the internal surface ', units='m', type='MATRIX', group='solar_field', required='*')
+    Rough: Matrix = INPUT(label='Relative roughness of the internal HCE surface ', units='-', type='MATRIX', group='solar_field', required='*')
     alpha_env: Matrix = INPUT(label='Envelope absorptance ', units='none', type='MATRIX', group='solar_field', required='*')
     epsilon_3_11: Matrix = INPUT(label='Absorber emittance for receiver type 1 variation 1', units='none', type='MATRIX', group='solar_field', required='*')
     epsilon_3_12: Matrix = INPUT(label='Absorber emittance for receiver type 1 variation 2', units='none', type='MATRIX', group='solar_field', required='*')
@@ -347,16 +451,47 @@ class Data(ssc.DataDict):
     Design_loss: Matrix = INPUT(label='Receiver heat loss at design', units='W/m', type='MATRIX', group='solar_field', required='*')
     SCAInfoArray: Matrix = INPUT(label='Receiver (,1) and collector (,2) type for each assembly in loop', units='none', type='MATRIX', group='solar_field', required='*')
     SCADefocusArray: Array = INPUT(label='Collector defocus order', units='none', type='ARRAY', group='solar_field', required='*')
-    pb_pump_coef: float = INPUT(label='Pumping power to move 1kg of HTF through PB loop', units='kW/kg', type='NUMBER', group='controller', required='*')
-    init_hot_htf_percent: float = INPUT(label='Initial fraction of avail. vol that is hot', units='%', type='NUMBER', group='TES', required='*')
+    rec_su_delay: float = INPUT(label='Fixed startup delay time for the receiver', units='hr', type='NUMBER', group='solar_field', required='*')
+    rec_qf_delay: float = INPUT(label='Energy-based receiver startup delay (fraction of rated thermal power)', units='-', type='NUMBER', group='solar_field', required='*')
+    p_start: float = INPUT(label='Collector startup energy, per SCA', units='kWe-hr', type='NUMBER', group='solar_field', required='*')
+    pc_config: float = INPUT(label='0: Steam Rankine (224), 1: user defined', units='-', type='NUMBER', group='powerblock', required='?=0', constraints='INTEGER')
+    P_ref: float = INPUT(label='Rated plant capacity', units='MWe', type='NUMBER', group='powerblock', required='*')
+    eta_ref: float = INPUT(label='Power cycle efficiency at design', units='none', type='NUMBER', group='powerblock', required='*')
+    cycle_max_frac: float = INPUT(label='Maximum turbine over design operation fraction', units='-', type='NUMBER', group='powerblock', required='*')
+    cycle_cutoff_frac: float = INPUT(label='Minimum turbine operation fraction before shutdown', units='-', type='NUMBER', group='powerblock', required='*')
+    q_sby_frac: float = INPUT(label='Fraction of thermal power required for standby mode', units='none', type='NUMBER', group='powerblock', required='*')
+    startup_time: float = INPUT(label='Time needed for power block startup', units='hr', type='NUMBER', group='powerblock', required='*')
+    startup_frac: float = INPUT(label='Fraction of design thermal power needed for startup', units='none', type='NUMBER', group='powerblock', required='*')
+    pb_pump_coef: float = INPUT(label='Pumping power to move 1kg of HTF through PB loop', units='kW/kg', type='NUMBER', group='powerblock', required='*')
+    dT_cw_ref: float = INPUT(label='Reference condenser cooling water inlet/outlet T diff', units='C', type='NUMBER', group='powerblock', required='pc_config=0')
+    T_amb_des: float = INPUT(label='Reference ambient temperature at design point', units='C', type='NUMBER', group='powerblock', required='pc_config=0')
+    P_boil: float = INPUT(label='Boiler operating pressure', units='bar', type='NUMBER', group='powerblock', required='pc_config=0')
+    CT: float = INPUT(label='Flag for using dry cooling or wet cooling system', units='none', type='NUMBER', group='powerblock', required='pc_config=0')
+    tech_type: float = INPUT(label='Turbine inlet pressure control flag (sliding=user, fixed=trough)', units='1/2/3', type='NUMBER', group='powerblock', required='pc_config=0', meta='tower/trough/user')
+    T_approach: float = INPUT(label='Cooling tower approach temperature', units='C', type='NUMBER', group='powerblock', required='pc_config=0')
+    T_ITD_des: float = INPUT(label='ITD at design for dry system', units='C', type='NUMBER', group='powerblock', required='pc_config=0')
+    P_cond_ratio: float = INPUT(label='Condenser pressure ratio', units='none', type='NUMBER', group='powerblock', required='pc_config=0')
+    pb_bd_frac: float = INPUT(label='Power block blowdown steam fraction ', units='none', type='NUMBER', group='powerblock', required='pc_config=0')
+    P_cond_min: float = INPUT(label='Minimum condenser pressure', units='inHg', type='NUMBER', group='powerblock', required='pc_config=0')
+    n_pl_inc: float = INPUT(label='Number of part-load increments for the heat rejection system', units='none', type='NUMBER', group='powerblock', required='pc_config=0')
+    F_wc: Array = INPUT(label='Fraction indicating wet cooling use for hybrid system', units='none', type='ARRAY', group='powerblock', required='pc_config=0', meta='constant=[0,0,0,0,0,0,0,0,0]')
+    ud_f_W_dot_cool_des: float = INPUT(label='Percent of user-defined power cycle design gross output consumed by cooling', units='%', type='NUMBER', group='powerblock', required='pc_config=1')
+    ud_m_dot_water_cool_des: float = INPUT(label='Mass flow rate of water required at user-defined power cycle design point', units='kg/s', type='NUMBER', group='powerblock', required='pc_config=1')
+    ud_ind_od: Matrix = INPUT(label='Off design user-defined power cycle performance as function of T_htf, m_dot_htf [ND], and T_amb', type='MATRIX', group='powerblock', required='pc_config=1')
+    store_fluid: float = INPUT(label='Material number for storage fluid', units='-', type='NUMBER', group='TES', required='*')
+    store_fl_props: Matrix = INPUT(label='User defined storage fluid property data', units='-', type='MATRIX', group='TES', required='*')
+    is_hx: float = INPUT(label='Heat exchanger (HX) exists (1=yes, 0=no)', units='-', type='NUMBER', group='TES', required='*')
+    tshours: float = INPUT(label='Equivalent full-load thermal storage hours', units='hr', type='NUMBER', group='TES', required='*')
     h_tank: float = INPUT(label='Total height of tank (height of HTF when tank is full', units='m', type='NUMBER', group='TES', required='*')
-    cold_tank_max_heat: float = INPUT(label='Rated heater capacity for cold tank heating', units='MW', type='NUMBER', group='TES', required='*')
     u_tank: float = INPUT(label='Loss coefficient from the tank', units='W/m2-K', type='NUMBER', group='TES', required='*')
     tank_pairs: float = INPUT(label='Number of equivalent tank pairs', units='-', type='NUMBER', group='TES', required='*', constraints='INTEGER')
+    hot_tank_Thtr: float = INPUT(label='Minimum allowable hot tank HTF temp', units='C', type='NUMBER', group='TES', required='*')
+    hot_tank_max_heat: float = INPUT(label='Rated heater capacity for hot tank heating', units='MWe', type='NUMBER', group='TES', required='*')
     cold_tank_Thtr: float = INPUT(label='Minimum allowable cold tank HTF temp', units='C', type='NUMBER', group='TES', required='*')
-    h_tank_min: float = INPUT(label='Minimum allowable HTF height in storage tank', units='m', type='NUMBER', group='TES_2tank', required='*')
-    hot_tank_Thtr: float = INPUT(label='Minimum allowable hot tank HTF temp', units='C', type='NUMBER', group='TES_2tank', required='*')
-    hot_tank_max_heat: float = INPUT(label='Rated heater capacity for hot tank heating', units='MW', type='NUMBER', group='TES_2tank', required='*')
+    cold_tank_max_heat: float = INPUT(label='Rated heater capacity for cold tank heating', units='MWe', type='NUMBER', group='TES', required='*')
+    dt_hot: float = INPUT(label='Hot side HX approach temp', units='C', type='NUMBER', group='TES', required='*')
+    h_tank_min: float = INPUT(label='Minimum allowable HTF height in storage tank', units='m', type='NUMBER', group='TES', required='*')
+    init_hot_htf_percent: float = INPUT(label='Initial fraction of avail. vol that is hot', units='%', type='NUMBER', group='TES', required='*')
     weekday_schedule: Matrix = INPUT(label='12x24 CSP operation Time-of-Use Weekday schedule', units='-', type='MATRIX', group='tou', required='*')
     weekend_schedule: Matrix = INPUT(label='12x24 CSP operation Time-of-Use Weekend schedule', units='-', type='MATRIX', group='tou', required='*')
     dispatch_sched_weekday: Matrix = INPUT(label='12x24 PPA pricing Weekday schedule', type='MATRIX', group='tou', required='?=1')
@@ -379,13 +514,13 @@ class Data(ssc.DataDict):
     disp_spec_scaling: float = INPUT(label='Dispatch optimization scaling heuristic', units='-', type='NUMBER', group='tou', required='?=-1')
     disp_time_weighting: float = INPUT(label='Dispatch optimization future time discounting factor', units='-', type='NUMBER', group='tou', required='?=0.99')
     disp_rsu_cost: float = INPUT(label='Receiver startup cost', units='$', type='NUMBER', group='tou', required='is_dispatch=1')
-    disp_csu_cost: float = INPUT(label='Heat sink startup cost', units='$', type='NUMBER', group='tou', required='is_dispatch=1')
-    disp_pen_delta_w: float = INPUT(label='Dispatch heat production change penalty', units='$/kWt-change', type='NUMBER', group='tou', required='is_dispatch=1')
+    disp_csu_cost: float = INPUT(label='Cycle startup cost', units='$', type='NUMBER', group='tou', required='is_dispatch=1')
+    disp_pen_delta_w: float = INPUT(label='Dispatch cycle production change penalty', units='$/kWe-change', type='NUMBER', group='tou', required='is_dispatch=1')
     q_rec_standby: float = INPUT(label='Receiver standby energy consumption', units='kWt', type='NUMBER', group='tou', required='?=9e99')
     q_rec_heattrace: float = INPUT(label='Receiver heat trace energy consumption during startup', units='kWe-hr', type='NUMBER', group='tou', required='?=0.0')
-    is_wlim_series: float = INPUT(label='Use time-series net heat generation limits', type='NUMBER', group='tou', required='?=0')
-    wlim_series: Array = INPUT(label='Time series net heat generation limits', units='kWt', type='ARRAY', group='tou', required='is_wlim_series=1')
-    f_turb_tou_periods: Array = INPUT(label='Dispatch logic for heat sink load fraction', units='-', type='ARRAY', group='tou', required='*')
+    is_wlim_series: float = INPUT(label='Use time-series net electricity generation limits', type='NUMBER', group='tou', required='?=0')
+    wlim_series: Array = INPUT(label='Time series net electicity generation limits', units='kWe', type='ARRAY', group='tou', required='is_wlim_series=1')
+    f_turb_tou_periods: Array = INPUT(label='Dispatch logic for turbine load fraction', units='-', type='ARRAY', group='tou', required='*')
     ppa_multiplier_model: float = INPUT(label='PPA multiplier model', units='0/1', type='NUMBER', group='tou', required='?=0', constraints='INTEGER,MIN=0', meta='0=diurnal,1=timestep')
     dispatch_factors_ts: Array = INPUT(label='Dispatch payment factor array', type='ARRAY', group='tou', required='ppa_multiplier_model=1')
     dispatch_factor1: float = INPUT(label='Dispatch payment factor 1', type='NUMBER', group='tou', required='?=1')
@@ -402,6 +537,9 @@ class Data(ssc.DataDict):
     pb_fixed_par: float = INPUT(label='Fraction of rated gross power constantly consumed', units='MWe/MWcap', type='NUMBER', group='system', required='*')
     bop_array: Array = INPUT(label='Balance of plant parasitic power fraction, mult frac and const, linear and quad coeff', type='ARRAY', group='system', required='*')
     aux_array: Array = INPUT(label='Auxiliary heater, mult frac and const, linear and quad coeff', type='ARRAY', group='system', required='*')
+    gross_net_conversion_factor: float = INPUT(label='Estimated gross to net conversion factor', type='NUMBER', group='system', required='*')
+    water_usage_per_wash: float = INPUT(label='Water usage per wash', units='L/m2_aper', type='NUMBER', group='system', required='*')
+    washing_frequency: float = INPUT(label='Mirror washing frequency', units='-/year', type='NUMBER', group='system', required='*')
     calc_design_pipe_vals: float = INPUT(label='Calculate temps and pressures at design conditions for runners and headers', units='none', type='NUMBER', group='solar_field', required='*')
     V_hdr_cold_max: float = INPUT(label='Maximum HTF velocity in the cold headers at design', units='m/s', type='NUMBER', group='solar_field', required='*')
     V_hdr_cold_min: float = INPUT(label='Minimum HTF velocity in the cold headers at design', units='m/s', type='NUMBER', group='solar_field', required='*')
@@ -427,7 +565,19 @@ class Data(ssc.DataDict):
     sf_hdr_diams: Matrix = INPUT(label='Custom header diameters', units='m', type='MATRIX', group='solar_field', required='*')
     sf_hdr_wallthicks: Matrix = INPUT(label='Custom header wall thicknesses', units='m', type='MATRIX', group='solar_field', required='*')
     sf_hdr_lengths: Matrix = INPUT(label='Custom header lengths', units='m', type='MATRIX', group='solar_field', required='*')
-    time_hr: Final[Array] = OUTPUT(label='Time at end of timestep', units='hr', type='ARRAY', group='Solver', required='*')
+    tanks_in_parallel: float = INPUT(label='Tanks are in parallel, not in series, with solar field', units='-', type='NUMBER', group='controller', required='*')
+    has_hot_tank_bypass: float = INPUT(label='Bypass valve connects field outlet to cold tank', units='-', type='NUMBER', group='controller', required='*')
+    T_tank_hot_inlet_min: float = INPUT(label='Minimum hot tank htf inlet temperature', units='C', type='NUMBER', group='controller', required='*')
+    tes_pump_coef: float = INPUT(label='Pumping power to move 1kg of HTF through tes loop', units='kW/(kg/s)', type='NUMBER', group='controller', required='*')
+    V_tes_des: float = INPUT(label='Design-point velocity to size the TES pipe diameters', units='m/s', type='NUMBER', group='controller', required='*')
+    custom_tes_p_loss: float = INPUT(label='TES pipe losses are based on custom lengths and coeffs', units='-', type='NUMBER', group='controller', required='*')
+    k_tes_loss_coeffs: Matrix = INPUT(label='Minor loss coeffs for the coll, gen, and bypass loops', units='-', type='MATRIX', group='controller', required='*')
+    custom_tes_pipe_sizes: float = INPUT(label='Use custom TES pipe diams, wallthks, and lengths', units='-', type='NUMBER', group='controller', required='*')
+    tes_diams: Matrix = INPUT(label='Custom TES diameters', units='m', type='MATRIX', group='controller', required='*')
+    tes_wallthicks: Matrix = INPUT(label='Custom TES wall thicknesses', units='m', type='MATRIX', group='controller', required='*')
+    tes_lengths: Matrix = INPUT(label='Custom TES lengths', units='m', type='MATRIX', group='controller', required='*')
+    DP_SGS: float = INPUT(label='Pressure drop within the steam generator', units='bar', type='NUMBER', group='controller', required='*')
+    time_hr: Final[Array] = OUTPUT(label='Time at end of timestep', units='hr', type='ARRAY', group='solver', required='*')
     month: Final[Array] = OUTPUT(label='Resource Month', type='ARRAY', group='weather', required='*')
     hour_day: Final[Array] = OUTPUT(label='Resource Hour of Day', type='ARRAY', group='weather', required='*')
     solazi: Final[Array] = OUTPUT(label='Resource Solar Azimuth', units='deg', type='ARRAY', group='weather', required='*')
@@ -435,40 +585,64 @@ class Data(ssc.DataDict):
     beam: Final[Array] = OUTPUT(label='Resource Beam normal irradiance', units='W/m2', type='ARRAY', group='weather', required='*')
     tdry: Final[Array] = OUTPUT(label='Resource Dry bulb temperature', units='C', type='ARRAY', group='weather', required='*')
     twet: Final[Array] = OUTPUT(label='Resource Wet bulb temperature', units='C', type='ARRAY', group='weather', required='*')
+    rh: Final[Array] = OUTPUT(label='Resource Relative Humidity', units='%', type='ARRAY', group='weather', required='*')
     wspd: Final[Array] = OUTPUT(label='Resource Wind Speed', units='m/s', type='ARRAY', group='weather', required='*')
     pres: Final[Array] = OUTPUT(label='Resource Pressure', units='mbar', type='ARRAY', group='weather', required='*')
-    Theta_ave: Final[Array] = OUTPUT(label='Field collector solar incidence angle', units='deg', type='ARRAY', group='trough_field', required='*')
-    CosTh_ave: Final[Array] = OUTPUT(label='Field collector cosine efficiency', type='ARRAY', group='trough_field', required='*')
-    IAM_ave: Final[Array] = OUTPUT(label='Field collector incidence angle modifier', type='ARRAY', group='trough_field', required='*')
-    RowShadow_ave: Final[Array] = OUTPUT(label='Field collector row shadowing loss', type='ARRAY', group='trough_field', required='*')
-    EndLoss_ave: Final[Array] = OUTPUT(label='Field collector optical end loss', type='ARRAY', group='trough_field', required='*')
-    dni_costh: Final[Array] = OUTPUT(label='Field collector DNI-cosine product', units='W/m2', type='ARRAY', group='trough_field', required='*')
-    EqOpteff: Final[Array] = OUTPUT(label='Field optical efficiency before defocus', type='ARRAY', group='trough_field', required='*')
-    SCAs_def: Final[Array] = OUTPUT(label='Field fraction of focused SCAs', type='ARRAY', group='trough_field', required='*')
-    q_inc_sf_tot: Final[Array] = OUTPUT(label='Field thermal power incident', units='MWt', type='ARRAY', group='trough_field', required='*')
-    qinc_costh: Final[Array] = OUTPUT(label='Field thermal power incident after cosine', units='MWt', type='ARRAY', group='trough_field', required='*')
-    q_dot_rec_inc: Final[Array] = OUTPUT(label='Receiver thermal power incident', units='MWt', type='ARRAY', group='trough_field', required='*')
-    q_dot_rec_thermal_loss: Final[Array] = OUTPUT(label='Receiver thermal losses', units='MWt', type='ARRAY', group='trough_field', required='*')
-    q_dot_rec_abs: Final[Array] = OUTPUT(label='Receiver thermal power absorbed', units='MWt', type='ARRAY', group='trough_field', required='*')
-    q_dot_piping_loss: Final[Array] = OUTPUT(label='Field piping thermal losses', units='MWt', type='ARRAY', group='trough_field', required='*')
-    e_dot_field_int_energy: Final[Array] = OUTPUT(label='Field change in material/htf internal energy', units='MWt', type='ARRAY', group='trough_field', required='*')
-    q_dot_htf_sf_out: Final[Array] = OUTPUT(label='Field thermal power leaving in HTF', units='MWt', type='ARRAY', group='trough_field', required='*')
-    q_dot_freeze_prot: Final[Array] = OUTPUT(label='Field freeze protection required', units='MWt', type='ARRAY', group='trough_field', required='*')
-    m_dot_loop: Final[Array] = OUTPUT(label='Receiver mass flow rate', units='kg/s', type='ARRAY', group='trough_field', required='*')
-    m_dot_field_recirc: Final[Array] = OUTPUT(label='Field total mass flow recirculated', units='kg/s', type='ARRAY', group='trough_field', required='*')
-    m_dot_field_delivered: Final[Array] = OUTPUT(label='Field total mass flow delivered', units='kg/s', type='ARRAY', group='trough_field', required='*')
-    T_field_cold_in: Final[Array] = OUTPUT(label='Field timestep-averaged inlet temperature', units='C', type='ARRAY', group='trough_field', required='*')
-    T_rec_cold_in: Final[Array] = OUTPUT(label='Loop timestep-averaged inlet temperature', units='C', type='ARRAY', group='trough_field', required='*')
-    T_rec_hot_out: Final[Array] = OUTPUT(label='Loop timestep-averaged outlet temperature', units='C', type='ARRAY', group='trough_field', required='*')
-    T_field_hot_out: Final[Array] = OUTPUT(label='Field timestep-averaged outlet temperature', units='C', type='ARRAY', group='trough_field', required='*')
-    deltaP_field: Final[Array] = OUTPUT(label='Field pressure drop', units='bar', type='ARRAY', group='trough_field', required='*')
-    W_dot_sca_track: Final[Array] = OUTPUT(label='Field collector tracking power', units='MWe', type='ARRAY', group='trough_field', required='*')
-    W_dot_field_pump: Final[Array] = OUTPUT(label='Field htf pumping power', units='MWe', type='ARRAY', group='trough_field', required='*')
-    q_dot_to_heat_sink: Final[Array] = OUTPUT(label='Heat sink thermal power', units='MWt', type='ARRAY', group='Heat_Sink', required='*')
-    W_dot_pc_pump: Final[Array] = OUTPUT(label='Heat sink pumping power', units='MWe', type='ARRAY', group='Heat_Sink', required='*')
-    m_dot_htf_heat_sink: Final[Array] = OUTPUT(label='Heat sink HTF mass flow', units='kg/s', type='ARRAY', group='Heat_Sink', required='*')
-    T_heat_sink_in: Final[Array] = OUTPUT(label='Heat sink HTF inlet temp', units='C', type='ARRAY', group='Heat_Sink', required='*')
-    T_heat_sink_out: Final[Array] = OUTPUT(label='Heat sink HTF outlet temp', units='C', type='ARRAY', group='Heat_Sink', required='*')
+    defocus: Final[Array] = OUTPUT(label='Field optical focus fraction', type='ARRAY', group='weather', required='*')
+    Theta_ave: Final[Array] = OUTPUT(label='Field collector solar incidence angle', units='deg', type='ARRAY', group='solar_field', required='*')
+    CosTh_ave: Final[Array] = OUTPUT(label='Field collector cosine efficiency', type='ARRAY', group='solar_field', required='*')
+    IAM_ave: Final[Array] = OUTPUT(label='Field collector incidence angle modifier', type='ARRAY', group='solar_field', required='*')
+    RowShadow_ave: Final[Array] = OUTPUT(label='Field collector row shadowing loss', type='ARRAY', group='solar_field', required='*')
+    EndLoss_ave: Final[Array] = OUTPUT(label='Field collector optical end loss', type='ARRAY', group='solar_field', required='*')
+    dni_costh: Final[Array] = OUTPUT(label='Field collector DNI-cosine product', units='W/m2', type='ARRAY', group='solar_field', required='*')
+    EqOpteff: Final[Array] = OUTPUT(label='Field optical efficiency before defocus', type='ARRAY', group='solar_field', required='*')
+    SCAs_def: Final[Array] = OUTPUT(label='Field fraction of focused SCAs', type='ARRAY', group='solar_field', required='*')
+    q_inc_sf_tot: Final[Array] = OUTPUT(label='Field thermal power incident', units='MWt', type='ARRAY', group='solar_field', required='*')
+    qinc_costh: Final[Array] = OUTPUT(label='Field thermal power incident after cosine', units='MWt', type='ARRAY', group='solar_field', required='*')
+    q_dot_rec_inc: Final[Array] = OUTPUT(label='Receiver thermal power incident', units='MWt', type='ARRAY', group='solar_field', required='*')
+    q_dot_rec_thermal_loss: Final[Array] = OUTPUT(label='Receiver thermal losses', units='MWt', type='ARRAY', group='solar_field', required='*')
+    q_dot_rec_abs: Final[Array] = OUTPUT(label='Receiver thermal power absorbed', units='MWt', type='ARRAY', group='solar_field', required='*')
+    q_dot_piping_loss: Final[Array] = OUTPUT(label='Field piping thermal losses', units='MWt', type='ARRAY', group='solar_field', required='*')
+    e_dot_field_int_energy: Final[Array] = OUTPUT(label='Field change in material/htf internal energy', units='MWt', type='ARRAY', group='solar_field', required='*')
+    q_dot_htf_sf_out: Final[Array] = OUTPUT(label='Field thermal power leaving in HTF', units='MWt', type='ARRAY', group='solar_field', required='*')
+    q_dot_freeze_prot: Final[Array] = OUTPUT(label='Field freeze protection required', units='MWt', type='ARRAY', group='solar_field', required='*')
+    m_dot_loop: Final[Array] = OUTPUT(label='Receiver mass flow rate', units='kg/s', type='ARRAY', group='solar_field', required='*')
+    m_dot_field_recirc: Final[Array] = OUTPUT(label='Field total mass flow recirculated', units='kg/s', type='ARRAY', group='solar_field', required='*')
+    m_dot_field_delivered: Final[Array] = OUTPUT(label='Field total mass flow delivered', units='kg/s', type='ARRAY', group='solar_field', required='*')
+    T_field_cold_in: Final[Array] = OUTPUT(label='Field timestep-averaged inlet temperature', units='C', type='ARRAY', group='solar_field', required='*')
+    T_rec_cold_in: Final[Array] = OUTPUT(label='Loop timestep-averaged inlet temperature', units='C', type='ARRAY', group='solar_field', required='*')
+    T_rec_hot_out: Final[Array] = OUTPUT(label='Loop timestep-averaged outlet temperature', units='C', type='ARRAY', group='solar_field', required='*')
+    T_field_hot_out: Final[Array] = OUTPUT(label='Field timestep-averaged outlet temperature', units='C', type='ARRAY', group='solar_field', required='*')
+    deltaP_field: Final[Array] = OUTPUT(label='Field pressure drop', units='bar', type='ARRAY', group='solar_field', required='*')
+    W_dot_sca_track: Final[Array] = OUTPUT(label='Field collector tracking power', units='MWe', type='ARRAY', group='solar_field', required='*')
+    W_dot_field_pump: Final[Array] = OUTPUT(label='Field htf pumping power', units='MWe', type='ARRAY', group='solar_field', required='*')
+    pipe_header_diams: Final[Array] = OUTPUT(label='Field piping header diameters', units='m', type='ARRAY', group='solar_field', required='*')
+    pipe_header_wallthk: Final[Array] = OUTPUT(label='Field piping header wall thicknesses', units='m', type='ARRAY', group='solar_field', required='*')
+    pipe_header_lengths: Final[Array] = OUTPUT(label='Field piping header lengths', units='m', type='ARRAY', group='solar_field', required='*')
+    pipe_header_expansions: Final[Array] = OUTPUT(label='Number of field piping header expansions', units='-', type='ARRAY', group='solar_field', required='*')
+    pipe_header_mdot_dsn: Final[Array] = OUTPUT(label='Field piping header mass flow at design', units='kg/s', type='ARRAY', group='solar_field', required='*')
+    pipe_header_vel_dsn: Final[Array] = OUTPUT(label='Field piping header velocity at design', units='m/s', type='ARRAY', group='solar_field', required='*')
+    pipe_header_T_dsn: Final[Array] = OUTPUT(label='Field piping header temperature at design', units='C', type='ARRAY', group='solar_field', required='*')
+    pipe_header_P_dsn: Final[Array] = OUTPUT(label='Field piping header pressure at design', units='bar', type='ARRAY', group='solar_field', required='*')
+    pipe_runner_diams: Final[Array] = OUTPUT(label='Field piping runner diameters', units='m', type='ARRAY', group='solar_field', required='*')
+    pipe_runner_wallthk: Final[Array] = OUTPUT(label='Field piping runner wall thicknesses', units='m', type='ARRAY', group='solar_field', required='*')
+    pipe_runner_lengths: Final[Array] = OUTPUT(label='Field piping runner lengths', units='m', type='ARRAY', group='solar_field', required='*')
+    pipe_runner_expansions: Final[Array] = OUTPUT(label='Number of field piping runner expansions', units='-', type='ARRAY', group='solar_field', required='*')
+    pipe_runner_mdot_dsn: Final[Array] = OUTPUT(label='Field piping runner mass flow at design', units='kg/s', type='ARRAY', group='solar_field', required='*')
+    pipe_runner_vel_dsn: Final[Array] = OUTPUT(label='Field piping runner velocity at design', units='m/s', type='ARRAY', group='solar_field', required='*')
+    pipe_runner_T_dsn: Final[Array] = OUTPUT(label='Field piping runner temperature at design', units='C', type='ARRAY', group='solar_field', required='*')
+    pipe_runner_P_dsn: Final[Array] = OUTPUT(label='Field piping runner pressure at design', units='bar', type='ARRAY', group='solar_field', required='*')
+    pipe_loop_T_dsn: Final[Array] = OUTPUT(label='Field piping loop temperature at design', units='C', type='ARRAY', group='solar_field', required='*')
+    pipe_loop_P_dsn: Final[Array] = OUTPUT(label='Field piping loop pressure at design', units='bar', type='ARRAY', group='solar_field', required='*')
+    eta: Final[Array] = OUTPUT(label='PC efficiency: gross', type='ARRAY', group='powerblock', required='*')
+    q_pb: Final[Array] = OUTPUT(label='PC input energy', units='MWt', type='ARRAY', group='powerblock', required='*')
+    m_dot_pc: Final[Array] = OUTPUT(label='PC HTF mass flow rate', units='kg/s', type='ARRAY', group='powerblock', required='*')
+    q_dot_pc_startup: Final[Array] = OUTPUT(label='PC startup thermal power', units='MWt', type='ARRAY', group='powerblock', required='*')
+    P_cycle: Final[Array] = OUTPUT(label='PC electrical power output: gross', units='MWe', type='ARRAY', group='powerblock', required='*')
+    T_pc_in: Final[Array] = OUTPUT(label='PC HTF inlet temperature', units='C', type='ARRAY', group='powerblock', required='*')
+    T_pc_out: Final[Array] = OUTPUT(label='PC HTF outlet temperature', units='C', type='ARRAY', group='powerblock', required='*')
+    m_dot_water_pc: Final[Array] = OUTPUT(label='PC water consumption: makeup + cooling', units='kg/s', type='ARRAY', group='powerblock', required='*')
+    q_pc_startup: Final[Array] = OUTPUT(label='PC startup thermal energy', units='MWht', type='ARRAY', group='powerblock', required='*')
     tank_losses: Final[Array] = OUTPUT(label='TES thermal losses', units='MWt', type='ARRAY', group='TES', required='*')
     q_tes_heater: Final[Array] = OUTPUT(label='TES freeze protection power', units='MWe', type='ARRAY', group='TES', required='*')
     T_tes_hot: Final[Array] = OUTPUT(label='TES hot temperature', units='C', type='ARRAY', group='TES', required='*')
@@ -478,63 +652,103 @@ class Data(ssc.DataDict):
     e_ch_tes: Final[Array] = OUTPUT(label='TES charge state', units='MWht', type='ARRAY', group='TES', required='*')
     m_dot_tes_dc: Final[Array] = OUTPUT(label='TES discharge mass flow rate', units='kg/s', type='ARRAY', group='TES', required='*')
     m_dot_tes_ch: Final[Array] = OUTPUT(label='TES charge mass flow rate', units='kg/s', type='ARRAY', group='TES', required='*')
-    W_dot_parasitic_tot: Final[Array] = OUTPUT(label='System total electrical parasitic', units='MWe', type='ARRAY', group='Heat_Sink', required='*')
-    op_mode_1: Final[Array] = OUTPUT(label='1st operating mode', type='ARRAY', group='Solver', required='*')
-    op_mode_2: Final[Array] = OUTPUT(label='2nd op. mode, if applicable', type='ARRAY', group='Solver', required='*')
-    op_mode_3: Final[Array] = OUTPUT(label='3rd op. mode, if applicable', type='ARRAY', group='Solver', required='*')
-    m_dot_balance: Final[Array] = OUTPUT(label='Relative mass flow balance error', type='ARRAY', group='Controller', required='*')
-    q_balance: Final[Array] = OUTPUT(label='Relative energy balance error', type='ARRAY', group='Controller', required='*')
-    annual_energy: Final[float] = OUTPUT(label='Annual Net Thermal Energy Production w/ avail derate', units='kWt-hr', type='NUMBER', group='Post-process', required='*')
-    annual_gross_energy: Final[float] = OUTPUT(label='Annual Gross Thermal Energy Production w/ avail derate', units='kWt-hr', type='NUMBER', group='Post-process', required='*')
+    op_mode_1: Final[Array] = OUTPUT(label='1st operating mode', type='ARRAY', group='solver', required='*')
+    op_mode_2: Final[Array] = OUTPUT(label='2nd op. mode, if applicable', type='ARRAY', group='solver', required='*')
+    op_mode_3: Final[Array] = OUTPUT(label='3rd op. mode, if applicable', type='ARRAY', group='solver', required='*')
+    m_dot_balance: Final[Array] = OUTPUT(label='Relative mass flow balance error', type='ARRAY', group='solver', required='*')
+    q_balance: Final[Array] = OUTPUT(label='Relative energy balance error', type='ARRAY', group='solver', required='*')
+    monthly_energy: Final[Array] = OUTPUT(label='Monthly Energy', units='kWh', type='ARRAY', group='Post-process', required='*', constraints='LENGTH=12')
+    annual_energy: Final[float] = OUTPUT(label='Annual Net Electrical Energy Production w/ avail derate', units='kWe-hr', type='NUMBER', group='Post-process', required='*')
     annual_thermal_consumption: Final[float] = OUTPUT(label='Annual thermal freeze protection required', units='kWt-hr', type='NUMBER', group='Post-process', required='*')
-    annual_electricity_consumption: Final[float] = OUTPUT(label='Annual electricity consumption w/ avail derate', units='kWe-hr', type='NUMBER', group='Post-process', required='*')
     annual_total_water_use: Final[float] = OUTPUT(label='Total Annual Water Usage', units='m^3', type='NUMBER', group='Post-process', required='*')
     annual_field_freeze_protection: Final[float] = OUTPUT(label='Annual thermal power for field freeze protection', units='kWt-hr', type='NUMBER', group='Post-process', required='*')
     annual_tes_freeze_protection: Final[float] = OUTPUT(label='Annual thermal power for TES freeze protection', units='kWt-hr', type='NUMBER', group='Post-process', required='*')
-    capacity_factor: Final[float] = OUTPUT(label='Capacity factor', units='%', type='NUMBER', group='Post-process', required='*')
-    kwh_per_kw: Final[float] = OUTPUT(label='First year kWh/kW', units='kWht/kWt', type='NUMBER', group='Post-process', required='*')
+    n_op_modes: Final[Array] = OUTPUT(label='Operating modes in reporting timestep', type='ARRAY', group='solver', required='*')
+    tou_value: Final[Array] = OUTPUT(label='CSP operating Time-of-use value', type='ARRAY', group='solver', required='*')
+    pricing_mult: Final[Array] = OUTPUT(label='PPA price multiplier', type='ARRAY', group='solver', required='*')
+    q_dot_pc_sb: Final[Array] = OUTPUT(label='Thermal power for PC standby', units='MWt', type='ARRAY', group='solver', required='*')
+    q_dot_pc_min: Final[Array] = OUTPUT(label='Thermal power for PC min operation', units='MWt', type='ARRAY', group='solver', required='*')
+    q_dot_pc_target: Final[Array] = OUTPUT(label='Target thermal power to PC', units='MWt', type='ARRAY', group='solver', required='*')
+    q_dot_pc_max: Final[Array] = OUTPUT(label='Max thermal power to PC', units='MWt', type='ARRAY', group='solver', required='*')
+    is_rec_su_allowed: Final[Array] = OUTPUT(label='is receiver startup allowed', type='ARRAY', group='solver', required='*')
+    is_pc_su_allowed: Final[Array] = OUTPUT(label='is power cycle startup allowed', type='ARRAY', group='solver', required='*')
+    is_pc_sb_allowed: Final[Array] = OUTPUT(label='is power cycle standby allowed', type='ARRAY', group='solver', required='*')
+    q_dot_est_cr_su: Final[Array] = OUTPUT(label='Estimate rec. startup thermal power', units='MWt', type='ARRAY', group='solver', required='*')
+    q_dot_est_cr_on: Final[Array] = OUTPUT(label='Estimate rec. thermal power TO HTF', units='MWt', type='ARRAY', group='solver', required='*')
+    q_dot_est_tes_dc: Final[Array] = OUTPUT(label='Estimate max TES discharge thermal power', units='MWt', type='ARRAY', group='solver', required='*')
+    q_dot_est_tes_ch: Final[Array] = OUTPUT(label='Estimate max TES charge thermal power', units='MWt', type='ARRAY', group='solver', required='*')
+    operating_modes_a: Final[Array] = OUTPUT(label='First 3 operating modes tried', type='ARRAY', group='solver', required='*')
+    operating_modes_b: Final[Array] = OUTPUT(label='Next 3 operating modes tried', type='ARRAY', group='solver', required='*')
+    operating_modes_c: Final[Array] = OUTPUT(label='Final 3 operating modes tried', type='ARRAY', group='solver', required='*')
+    disp_solve_state: Final[Array] = OUTPUT(label='Dispatch solver state', type='ARRAY', group='tou', required='*')
+    disp_solve_iter: Final[Array] = OUTPUT(label='Dispatch iterations count', type='ARRAY', group='tou', required='*')
+    disp_objective: Final[Array] = OUTPUT(label='Dispatch objective function value', type='ARRAY', group='tou', required='*')
+    disp_obj_relax: Final[Array] = OUTPUT(label='Dispatch objective function - relaxed max', type='ARRAY', group='tou', required='*')
+    disp_qsf_expected: Final[Array] = OUTPUT(label='Dispatch expected solar field available energy', units='MWt', type='ARRAY', group='tou', required='*')
+    disp_qsfprod_expected: Final[Array] = OUTPUT(label='Dispatch expected solar field generation', units='MWt', type='ARRAY', group='tou', required='*')
+    disp_qsfsu_expected: Final[Array] = OUTPUT(label='Dispatch expected solar field startup enegy', units='MWt', type='ARRAY', group='tou', required='*')
+    disp_tes_expected: Final[Array] = OUTPUT(label='Dispatch expected TES charge level', units='MWht', type='ARRAY', group='tou', required='*')
+    disp_pceff_expected: Final[Array] = OUTPUT(label='Dispatch expected power cycle efficiency adj.', type='ARRAY', group='tou', required='*')
+    disp_thermeff_expected: Final[Array] = OUTPUT(label='Dispatch expected SF thermal efficiency adj.', type='ARRAY', group='tou', required='*')
+    disp_qpbsu_expected: Final[Array] = OUTPUT(label='Dispatch expected power cycle startup energy', units='MWht', type='ARRAY', group='tou', required='*')
+    disp_wpb_expected: Final[Array] = OUTPUT(label='Dispatch expected power generation', units='MWe', type='ARRAY', group='tou', required='*')
+    disp_rev_expected: Final[Array] = OUTPUT(label='Dispatch expected revenue factor', type='ARRAY', group='tou', required='*')
+    disp_presolve_nconstr: Final[Array] = OUTPUT(label='Dispatch number of constraints in problem', type='ARRAY', group='tou', required='*')
+    disp_presolve_nvar: Final[Array] = OUTPUT(label='Dispatch number of variables in problem', type='ARRAY', group='tou', required='*')
+    disp_solve_time: Final[Array] = OUTPUT(label='Dispatch solver time', units='sec', type='ARRAY', group='tou', required='*')
+    htf_pump_power: Final[Array] = OUTPUT(label='Parasitic power TES and Cycle HTF pump', units='MWe', type='ARRAY', group='system', required='*')
+    P_cooling_tower_tot: Final[Array] = OUTPUT(label='Parasitic power condenser operation', units='MWe', type='ARRAY', group='system', required='*')
+    P_fixed: Final[Array] = OUTPUT(label='Parasitic power fixed load', units='MWe', type='ARRAY', group='system', required='*')
+    P_plant_balance_tot: Final[Array] = OUTPUT(label='Parasitic power generation-dependent load', units='MWe', type='ARRAY', group='system', required='*')
+    P_out_net: Final[Array] = OUTPUT(label='Total electric power to grid', units='MWe', type='ARRAY', group='system', required='*')
+    gen: Final[Array] = OUTPUT(label='Total electric power to grid w/ avail. derate', units='kWe', type='ARRAY', group='system', required='*')
+    annual_W_cycle_gross: Final[float] = OUTPUT(label='Electrical source - Power cycle gross output', units='kWhe', type='NUMBER', group='system', required='*')
+    conversion_factor: Final[float] = OUTPUT(label='Gross to Net Conversion Factor', units='%', type='NUMBER', group='system', required='*')
+    capacity_factor: Final[float] = OUTPUT(label='Capacity factor', units='%', type='NUMBER', group='system', required='*')
+    kwh_per_kw: Final[float] = OUTPUT(label='First year kWh/kW', units='kWh/kW', type='NUMBER', group='system', required='*')
+    recirculating: Final[Array] = OUTPUT(label='Field recirculating (bypass valve open)', units='-', type='ARRAY', group='solar_field', required='*')
+    pipe_tes_diams: Final[Array] = OUTPUT(label='Pipe diameters in TES', units='m', type='ARRAY', group='TES', required='*')
+    pipe_tes_wallthk: Final[Array] = OUTPUT(label='Pipe wall thickness in TES', units='m', type='ARRAY', group='TES', required='*')
+    pipe_tes_mdot_dsn: Final[Array] = OUTPUT(label='Mass flow TES pipes at design conditions', units='kg/s', type='ARRAY', group='TES', required='*')
+    pipe_tes_vel_dsn: Final[Array] = OUTPUT(label='Velocity in TES pipes at design conditions', units='m/s', type='ARRAY', group='TES', required='*')
+    pipe_tes_T_dsn: Final[Array] = OUTPUT(label='Temperature in TES pipes at design conditions', units='C', type='ARRAY', group='TES', required='*')
+    pipe_tes_P_dsn: Final[Array] = OUTPUT(label='Pressure in TES pipes at design conditions', units='bar', type='ARRAY', group='TES', required='*')
     adjust_constant: float = INPUT(name='adjust:constant', label='Constant loss adjustment', units='%', type='NUMBER', group='Adjustment Factors', required='*', constraints='MAX=100')
     adjust_hourly: Array = INPUT(name='adjust:hourly', label='Hourly Adjustment Factors', units='%', type='ARRAY', group='Adjustment Factors', required='?', constraints='LENGTH=8760')
     adjust_periods: Matrix = INPUT(name='adjust:periods', label='Period-based Adjustment Factors', units='%', type='MATRIX', group='Adjustment Factors', required='?', constraints='COLS=3', meta='n x 3 matrix [ start, end, loss ]')
 
     def __init__(self, *args: Mapping[str, Any],
                  file_name: str = ...,
-                 solar_resource_data: Table = ...,
-                 track_mode: float = ...,
-                 tilt: float = ...,
-                 azimuth: float = ...,
-                 I_bn_des: float = ...,
-                 solar_mult: float = ...,
-                 T_loop_in_des: float = ...,
-                 T_loop_out: float = ...,
-                 q_pb_design: float = ...,
-                 tshours: float = ...,
                  nSCA: float = ...,
                  nHCEt: float = ...,
                  nColt: float = ...,
                  nHCEVar: float = ...,
                  nLoops: float = ...,
+                 FieldConfig: float = ...,
+                 include_fixed_power_block_runner: float = ...,
+                 L_power_block_piping: float = ...,
                  eta_pump: float = ...,
+                 Fluid: float = ...,
+                 accept_loc: float = ...,
                  HDR_rough: float = ...,
                  theta_stow: float = ...,
                  theta_dep: float = ...,
                  Row_Distance: float = ...,
-                 FieldConfig: float = ...,
-                 is_model_heat_sink_piping: float = ...,
-                 L_heat_sink_piping: float = ...,
+                 T_loop_in_des: float = ...,
+                 T_loop_out: float = ...,
                  m_dot_htfmin: float = ...,
                  m_dot_htfmax: float = ...,
-                 Fluid: float = ...,
-                 wind_stow_speed: float = ...,
                  field_fl_props: Matrix = ...,
                  T_fp: float = ...,
+                 I_bn_des: float = ...,
                  Pipe_hl_coef: float = ...,
                  SCA_drives_elec: float = ...,
-                 water_usage_per_wash: float = ...,
-                 washing_frequency: float = ...,
+                 tilt: float = ...,
+                 azimuth: float = ...,
+                 wind_stow_speed: float = ...,
                  accept_mode: float = ...,
                  accept_init: float = ...,
-                 accept_loc: float = ...,
+                 solar_mult: float = ...,
                  mc_bal_hot: float = ...,
                  mc_bal_cold: float = ...,
                  mc_bal_sca: float = ...,
@@ -589,16 +803,47 @@ class Data(ssc.DataDict):
                  Design_loss: Matrix = ...,
                  SCAInfoArray: Matrix = ...,
                  SCADefocusArray: Array = ...,
+                 rec_su_delay: float = ...,
+                 rec_qf_delay: float = ...,
+                 p_start: float = ...,
+                 pc_config: float = ...,
+                 P_ref: float = ...,
+                 eta_ref: float = ...,
+                 cycle_max_frac: float = ...,
+                 cycle_cutoff_frac: float = ...,
+                 q_sby_frac: float = ...,
+                 startup_time: float = ...,
+                 startup_frac: float = ...,
                  pb_pump_coef: float = ...,
-                 init_hot_htf_percent: float = ...,
+                 dT_cw_ref: float = ...,
+                 T_amb_des: float = ...,
+                 P_boil: float = ...,
+                 CT: float = ...,
+                 tech_type: float = ...,
+                 T_approach: float = ...,
+                 T_ITD_des: float = ...,
+                 P_cond_ratio: float = ...,
+                 pb_bd_frac: float = ...,
+                 P_cond_min: float = ...,
+                 n_pl_inc: float = ...,
+                 F_wc: Array = ...,
+                 ud_f_W_dot_cool_des: float = ...,
+                 ud_m_dot_water_cool_des: float = ...,
+                 ud_ind_od: Matrix = ...,
+                 store_fluid: float = ...,
+                 store_fl_props: Matrix = ...,
+                 is_hx: float = ...,
+                 tshours: float = ...,
                  h_tank: float = ...,
-                 cold_tank_max_heat: float = ...,
                  u_tank: float = ...,
                  tank_pairs: float = ...,
-                 cold_tank_Thtr: float = ...,
-                 h_tank_min: float = ...,
                  hot_tank_Thtr: float = ...,
                  hot_tank_max_heat: float = ...,
+                 cold_tank_Thtr: float = ...,
+                 cold_tank_max_heat: float = ...,
+                 dt_hot: float = ...,
+                 h_tank_min: float = ...,
+                 init_hot_htf_percent: float = ...,
                  weekday_schedule: Matrix = ...,
                  weekend_schedule: Matrix = ...,
                  dispatch_sched_weekday: Matrix = ...,
@@ -644,6 +889,9 @@ class Data(ssc.DataDict):
                  pb_fixed_par: float = ...,
                  bop_array: Array = ...,
                  aux_array: Array = ...,
+                 gross_net_conversion_factor: float = ...,
+                 water_usage_per_wash: float = ...,
+                 washing_frequency: float = ...,
                  calc_design_pipe_vals: float = ...,
                  V_hdr_cold_max: float = ...,
                  V_hdr_cold_min: float = ...,
@@ -669,6 +917,18 @@ class Data(ssc.DataDict):
                  sf_hdr_diams: Matrix = ...,
                  sf_hdr_wallthicks: Matrix = ...,
                  sf_hdr_lengths: Matrix = ...,
+                 tanks_in_parallel: float = ...,
+                 has_hot_tank_bypass: float = ...,
+                 T_tank_hot_inlet_min: float = ...,
+                 tes_pump_coef: float = ...,
+                 V_tes_des: float = ...,
+                 custom_tes_p_loss: float = ...,
+                 k_tes_loss_coeffs: Matrix = ...,
+                 custom_tes_pipe_sizes: float = ...,
+                 tes_diams: Matrix = ...,
+                 tes_wallthicks: Matrix = ...,
+                 tes_lengths: Matrix = ...,
+                 DP_SGS: float = ...,
                  adjust_constant: float = ...,
                  adjust_hourly: Array = ...,
                  adjust_periods: Matrix = ...) -> None: ...

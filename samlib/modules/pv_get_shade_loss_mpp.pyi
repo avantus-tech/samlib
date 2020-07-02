@@ -1,7 +1,7 @@
 
 # This is a generated file
 
-"""pv_get_shade_loss_mpp - PV get shade loss fraction for strings from Sara MacAlpine"""
+"""pv_get_shade_loss_mpp - PV get shade loss fraction for strings"""
 
 # VERSION: 1
 

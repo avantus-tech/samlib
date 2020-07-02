@@ -191,6 +191,7 @@ DataDict = TypedDict('DataDict', {
         'EparOnLine': Array,
         'Epar': Array,
         'system_use_lifetime_output': float,
+        'monthly_energy': Array,
         'annual_energy': float,
         'annual_W_cycle_gross': float,
         'conversion_factor': float,
@@ -383,6 +384,7 @@ class Data(ssc.DataDict):
     EparOnLine: Final[Array] = OUTPUT(label='Parasitic power - online total', units='MWe', type='ARRAY', group='type_807', required='*', constraints='LENGTH=8760')
     Epar: Final[Array] = OUTPUT(label='Parasitic power total consumption', units='MWe', type='ARRAY', group='type_807', required='*', constraints='LENGTH=8760')
     system_use_lifetime_output: Final[float] = OUTPUT(label='Use lifetime output', units='0/1', type='NUMBER', group='tcs_trough_empirical', required='*', constraints='INTEGER')
+    monthly_energy: Final[Array] = OUTPUT(label='Monthly energy', units='kWh', type='ARRAY', group='tcs_trough_empirical', required='*')
     annual_energy: Final[float] = OUTPUT(label='Annual energy', units='kWh', type='NUMBER', group='tcs_trough_empirical', required='*')
     annual_W_cycle_gross: Final[float] = OUTPUT(label='Electrical source - Power cycle gross output', units='kWh', type='NUMBER', group='tcs_trough_empirical', required='*')
     conversion_factor: Final[float] = OUTPUT(label='Gross to Net Conversion Factor', units='%', type='NUMBER', group='Calculated', required='*')
@@ -390,9 +392,9 @@ class Data(ssc.DataDict):
     kwh_per_kw: Final[float] = OUTPUT(label='First year kWh/kW', units='kWh/kW', type='NUMBER', required='*')
     system_heat_rate: Final[float] = OUTPUT(label='System heat rate', units='MMBtu/MWh', type='NUMBER', required='*')
     annual_fuel_usage: Final[float] = OUTPUT(label='Annual fuel usage', units='kWh', type='NUMBER', required='*')
-    adjust_constant: float = INPUT(name='adjust:constant', label='Constant loss adjustment', units='%', type='NUMBER', group='Loss Adjustments', required='*', constraints='MAX=100')
-    adjust_hourly: Array = INPUT(name='adjust:hourly', label='Hourly loss adjustments', units='%', type='ARRAY', group='Loss Adjustments', required='?', constraints='LENGTH=8760')
-    adjust_periods: Matrix = INPUT(name='adjust:periods', label='Period-based loss adjustments', units='%', type='MATRIX', group='Loss Adjustments', required='?', constraints='COLS=3', meta='n x 3 matrix [ start, end, loss ]')
+    adjust_constant: float = INPUT(name='adjust:constant', label='Constant loss adjustment', units='%', type='NUMBER', group='Adjustment Factors', required='*', constraints='MAX=100')
+    adjust_hourly: Array = INPUT(name='adjust:hourly', label='Hourly Adjustment Factors', units='%', type='ARRAY', group='Adjustment Factors', required='?', constraints='LENGTH=8760')
+    adjust_periods: Matrix = INPUT(name='adjust:periods', label='Period-based Adjustment Factors', units='%', type='MATRIX', group='Adjustment Factors', required='?', constraints='COLS=3', meta='n x 3 matrix [ start, end, loss ]')
     gen: Final[Array] = OUTPUT(label='System power generated', units='kW', type='ARRAY', group='Time Series', required='*')
 
     def __init__(self, *args: Mapping[str, Any],

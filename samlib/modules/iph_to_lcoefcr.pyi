@@ -19,8 +19,8 @@ DataDict = TypedDict('DataDict', {
 }, total=False)
 
 class Data(ssc.DataDict):
-    annual_electricity_consumption: float = INPUT(label='Annual electricity consumptoin w/ avail derate', units='kWe-hr', type='NUMBER', group='IPH_LCOH', required='*')
-    electricity_rate: float = INPUT(label='Cost of electricity used to operate pumps/trackers', units='$/kWe', type='NUMBER', group='IPH_LCOH', required='*')
+    annual_electricity_consumption: float = INPUT(label='Annual electricity consumptoin w/ avail derate', units='kWe-hr', type='NUMBER', group='IPH LCOH', required='*')
+    electricity_rate: float = INPUT(label='Cost of electricity used to operate pumps/trackers', units='$/kWe', type='NUMBER', group='IPH LCOH', required='*')
     fixed_operating_cost: float = INOUT(label='Annual fixed operating cost', units='$/kW', type='NUMBER', group='Simple LCOE', required='*')
 
     def __init__(self, *args: Mapping[str, Any],

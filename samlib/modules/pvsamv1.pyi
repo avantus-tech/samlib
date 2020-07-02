@@ -25,6 +25,7 @@ DataDict = TypedDict('DataDict', {
         'dc_lifetime_losses': Array,
         'en_ac_lifetime_losses': float,
         'ac_lifetime_losses': Array,
+        'save_full_lifetime_variables': float,
         'en_snow_model': float,
         'system_capacity': float,
         'use_wf_albedo': float,
@@ -420,6 +421,7 @@ DataDict = TypedDict('DataDict', {
         'inv_tdc_plc': Matrix,
         'en_batt': float,
         'load': Array,
+        'crit_load': Array,
         'gh': Array,
         'dn': Array,
         'df': Array,
@@ -462,6 +464,7 @@ DataDict = TypedDict('DataDict', {
         'subarray1_snow_loss': Array,
         'subarray1_modeff': Array,
         'subarray1_celltemp': Array,
+        'subarray1_celltempSS': Array,
         'subarray1_dc_voltage': Array,
         'subarray1_dc_gross': Array,
         'subarray1_voc': Array,
@@ -491,6 +494,7 @@ DataDict = TypedDict('DataDict', {
         'subarray2_snow_loss': Array,
         'subarray2_modeff': Array,
         'subarray2_celltemp': Array,
+        'subarray2_celltempSS': Array,
         'subarray2_dc_voltage': Array,
         'subarray2_dc_gross': Array,
         'subarray2_voc': Array,
@@ -520,6 +524,7 @@ DataDict = TypedDict('DataDict', {
         'subarray3_snow_loss': Array,
         'subarray3_modeff': Array,
         'subarray3_celltemp': Array,
+        'subarray3_celltempSS': Array,
         'subarray3_dc_voltage': Array,
         'subarray3_dc_gross': Array,
         'subarray3_voc': Array,
@@ -549,6 +554,7 @@ DataDict = TypedDict('DataDict', {
         'subarray4_snow_loss': Array,
         'subarray4_modeff': Array,
         'subarray4_celltemp': Array,
+        'subarray4_celltempSS': Array,
         'subarray4_dc_voltage': Array,
         'subarray4_dc_gross': Array,
         'subarray4_voc': Array,
@@ -677,6 +683,7 @@ DataDict = TypedDict('DataDict', {
         'annual_ac_perf_adj_loss_percent': float,
         'annual_ac_wiring_loss': float,
         'annual_transmission_loss': float,
+        'annual_total_loss_percent': float,
         '6par_a': float,
         '6par_Io': float,
         '6par_Il': float,
@@ -705,6 +712,7 @@ DataDict = TypedDict('DataDict', {
         'batt_dc_ac_efficiency': float,
         'batt_ac_dc_efficiency': float,
         'batt_meter_position': float,
+        'batt_inverter_efficiency_cutoff': float,
         'batt_losses': Array,
         'batt_losses_charging': Array,
         'batt_losses_discharging': Array,
@@ -716,8 +724,10 @@ DataDict = TypedDict('DataDict', {
         'batt_computed_bank_capacity': float,
         'batt_current_charge_max': float,
         'batt_current_discharge_max': float,
-        'batt_power_charge_max': float,
-        'batt_power_discharge_max': float,
+        'batt_power_charge_max_kwdc': float,
+        'batt_power_discharge_max_kwdc': float,
+        'batt_power_charge_max_kwac': float,
+        'batt_power_discharge_max_kwac': float,
         'batt_voltage_choice': float,
         'batt_Vfull': float,
         'batt_Vexp': float,
@@ -748,16 +758,16 @@ DataDict = TypedDict('DataDict', {
         'batt_replacement_capacity': float,
         'batt_replacement_option': float,
         'batt_replacement_schedule': Array,
-        'batt_replacement_cost': float,
+        'batt_replacement_schedule_percent': Array,
+        'om_replacement_cost1': Array,
         'batt_mass': float,
-        'batt_length': float,
-        'batt_width': float,
-        'batt_height': float,
+        'batt_surface_area': float,
         'batt_Cp': float,
         'batt_h_to_ambient': float,
-        'T_room': float,
+        'batt_room_temperature_celsius': Array,
         'cap_vs_temp': Matrix,
         'dispatch_manual_charge': Array,
+        'dispatch_manual_fuelcellcharge': Array,
         'dispatch_manual_discharge': Array,
         'dispatch_manual_gridcharge': Array,
         'dispatch_manual_percent_discharge': Array,
@@ -771,6 +781,7 @@ DataDict = TypedDict('DataDict', {
         'batt_dispatch_choice': float,
         'batt_pv_clipping_forecast': Array,
         'batt_pv_dc_forecast': Array,
+        'batt_dispatch_auto_can_fuelcellcharge': float,
         'batt_dispatch_auto_can_gridcharge': float,
         'batt_dispatch_auto_can_charge': float,
         'batt_dispatch_auto_can_clipcharge': float,
@@ -780,15 +791,29 @@ DataDict = TypedDict('DataDict', {
         'batt_cycle_cost_choice': float,
         'batt_cycle_cost': float,
         'en_electricity_rates': float,
+        'ur_en_ts_sell_rate': float,
+        'ur_ts_buy_rate': Array,
         'ur_ec_sched_weekday': Matrix,
         'ur_ec_sched_weekend': Matrix,
         'ur_ec_tou_mat': Matrix,
-        'ppa_price_input': float,
+        'fuelcell_power': Array,
+        'forecast_price_signal_model': float,
+        'ppa_price_input': Array,
         'ppa_multiplier_model': float,
         'dispatch_factors_ts': Array,
         'dispatch_tod_factors': Array,
         'dispatch_sched_weekday': Matrix,
         'dispatch_sched_weekend': Matrix,
+        'mp_enable_energy_market_revenue': float,
+        'mp_energy_market_revenue': Matrix,
+        'mp_enable_ancserv1': float,
+        'mp_ancserv1_revenue': Matrix,
+        'mp_enable_ancserv2': float,
+        'mp_ancserv2_revenue': Matrix,
+        'mp_enable_ancserv3': float,
+        'mp_ancserv3_revenue': Matrix,
+        'mp_enable_ancserv4': float,
+        'mp_ancserv4_revenue': Matrix,
         'batt_q0': Array,
         'batt_q1': Array,
         'batt_q2': Array,
@@ -804,6 +829,8 @@ DataDict = TypedDict('DataDict', {
         'batt_cycles': Array,
         'batt_temperature': Array,
         'batt_capacity_percent': Array,
+        'batt_capacity_percent_cycle': Array,
+        'batt_capacity_percent_calendar': Array,
         'batt_capacity_thermal_percent': Array,
         'batt_bank_replacement': Array,
         'batt_power': Array,
@@ -812,6 +839,7 @@ DataDict = TypedDict('DataDict', {
         'batt_to_load': Array,
         'grid_to_load': Array,
         'pv_to_batt': Array,
+        'fuelcell_to_batt': Array,
         'grid_to_batt': Array,
         'pv_to_grid': Array,
         'batt_to_grid': Array,
@@ -821,6 +849,10 @@ DataDict = TypedDict('DataDict', {
         'batt_power_target': Array,
         'batt_cost_to_cycle': Array,
         'market_sell_rate_series_yr1': Array,
+        'batt_revenue_gridcharge': Array,
+        'batt_revenue_charge': Array,
+        'batt_revenue_clipcharge': Array,
+        'batt_revenue_discharge': Array,
         'monthly_pv_to_load': Array,
         'monthly_batt_to_load': Array,
         'monthly_grid_to_load': Array,
@@ -840,417 +872,428 @@ DataDict = TypedDict('DataDict', {
         'average_battery_roundtrip_efficiency': float,
         'batt_pv_charge_percent': float,
         'batt_bank_installed_capacity': float,
-        'batt_dispatch_sched': Matrix
+        'batt_dispatch_sched': Matrix,
+        'resilience_hrs': Array,
+        'resilience_hrs_min': float,
+        'resilience_hrs_max': float,
+        'resilience_hrs_avg': float,
+        'outage_durations': Array,
+        'pdf_of_surviving': Array,
+        'cdf_of_surviving': Array,
+        'survival_function': Array,
+        'avg_critical_load': float
 }, total=False)
 
 class Data(ssc.DataDict):
-    solar_resource_file: str = INPUT(label='Weather file in TMY2, TMY3, EPW, or SAM CSV.', type='STRING', group='pvsamv1', required='?')
-    solar_resource_data: Table = INPUT(label='Weather data', type='TABLE', group='pvsamv1', required='?', meta='lat,lon,tz,elev,year,month,hour,minute,gh,dn,df,poa,tdry,twet,tdew,rhum,pres,snow,alb,aod,wspd,wdir')
-    transformer_no_load_loss: float = INPUT(label='Power transformer no load loss', units='%', type='NUMBER', group='pvsamv1', required='?=0')
-    transformer_load_loss: float = INPUT(label='Power transformer load loss', units='%', type='NUMBER', group='pvsamv1', required='?=0')
-    system_use_lifetime_output: float = INPUT(label='PV lifetime simulation', units='0/1', type='NUMBER', group='pvsamv1', required='?=0', constraints='INTEGER,MIN=0,MAX=1')
-    analysis_period: float = INPUT(label='Lifetime analysis period', units='years', type='NUMBER', group='pvsamv1', required='system_use_lifetime_output=1')
-    dc_degradation: Array = INPUT(label='Annual module degradation', units='%/year', type='ARRAY', group='pvsamv1', required='system_use_lifetime_output=1')
-    dc_degrade_factor: Final[Array] = OUTPUT(label='Annual module degrade factor', type='ARRAY', group='Annual', required='system_use_lifetime_output=1')
-    en_dc_lifetime_losses: float = INPUT(label='Enable lifetime daily DC losses', units='0/1', type='NUMBER', group='pvsamv1', required='?=0', constraints='INTEGER,MIN=0,MAX=1')
-    dc_lifetime_losses: Array = INPUT(label='Lifetime daily DC losses', units='%', type='ARRAY', group='pvsamv1', required='en_dc_lifetime_losses=1')
-    en_ac_lifetime_losses: float = INPUT(label='Enable lifetime daily AC losses', units='0/1', type='NUMBER', group='pvsamv1', required='?=0', constraints='INTEGER,MIN=0,MAX=1')
-    ac_lifetime_losses: Array = INPUT(label='Lifetime daily AC losses', units='%', type='ARRAY', group='pvsamv1', required='en_ac_lifetime_losses=1')
-    en_snow_model: float = INPUT(label='Toggle snow loss estimation', units='0/1', type='NUMBER', group='snowmodel', required='?=0', constraints='BOOLEAN')
-    system_capacity: float = INPUT(label='DC Nameplate capacity', units='kWdc', type='NUMBER', group='pvsamv1', required='*')
-    use_wf_albedo: float = INPUT(label='Use albedo in weather file if provided', units='0/1', type='NUMBER', group='pvsamv1', required='?=1', constraints='BOOLEAN')
-    albedo: Array = INPUT(label='User specified ground albedo', units='0..1', type='ARRAY', group='pvsamv1', required='*', constraints='LENGTH=12')
-    irrad_mode: float = INPUT(label='Irradiance input translation mode', type='NUMBER', group='pvsamv1', required='?=0', constraints='INTEGER,MIN=0,MAX=4', meta='0=beam&diffuse,1=total&beam,2=total&diffuse,3=poa_reference,4=poa_pyranometer')
-    sky_model: float = INPUT(label='Diffuse sky model', type='NUMBER', group='pvsamv1', required='?=2', constraints='INTEGER,MIN=0,MAX=2', meta='0=isotropic,1=hkdr,2=perez')
-    inverter_count: float = INPUT(label='Number of inverters', type='NUMBER', group='pvsamv1', required='*', constraints='INTEGER,POSITIVE')
-    enable_mismatch_vmax_calc: float = INPUT(label='Enable mismatched subarray Vmax calculation', type='NUMBER', group='pvsamv1', required='?=0', constraints='BOOLEAN')
-    subarray1_nstrings: float = INPUT(label='Sub-array 1 Number of parallel strings', type='NUMBER', group='pvsamv1', constraints='INTEGER')
-    subarray1_modules_per_string: float = INPUT(label='Sub-array 1 Modules per string', type='NUMBER', group='pvsamv1', required='*', constraints='INTEGER,POSITIVE')
-    subarray1_mppt_input: float = INPUT(label='Sub-array 1 Inverter MPPT input number', type='NUMBER', group='pvsamv1', required='?=1', constraints='INTEGER,POSITIVE')
-    subarray1_tilt: float = INPUT(label='Sub-array 1 Tilt', units='deg', type='NUMBER', group='pvsamv1', constraints='MIN=0,MAX=90', meta='0=horizontal,90=vertical')
-    subarray1_tilt_eq_lat: float = INPUT(label='Sub-array 1 Tilt=latitude override', units='0/1', type='NUMBER', group='pvsamv1', constraints='BOOLEAN')
-    subarray1_azimuth: float = INPUT(label='Sub-array 1 Azimuth', units='deg', type='NUMBER', group='pvsamv1', constraints='MIN=0,MAX=359.9', meta='0=N,90=E,180=S,270=W')
-    subarray1_track_mode: float = INPUT(label='Sub-array 1 Tracking mode', type='NUMBER', group='pvsamv1', required='*', constraints='INTEGER,MIN=0,MAX=4', meta='0=fixed,1=1axis,2=2axis,3=azi,4=monthly')
-    subarray1_rotlim: float = INPUT(label='Sub-array 1 Tracker rotation limit', units='deg', type='NUMBER', group='pvsamv1', required='?=45', constraints='MIN=0,MAX=85')
-    subarray1_shade_mode: float = INPUT(label='Sub-array 1 shading mode (fixed tilt or 1x tracking)', units='0/1/2', type='NUMBER', group='pvsamv1', required='*', constraints='INTEGER,MIN=0,MAX=2', meta='0=none,1=standard(non-linear),2=thin film(linear)')
-    subarray1_gcr: float = INPUT(label='Sub-array 1 Ground coverage ratio', units='0..1', type='NUMBER', group='pvsamv1', required='?=0.3', constraints='MIN=0,MAX=3')
-    subarray1_monthly_tilt: Array = INPUT(label='Sub-array 1 monthly tilt input', units='deg', type='ARRAY', group='pvsamv1', required='subarray1_track_mode=4', constraints='LENGTH=12')
-    subarray1_shading_string_option: float = INPUT(name='subarray1_shading:string_option', label='Sub-array 1 shading string option', type='NUMBER', group='pvsamv1', required='?=-1', constraints='INTEGER,MIN=-1,MAX=4', meta='0=shadingdb,1=shadingdb_notc,2=average,3=maximum,4=minimum')
-    subarray1_shading_timestep: Matrix = INPUT(name='subarray1_shading:timestep', label='Sub-array 1 timestep beam shading losses', units='%', type='MATRIX', group='pvsamv1', required='?')
-    subarray1_shading_mxh: Matrix = INPUT(name='subarray1_shading:mxh', label='Sub-array 1 Month x Hour beam shading losses', units='%', type='MATRIX', group='pvsamv1', required='?')
-    subarray1_shading_azal: Matrix = INPUT(name='subarray1_shading:azal', label='Sub-array 1 Azimuth x altitude beam shading losses', units='%', type='MATRIX', group='pvsamv1', required='?')
-    subarray1_shading_diff: float = INPUT(name='subarray1_shading:diff', label='Sub-array 1 Diffuse shading loss', units='%', type='NUMBER', group='pvsamv1', required='?')
-    subarray1_soiling: Array = INPUT(label='Sub-array 1 Monthly soiling loss', units='%', type='ARRAY', group='pvsamv1', required='*', constraints='LENGTH=12')
-    subarray1_rear_irradiance_loss: float = INPUT(label='Sub-array 1 rear irradiance loss', units='%', type='NUMBER', group='pvsamv1', required='*', constraints='MIN=0,MAX=100')
-    subarray1_mismatch_loss: float = INPUT(label='Sub-array 1 DC mismatch loss', units='%', type='NUMBER', group='pvsamv1', required='*', constraints='MIN=0,MAX=100')
-    subarray1_diodeconn_loss: float = INPUT(label='Sub-array 1 DC diodes and connections loss', units='%', type='NUMBER', group='pvsamv1', required='*', constraints='MIN=0,MAX=100')
-    subarray1_dcwiring_loss: float = INPUT(label='Sub-array 1 DC wiring loss', units='%', type='NUMBER', group='pvsamv1', required='*', constraints='MIN=0,MAX=100')
-    subarray1_tracking_loss: float = INPUT(label='Sub-array 1 DC tracking error loss', units='%', type='NUMBER', group='pvsamv1', required='*', constraints='MIN=0,MAX=100')
-    subarray1_nameplate_loss: float = INPUT(label='Sub-array 1 DC nameplate loss', units='%', type='NUMBER', group='pvsamv1', required='*', constraints='MIN=-5,MAX=100')
-    subarray2_rear_irradiance_loss: float = INPUT(label='Sub-array 2 rear irradiance loss', units='%', type='NUMBER', group='pvsamv1', required='subarray2_enable=1', constraints='MIN=0,MAX=100')
-    subarray2_mismatch_loss: float = INPUT(label='Sub-array 2 DC mismatch loss', units='%', type='NUMBER', group='pvsamv1', required='?', constraints='MIN=0,MAX=100')
-    subarray2_diodeconn_loss: float = INPUT(label='Sub-array 2 DC diodes and connections loss', units='%', type='NUMBER', group='pvsamv1', required='?', constraints='MIN=0,MAX=100')
-    subarray2_dcwiring_loss: float = INPUT(label='Sub-array 2 DC wiring loss', units='%', type='NUMBER', group='pvsamv1', required='?', constraints='MIN=0,MAX=100')
-    subarray2_tracking_loss: float = INPUT(label='Sub-array 2 DC tracking error loss', units='%', type='NUMBER', group='pvsamv1', required='?', constraints='MIN=0,MAX=100')
-    subarray2_nameplate_loss: float = INPUT(label='Sub-array 2 DC nameplate loss', units='%', type='NUMBER', group='pvsamv1', required='?', constraints='MIN=-5,MAX=100')
-    subarray3_rear_irradiance_loss: float = INPUT(label='Sub-array 3 rear irradiance loss', units='%', type='NUMBER', group='pvsamv1', required='subarray3_enable=1', constraints='MIN=0,MAX=100')
-    subarray3_mismatch_loss: float = INPUT(label='Sub-array 3 DC mismatch loss', units='%', type='NUMBER', group='pvsamv1', required='?', constraints='MIN=0,MAX=100')
-    subarray3_diodeconn_loss: float = INPUT(label='Sub-array 3 DC diodes and connections loss', units='%', type='NUMBER', group='pvsamv1', required='?', constraints='MIN=0,MAX=100')
-    subarray3_dcwiring_loss: float = INPUT(label='Sub-array 3 DC wiring loss', units='%', type='NUMBER', group='pvsamv1', required='?', constraints='MIN=0,MAX=100')
-    subarray3_tracking_loss: float = INPUT(label='Sub-array 3 DC tracking error loss', units='%', type='NUMBER', group='pvsamv1', required='?', constraints='MIN=0,MAX=100')
-    subarray3_nameplate_loss: float = INPUT(label='Sub-array 3 DC nameplate loss', units='%', type='NUMBER', group='pvsamv1', required='?', constraints='MIN=-5,MAX=100')
-    subarray4_rear_irradiance_loss: float = INPUT(label='Sub-array 4 rear irradiance loss', units='%', type='NUMBER', group='pvsamv1', required='subarray4_enable=1', constraints='MIN=0,MAX=100')
-    subarray4_mismatch_loss: float = INPUT(label='Sub-array 4 DC mismatch loss', units='%', type='NUMBER', group='pvsamv1', required='?', constraints='MIN=0,MAX=100')
-    subarray4_diodeconn_loss: float = INPUT(label='Sub-array 4 DC diodes and connections loss', units='%', type='NUMBER', group='pvsamv1', required='?', constraints='MIN=0,MAX=100', meta='?')
-    subarray4_dcwiring_loss: float = INPUT(label='Sub-array 4 DC wiring loss', units='%', type='NUMBER', group='pvsamv1', required='?', constraints='MIN=0,MAX=100')
-    subarray4_tracking_loss: float = INPUT(label='Sub-array 4 DC tracking error loss', units='%', type='NUMBER', group='pvsamv1', required='?', constraints='MIN=0,MAX=100')
-    subarray4_nameplate_loss: float = INPUT(label='Sub-array 4 DC nameplate loss', units='%', type='NUMBER', group='pvsamv1', required='?', constraints='MIN=-5,MAX=100')
-    dcoptimizer_loss: float = INPUT(label='DC power optimizer loss', units='%', type='NUMBER', group='pvsamv1', required='*', constraints='MIN=0,MAX=100')
-    acwiring_loss: float = INPUT(label='AC wiring loss', units='%', type='NUMBER', group='pvsamv1', required='*', constraints='MIN=0,MAX=100')
-    transmission_loss: float = INPUT(label='Transmission loss', units='%', type='NUMBER', group='pvsamv1', required='*', constraints='MIN=0,MAX=100')
-    subarray1_mod_orient: float = INPUT(label='Sub-array 1 Module orientation', units='0/1', type='NUMBER', group='pvsamv1', required='*', constraints='INTEGER,MIN=0,MAX=1', meta='0=portrait,1=landscape')
-    subarray1_nmodx: float = INPUT(label='Sub-array 1 Number of modules along bottom of row', type='NUMBER', group='pvsamv1', required='*', constraints='INTEGER,POSITIVE')
-    subarray1_nmody: float = INPUT(label='Sub-array 1 Number of modules along side of row', type='NUMBER', group='pvsamv1', required='*', constraints='INTEGER,POSITIVE')
-    subarray1_backtrack: float = INPUT(label='Sub-array 1 Backtracking enabled', type='NUMBER', group='pvsamv1', required='subarray1_track_mode=1', constraints='BOOLEAN', meta='0=no backtracking,1=backtrack')
-    subarray2_enable: float = INPUT(label='Sub-array 2 Enable', units='0/1', type='NUMBER', group='pvsamv1', required='?=0', constraints='BOOLEAN', meta='0=disabled,1=enabled')
-    subarray2_modules_per_string: float = INPUT(label='Sub-array 2 Modules per string', type='NUMBER', group='pvsamv1', required='subarray2_enable=1', constraints='INTEGER,MIN=1')
-    subarray2_nstrings: float = INPUT(label='Sub-array 2 Number of parallel strings', type='NUMBER', group='pvsamv1', required='subarray2_enable=1', constraints='INTEGER,MIN=1')
-    subarray2_mppt_input: float = INPUT(label='Sub-array 2 Inverter MPPT input number', type='NUMBER', group='pvsamv1', required='?=1', constraints='INTEGER,POSITIVE')
-    subarray2_tilt: float = INPUT(label='Sub-array 2 Tilt', units='deg', type='NUMBER', group='pvsamv1', constraints='MIN=0,MAX=90', meta='0=horizontal,90=vertical')
-    subarray2_tilt_eq_lat: float = INPUT(label='Sub-array 2 Tilt=latitude override', units='0/1', type='NUMBER', group='pvsamv1', constraints='BOOLEAN')
-    subarray2_azimuth: float = INPUT(label='Sub-array 2 Azimuth', units='deg', type='NUMBER', group='pvsamv1', constraints='MIN=0,MAX=359.9', meta='0=N,90=E,180=S,270=W')
-    subarray2_track_mode: float = INPUT(label='Sub-array 2 Tracking mode', type='NUMBER', group='pvsamv1', required='subarray2_enable=1', constraints='INTEGER,MIN=0,MAX=4', meta='0=fixed,1=1axis,2=2axis,3=azi,4=monthly')
-    subarray2_rotlim: float = INPUT(label='Sub-array 2 Tracker rotation limit', units='deg', type='NUMBER', group='pvsamv1', required='?=45', constraints='MIN=0,MAX=85')
-    subarray2_shade_mode: float = INPUT(label='Sub-array 2 Shading mode (fixed tilt or 1x tracking)', units='0/1/2', type='NUMBER', group='pvsamv1', required='subarray2_enable=1', constraints='INTEGER,MIN=0,MAX=2', meta='0=none,1=standard(non-linear),2=thin film(linear)')
-    subarray2_gcr: float = INPUT(label='Sub-array 2 Ground coverage ratio', units='0..1', type='NUMBER', group='pvsamv1', required='?=0.3', constraints='MIN=0,MAX=3')
-    subarray2_monthly_tilt: Array = INPUT(label='Sub-array 2 Monthly tilt input', units='deg', type='ARRAY', group='pvsamv1', constraints='LENGTH=12')
-    subarray2_shading_string_option: float = INPUT(name='subarray2_shading:string_option', label='Sub-array 2 Shading string option', type='NUMBER', group='pvsamv1', required='?=-1', constraints='INTEGER,MIN=-1,MAX=4', meta='0=shadingdb,1=shadingdb_notc,2=average,3=maximum,4=minimum')
-    subarray2_shading_timestep: Matrix = INPUT(name='subarray2_shading:timestep', label='Sub-array 2 Timestep beam shading losses', units='%', type='MATRIX', group='pvsamv1', required='?')
-    subarray2_shading_mxh: Matrix = INPUT(name='subarray2_shading:mxh', label='Sub-array 2 Month x Hour beam shading losses', units='%', type='MATRIX', group='pvsamv1', required='?')
-    subarray2_shading_azal: Matrix = INPUT(name='subarray2_shading:azal', label='Sub-array 2 Azimuth x altitude beam shading losses', units='%', type='MATRIX', group='pvsamv1', required='?')
-    subarray2_shading_diff: float = INPUT(name='subarray2_shading:diff', label='Sub-array 2 Diffuse shading loss', units='%', type='NUMBER', group='pvsamv1', required='?')
-    subarray2_soiling: Array = INPUT(label='Sub-array 2 Monthly soiling loss', units='%', type='ARRAY', group='pvsamv1', required='subarray2_enable=1', constraints='LENGTH=12')
-    subarray2_mod_orient: float = INPUT(label='Sub-array 2 Module orientation', units='0/1', type='NUMBER', group='pvsamv1', required='subarray2_enable=1', constraints='INTEGER,MIN=0,MAX=1', meta='0=portrait,1=landscape')
-    subarray2_nmodx: float = INPUT(label='Sub-array 2 Number of modules along bottom of row', type='NUMBER', group='pvsamv1', required='subarray2_enable=1', constraints='INTEGER,POSITIVE')
-    subarray2_nmody: float = INPUT(label='Sub-array 2 Number of modules along side of row', type='NUMBER', group='pvsamv1', required='subarray2_enable=1', constraints='INTEGER,POSITIVE')
-    subarray2_backtrack: float = INPUT(label='Sub-array 2 Backtracking enabled', type='NUMBER', group='pvsamv1', constraints='BOOLEAN', meta='0=no backtracking,1=backtrack')
-    subarray3_enable: float = INPUT(label='Sub-array 3 Enable', units='0/1', type='NUMBER', group='pvsamv1', required='?=0', constraints='BOOLEAN', meta='0=disabled,1=enabled')
-    subarray3_modules_per_string: float = INPUT(label='Sub-array 3 Modules per string', type='NUMBER', group='pvsamv1', required='subarray3_enable=1', constraints='INTEGER,MIN=1')
-    subarray3_nstrings: float = INPUT(label='Sub-array 3 Number of parallel strings', type='NUMBER', group='pvsamv1', required='subarray3_enable=1', constraints='INTEGER,MIN=1')
-    subarray3_mppt_input: float = INPUT(label='Sub-array 3 Inverter MPPT input number', type='NUMBER', group='pvsamv1', required='?=1', constraints='INTEGER,POSITIVE')
-    subarray3_tilt: float = INPUT(label='Sub-array 3 Tilt', units='deg', type='NUMBER', group='pvsamv1', constraints='MIN=0,MAX=90', meta='0=horizontal,90=vertical')
-    subarray3_tilt_eq_lat: float = INPUT(label='Sub-array 3 Tilt=latitude override', units='0/1', type='NUMBER', group='pvsamv1', constraints='BOOLEAN')
-    subarray3_azimuth: float = INPUT(label='Sub-array 3 Azimuth', units='deg', type='NUMBER', group='pvsamv1', constraints='MIN=0,MAX=359.9', meta='0=N,90=E,180=S,270=W')
-    subarray3_track_mode: float = INPUT(label='Sub-array 3 Tracking mode', type='NUMBER', group='pvsamv1', required='subarray3_enable=1', constraints='INTEGER,MIN=0,MAX=4', meta='0=fixed,1=1axis,2=2axis,3=azi,4=monthly')
-    subarray3_rotlim: float = INPUT(label='Sub-array 3 Tracker rotation limit', units='deg', type='NUMBER', group='pvsamv1', required='?=45', constraints='MIN=0,MAX=85')
-    subarray3_shade_mode: float = INPUT(label='Sub-array 3 Shading mode (fixed tilt or 1x tracking)', units='0/1/2', type='NUMBER', group='pvsamv1', required='subarray3_enable=1', constraints='INTEGER,MIN=0,MAX=2', meta='0=none,1=standard(non-linear),2=thin film(linear)')
-    subarray3_gcr: float = INPUT(label='Sub-array 3 Ground coverage ratio', units='0..1', type='NUMBER', group='pvsamv1', required='?=0.3', constraints='MIN=0,MAX=3')
-    subarray3_monthly_tilt: Array = INPUT(label='Sub-array 3 Monthly tilt input', units='deg', type='ARRAY', group='pvsamv1', constraints='LENGTH=12')
-    subarray3_shading_string_option: float = INPUT(name='subarray3_shading:string_option', label='Sub-array 3 Shading string option', type='NUMBER', group='pvsamv1', required='?=-1', constraints='INTEGER,MIN=-1,MAX=4', meta='0=shadingdb,1=shadingdb_notc,2=average,3=maximum,4=minimum')
-    subarray3_shading_timestep: Matrix = INPUT(name='subarray3_shading:timestep', label='Sub-array 3 Timestep beam shading losses', units='%', type='MATRIX', group='pvsamv1', required='?')
-    subarray3_shading_mxh: Matrix = INPUT(name='subarray3_shading:mxh', label='Sub-array 3 Month x Hour beam shading losses', units='%', type='MATRIX', group='pvsamv1', required='?')
-    subarray3_shading_azal: Matrix = INPUT(name='subarray3_shading:azal', label='Sub-array 3 Azimuth x altitude beam shading losses', units='%', type='MATRIX', group='pvsamv1', required='?')
-    subarray3_shading_diff: float = INPUT(name='subarray3_shading:diff', label='Sub-array 3 Diffuse shading loss', units='%', type='NUMBER', group='pvsamv1', required='?')
-    subarray3_soiling: Array = INPUT(label='Sub-array 3 Monthly soiling loss', units='%', type='ARRAY', group='pvsamv1', required='subarray3_enable=1', constraints='LENGTH=12')
-    subarray3_mod_orient: float = INPUT(label='Sub-array 3 Module orientation', units='0/1', type='NUMBER', group='pvsamv1', required='subarray3_enable=1', constraints='INTEGER,MIN=0,MAX=1', meta='0=portrait,1=landscape')
-    subarray3_nmodx: float = INPUT(label='Sub-array 3 Number of modules along bottom of row', type='NUMBER', group='pvsamv1', required='subarray3_enable=1', constraints='INTEGER,POSITIVE')
-    subarray3_nmody: float = INPUT(label='Sub-array 3 Number of modules along side of row', type='NUMBER', group='pvsamv1', required='subarray3_enable=1', constraints='INTEGER,POSITIVE')
-    subarray3_backtrack: float = INPUT(label='Sub-array 3 Backtracking enabled', type='NUMBER', group='pvsamv1', constraints='BOOLEAN', meta='0=no backtracking,1=backtrack')
-    subarray4_enable: float = INPUT(label='Sub-array 4 Enable', units='0/1', type='NUMBER', group='pvsamv1', required='?=0', constraints='BOOLEAN', meta='0=disabled,1=enabled')
-    subarray4_modules_per_string: float = INPUT(label='Sub-array 4 Modules per string', type='NUMBER', group='pvsamv1', required='subarray4_enable=1', constraints='INTEGER,MIN=1')
-    subarray4_nstrings: float = INPUT(label='Sub-array 4 Number of parallel strings', type='NUMBER', group='pvsamv1', required='subarray4_enable=1', constraints='INTEGER,MIN=1')
-    subarray4_mppt_input: float = INPUT(label='Sub-array 4 Inverter MPPT input number', type='NUMBER', group='pvsamv1', required='?=1', constraints='INTEGER,POSITIVE')
-    subarray4_tilt: float = INPUT(label='Sub-array 4 Tilt', units='deg', type='NUMBER', group='pvsamv1', constraints='MIN=0,MAX=90', meta='0=horizontal,90=vertical')
-    subarray4_tilt_eq_lat: float = INPUT(label='Sub-array 4 Tilt=latitude override', units='0/1', type='NUMBER', group='pvsamv1', constraints='BOOLEAN')
-    subarray4_azimuth: float = INPUT(label='Sub-array 4 Azimuth', units='deg', type='NUMBER', group='pvsamv1', constraints='MIN=0,MAX=359.9', meta='0=N,90=E,180=S,270=W')
-    subarray4_track_mode: float = INPUT(label='Sub-array 4 Tracking mode', type='NUMBER', group='pvsamv1', required='subarray4_enable=1', constraints='INTEGER,MIN=0,MAX=4', meta='0=fixed,1=1axis,2=2axis,3=azi,4=monthly')
-    subarray4_rotlim: float = INPUT(label='Sub-array 4 Tracker rotation limit', units='deg', type='NUMBER', group='pvsamv1', required='?=45', constraints='MIN=0,MAX=85')
-    subarray4_shade_mode: float = INPUT(label='Sub-array 4 shading mode (fixed tilt or 1x tracking)', units='0/1/2', type='NUMBER', group='pvsamv1', required='subarray4_enable=1', constraints='INTEGER,MIN=0,MAX=2', meta='0=none,1=standard(non-linear),2=thin film(linear)')
-    subarray4_gcr: float = INPUT(label='Sub-array 4 Ground coverage ratio', units='0..1', type='NUMBER', group='pvsamv1', required='?=0.3', constraints='MIN=0,MAX=3')
-    subarray4_monthly_tilt: Array = INPUT(label='Sub-array 4 Monthly tilt input', units='deg', type='ARRAY', group='pvsamv1', constraints='LENGTH=12')
-    subarray4_shading_string_option: float = INPUT(name='subarray4_shading:string_option', label='Sub-array 4 Shading string option', type='NUMBER', group='pvsamv1', required='?=-1', constraints='INTEGER,MIN=-1,MAX=4', meta='0=shadingdb,1=shadingdb_notc,2=average,3=maximum,4=minimum')
-    subarray4_shading_timestep: Matrix = INPUT(name='subarray4_shading:timestep', label='Sub-array 4 Timestep beam shading losses', units='%', type='MATRIX', group='pvsamv1', required='?')
-    subarray4_shading_mxh: Matrix = INPUT(name='subarray4_shading:mxh', label='Sub-array 4 Month x Hour beam shading losses', units='%', type='MATRIX', group='pvsamv1', required='?')
-    subarray4_shading_azal: Matrix = INPUT(name='subarray4_shading:azal', label='Sub-array 4 Azimuth x altitude beam shading losses', units='%', type='MATRIX', group='pvsamv1', required='?')
-    subarray4_shading_diff: float = INPUT(name='subarray4_shading:diff', label='Sub-array 4 Diffuse shading loss', units='%', type='NUMBER', group='pvsamv1', required='?')
-    subarray4_soiling: Array = INPUT(label='Sub-array 4 Monthly soiling loss', units='%', type='ARRAY', group='pvsamv1', required='subarray4_enable=1', constraints='LENGTH=12')
-    subarray4_mod_orient: float = INPUT(label='Sub-array 4 Module orientation', units='0/1', type='NUMBER', group='pvsamv1', required='subarray4_enable=1', constraints='INTEGER,MIN=0,MAX=1', meta='0=portrait,1=landscape')
-    subarray4_nmodx: float = INPUT(label='Sub-array 4 Number of modules along bottom of row', type='NUMBER', group='pvsamv1', required='subarray4_enable=1', constraints='INTEGER,POSITIVE')
-    subarray4_nmody: float = INPUT(label='Sub-array 4 Number of modules along side of row', type='NUMBER', group='pvsamv1', required='subarray4_enable=1', constraints='INTEGER,POSITIVE')
-    subarray4_backtrack: float = INPUT(label='Sub-array 4 Backtracking enabled', type='NUMBER', group='pvsamv1', constraints='BOOLEAN', meta='0=no backtracking,1=backtrack')
-    module_model: float = INPUT(label='Photovoltaic module model specifier', type='NUMBER', group='pvsamv1', required='*', constraints='INTEGER,MIN=0,MAX=5', meta='0=spe,1=cec,2=6par_user,3=snl,4=sd11-iec61853,5=PVYield')
-    module_aspect_ratio: float = INPUT(label='Module aspect ratio', type='NUMBER', group='pvsamv1', required='?=1.7')
-    spe_area: float = INPUT(label='Module area', units='m2', type='NUMBER', group='pvsamv1', required='module_model=0')
-    spe_rad0: float = INPUT(label='Irradiance level 0', units='W/m2', type='NUMBER', group='pvsamv1', required='module_model=0')
-    spe_rad1: float = INPUT(label='Irradiance level 1', units='W/m2', type='NUMBER', group='pvsamv1', required='module_model=0')
-    spe_rad2: float = INPUT(label='Irradiance level 2', units='W/m2', type='NUMBER', group='pvsamv1', required='module_model=0')
-    spe_rad3: float = INPUT(label='Irradiance level 3', units='W/m2', type='NUMBER', group='pvsamv1', required='module_model=0')
-    spe_rad4: float = INPUT(label='Irradiance level 4', units='W/m2', type='NUMBER', group='pvsamv1', required='module_model=0')
-    spe_eff0: float = INPUT(label='Efficiency at irradiance level 0', units='%', type='NUMBER', group='pvsamv1', required='module_model=0')
-    spe_eff1: float = INPUT(label='Efficiency at irradiance level 1', units='%', type='NUMBER', group='pvsamv1', required='module_model=0')
-    spe_eff2: float = INPUT(label='Efficiency at irradiance level 2', units='%', type='NUMBER', group='pvsamv1', required='module_model=0')
-    spe_eff3: float = INPUT(label='Efficiency at irradiance level 3', units='%', type='NUMBER', group='pvsamv1', required='module_model=0')
-    spe_eff4: float = INPUT(label='Efficiency at irradiance level 4', units='%', type='NUMBER', group='pvsamv1', required='module_model=0')
-    spe_reference: float = INPUT(label='Reference irradiance level', type='NUMBER', group='pvsamv1', required='module_model=0', constraints='INTEGER,MIN=0,MAX=4')
-    spe_module_structure: float = INPUT(label='Mounting and module structure', type='NUMBER', group='pvsamv1', required='module_model=0', constraints='INTEGER,MIN=0,MAX=5', meta='0=glass/cell/polymer sheet - open rack,1=glass/cell/glass - open rack,2=polymer/thin film/steel - open rack,3=Insulated back, building-integrated PV,4=close roof mount,5=user-defined')
-    spe_a: float = INPUT(label='Cell temp parameter a', type='NUMBER', group='pvsamv1', required='module_model=0')
-    spe_b: float = INPUT(label='Cell temp parameter b', type='NUMBER', group='pvsamv1', required='module_model=0')
-    spe_dT: float = INPUT(label='Cell temp parameter dT', type='NUMBER', group='pvsamv1', required='module_model=0')
-    spe_temp_coeff: float = INPUT(label='Temperature coefficient', units='%/C', type='NUMBER', group='pvsamv1', required='module_model=0')
-    spe_fd: float = INPUT(label='Diffuse fraction', units='0..1', type='NUMBER', group='pvsamv1', required='module_model=0', constraints='MIN=0,MAX=1')
-    spe_vmp: float = INPUT(label='Nominal max power voltage', units='V', type='NUMBER', group='pvsamv1', required='module_model=0', constraints='POSITIVE')
-    spe_voc: float = INPUT(label='Nominal open circuit voltage', units='V', type='NUMBER', group='pvsamv1', required='module_model=0', constraints='POSITIVE')
-    spe_is_bifacial: float = INPUT(label='Modules are bifacial', units='0/1', type='NUMBER', group='pvsamv1', required='module_model=0')
-    spe_bifacial_transmission_factor: float = INPUT(label='Bifacial transmission factor', units='0-1', type='NUMBER', group='pvsamv1', required='module_model=0')
-    spe_bifaciality: float = INPUT(label='Bifaciality factor', units='%', type='NUMBER', group='pvsamv1', required='module_model=0')
-    spe_bifacial_ground_clearance_height: float = INPUT(label='Module ground clearance height', units='m', type='NUMBER', group='pvsamv1', required='module_model=0')
-    cec_area: float = INPUT(label='Module area', units='m2', type='NUMBER', group='pvsamv1', required='module_model=1')
-    cec_a_ref: float = INPUT(label='Nonideality factor a', type='NUMBER', group='pvsamv1', required='module_model=1')
-    cec_adjust: float = INPUT(label='Temperature coefficient adjustment', units='%', type='NUMBER', group='pvsamv1', required='module_model=1')
-    cec_alpha_sc: float = INPUT(label='Short circuit current temperature coefficient', units='A/C', type='NUMBER', group='pvsamv1', required='module_model=1')
-    cec_beta_oc: float = INPUT(label='Open circuit voltage temperature coefficient', units='V/C', type='NUMBER', group='pvsamv1', required='module_model=1')
-    cec_gamma_r: float = INPUT(label='Maximum power point temperature coefficient', units='%/C', type='NUMBER', group='pvsamv1', required='module_model=1')
-    cec_i_l_ref: float = INPUT(label='Light current', units='A', type='NUMBER', group='pvsamv1', required='module_model=1')
-    cec_i_mp_ref: float = INPUT(label='Maximum power point current', units='A', type='NUMBER', group='pvsamv1', required='module_model=1')
-    cec_i_o_ref: float = INPUT(label='Saturation current', units='A', type='NUMBER', group='pvsamv1', required='module_model=1')
-    cec_i_sc_ref: float = INPUT(label='Short circuit current', units='A', type='NUMBER', group='pvsamv1', required='module_model=1')
-    cec_n_s: float = INPUT(label='Number of cells in series', type='NUMBER', group='pvsamv1', required='module_model=1', constraints='POSITIVE')
-    cec_r_s: float = INPUT(label='Series resistance', units='ohm', type='NUMBER', group='pvsamv1', required='module_model=1')
-    cec_r_sh_ref: float = INPUT(label='Shunt resistance', units='ohm', type='NUMBER', group='pvsamv1', required='module_model=1')
-    cec_t_noct: float = INPUT(label='Nominal operating cell temperature', units='C', type='NUMBER', group='pvsamv1', required='module_model=1')
-    cec_v_mp_ref: float = INPUT(label='Maximum power point voltage', units='V', type='NUMBER', group='pvsamv1', required='module_model=1')
-    cec_v_oc_ref: float = INPUT(label='Open circuit voltage', units='V', type='NUMBER', group='pvsamv1', required='module_model=1')
-    cec_temp_corr_mode: float = INPUT(label='Cell temperature model selection', type='NUMBER', group='pvsamv1', required='module_model=1', constraints='INTEGER,MIN=0,MAX=1', meta='0=noct,1=mc')
-    cec_is_bifacial: float = INPUT(label='Modules are bifacial', units='0/1', type='NUMBER', group='pvsamv1', required='module_model=1')
-    cec_bifacial_transmission_factor: float = INPUT(label='Bifacial transmission factor', units='0-1', type='NUMBER', group='pvsamv1', required='module_model=1')
-    cec_bifaciality: float = INPUT(label='Bifaciality factor', units='%', type='NUMBER', group='pvsamv1', required='module_model=1')
-    cec_bifacial_ground_clearance_height: float = INPUT(label='Module ground clearance height', units='m', type='NUMBER', group='pvsamv1', required='module_model=1')
-    cec_standoff: float = INPUT(label='Standoff mode', type='NUMBER', group='pvsamv1', required='module_model=1', constraints='INTEGER,MIN=0,MAX=6', meta='0=bipv,1=>3.5in,2=2.5-3.5in,3=1.5-2.5in,4=0.5-1.5in,5=<0.5in,6=ground/rack')
-    cec_height: float = INPUT(label='Array mounting height', type='NUMBER', group='pvsamv1', required='module_model=1', constraints='INTEGER,MIN=0,MAX=1', meta='0=one story,1=two story')
-    cec_mounting_config: float = INPUT(label='Mounting configuration', type='NUMBER', group='pvsamv1', required='module_model=1&cec_temp_corr_mode=1', constraints='INTEGER,MIN=0,MAX=3', meta='0=rack,1=flush,2=integrated,3=gap')
-    cec_heat_transfer: float = INPUT(label='Heat transfer dimensions', type='NUMBER', group='pvsamv1', required='module_model=1&cec_temp_corr_mode=1', constraints='INTEGER,MIN=0,MAX=1', meta='0=module,1=array')
-    cec_mounting_orientation: float = INPUT(label='Mounting structure orientation', type='NUMBER', group='pvsamv1', required='module_model=1&cec_temp_corr_mode=1', constraints='INTEGER,MIN=0,MAX=2', meta='0=do not impede flow,1=vertical supports,2=horizontal supports')
-    cec_gap_spacing: float = INPUT(label='Gap spacing', units='m', type='NUMBER', group='pvsamv1', required='module_model=1&cec_temp_corr_mode=1')
-    cec_module_width: float = INPUT(label='Module width', units='m', type='NUMBER', group='pvsamv1', required='module_model=1&cec_temp_corr_mode=1')
-    cec_module_length: float = INPUT(label='Module height', units='m', type='NUMBER', group='pvsamv1', required='module_model=1&cec_temp_corr_mode=1')
-    cec_array_rows: float = INPUT(label='Rows of modules in array', type='NUMBER', group='pvsamv1', required='module_model=1&cec_temp_corr_mode=1')
-    cec_array_cols: float = INPUT(label='Columns of modules in array', type='NUMBER', group='pvsamv1', required='module_model=1&cec_temp_corr_mode=1')
-    cec_backside_temp: float = INPUT(label='Module backside temperature', units='C', type='NUMBER', group='pvsamv1', required='module_model=1&cec_temp_corr_mode=1', constraints='POSITIVE')
-    _6par_celltech: float = INPUT(name='6par_celltech', label='Solar cell technology type', type='NUMBER', group='pvsamv1', required='module_model=2', constraints='INTEGER,MIN=0,MAX=5', meta='monoSi=0,multiSi=1,CdTe=2,CIS=3,CIGS=4,Amorphous=5')
-    _6par_vmp: float = INPUT(name='6par_vmp', label='Maximum power point voltage', units='V', type='NUMBER', group='pvsamv1', required='module_model=2')
-    _6par_imp: float = INPUT(name='6par_imp', label='Imp', units='A', type='NUMBER', group='pvsamv1', required='module_model=2')
-    _6par_voc: float = INPUT(name='6par_voc', label='Voc', units='V', type='NUMBER', group='pvsamv1', required='module_model=2')
-    _6par_isc: float = INPUT(name='6par_isc', label='Isc', units='A', type='NUMBER', group='pvsamv1', required='module_model=2')
-    _6par_bvoc: float = INPUT(name='6par_bvoc', label='Open circuit voltage temperature coefficient', units='V/C', type='NUMBER', group='pvsamv1', required='module_model=2')
-    _6par_aisc: float = INPUT(name='6par_aisc', label='Short circuit current temperature coefficient', units='A/C', type='NUMBER', group='pvsamv1', required='module_model=2')
-    _6par_gpmp: float = INPUT(name='6par_gpmp', label='Maximum power point temperature coefficient', units='%/C', type='NUMBER', group='pvsamv1', required='module_model=2')
-    _6par_nser: float = INPUT(name='6par_nser', label='Nseries', type='NUMBER', group='pvsamv1', required='module_model=2', constraints='INTEGER,POSITIVE')
-    _6par_area: float = INPUT(name='6par_area', label='Module area', units='m2', type='NUMBER', group='pvsamv1', required='module_model=2')
-    _6par_tnoct: float = INPUT(name='6par_tnoct', label='Nominal operating cell temperature', units='C', type='NUMBER', group='pvsamv1', required='module_model=2')
-    _6par_standoff: float = INPUT(name='6par_standoff', label='Standoff mode', type='NUMBER', group='pvsamv1', required='module_model=2', constraints='INTEGER,MIN=0,MAX=6', meta='0=bipv,1=>3.5in,2=2.5-3.5in,3=1.5-2.5in,4=0.5-1.5in,5=<0.5in,6=ground/rack')
-    _6par_mounting: float = INPUT(name='6par_mounting', label='Array mounting height', type='NUMBER', group='pvsamv1', required='module_model=2', constraints='INTEGER,MIN=0,MAX=1', meta='0=one story,1=two story')
-    _6par_is_bifacial: float = INPUT(name='6par_is_bifacial', label='Modules are bifacial', units='0/1', type='NUMBER', group='pvsamv1', required='module_model=2')
-    _6par_bifacial_transmission_factor: float = INPUT(name='6par_bifacial_transmission_factor', label='Bifacial transmission factor', units='0-1', type='NUMBER', group='pvsamv1', required='module_model=2')
-    _6par_bifaciality: float = INPUT(name='6par_bifaciality', label='Bifaciality factor', units='%', type='NUMBER', group='pvsamv1', required='module_model=2')
-    _6par_bifacial_ground_clearance_height: float = INPUT(name='6par_bifacial_ground_clearance_height', label='Module ground clearance height', units='m', type='NUMBER', group='pvsamv1', required='module_model=2')
-    snl_module_structure: float = INPUT(label='Module and mounting structure configuration', type='NUMBER', group='pvsamv1', required='module_model=3', constraints='INTEGER,MIN=0,MAX=6', meta='0=Use Database Values,1=glass/cell/polymer sheet - open rack,2=glass/cell/glass - open rack,3=polymer/thin film/steel - open rack,4=Insulated back building-integrated PV,5=close roof mount,6=user-defined')
-    snl_a: float = INPUT(label='Temperature coefficient a', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_b: float = INPUT(label='Temperature coefficient b', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_dtc: float = INPUT(label='Temperature coefficient dT', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_ref_a: float = INPUT(label='User-specified a', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_ref_b: float = INPUT(label='User-specified b', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_ref_dT: float = INPUT(label='User-specified dT', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_fd: float = INPUT(label='Diffuse fraction', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_a0: float = INPUT(label='Air mass polynomial coeff 0', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_a1: float = INPUT(label='Air mass polynomial coeff 1', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_a2: float = INPUT(label='Air mass polynomial coeff 2', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_a3: float = INPUT(label='Air mass polynomial coeff 3', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_a4: float = INPUT(label='Air mass polynomial coeff 4', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_aimp: float = INPUT(label='Max power point current temperature coefficient', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_aisc: float = INPUT(label='Short circuit current temperature coefficient', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_area: float = INPUT(label='Module area', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_b0: float = INPUT(label='Incidence angle modifier polynomial coeff 0', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_b1: float = INPUT(label='Incidence angle modifier polynomial coeff 1', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_b2: float = INPUT(label='Incidence angle modifier polynomial coeff 2', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_b3: float = INPUT(label='Incidence angle modifier polynomial coeff 3', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_b4: float = INPUT(label='Incidence angle modifier polynomial coeff 4', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_b5: float = INPUT(label='Incidence angle modifier polynomial coeff 5', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_bvmpo: float = INPUT(label='Max power point voltage temperature coefficient', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_bvoco: float = INPUT(label='Open circuit voltage temperature coefficient', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_c0: float = INPUT(label='C0', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_c1: float = INPUT(label='C1', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_c2: float = INPUT(label='C2', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_c3: float = INPUT(label='C3', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_c4: float = INPUT(label='C4', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_c5: float = INPUT(label='C5', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_c6: float = INPUT(label='C6', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_c7: float = INPUT(label='C7', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_impo: float = INPUT(label='Max power point current', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_isco: float = INPUT(label='Short circuit current', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_ixo: float = INPUT(label='Ix midpoint current', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_ixxo: float = INPUT(label='Ixx midpoint current', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_mbvmp: float = INPUT(label='Irradiance dependence of Vmp temperature coefficient', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_mbvoc: float = INPUT(label='Irradiance dependence of Voc temperature coefficient', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_n: float = INPUT(label='Diode factor', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_series_cells: float = INPUT(label='Number of cells in series', type='NUMBER', group='pvsamv1', required='module_model=3', constraints='INTEGER')
-    snl_vmpo: float = INPUT(label='Max power point voltage', type='NUMBER', group='pvsamv1', required='module_model=3')
-    snl_voco: float = INPUT(label='Open circuit voltage', type='NUMBER', group='pvsamv1', required='module_model=3')
-    sd11par_nser: float = INPUT(label='Nseries', type='NUMBER', group='pvsamv1', required='module_model=4', constraints='INTEGER,POSITIVE')
-    sd11par_area: float = INPUT(label='Module area', units='m2', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_AMa0: float = INPUT(label='Air mass modifier coeff 0', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_AMa1: float = INPUT(label='Air mass modifier coeff 1', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_AMa2: float = INPUT(label='Air mass modifier coeff 2', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_AMa3: float = INPUT(label='Air mass modifier coeff 3', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_AMa4: float = INPUT(label='Air mass modifier coeff 4', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_glass: float = INPUT(label='Module cover glass type', type='NUMBER', group='pvsamv1', required='module_model=4', meta='0=normal,1=AR glass')
-    sd11par_tnoct: float = INPUT(label='Nominal operating cell temperature', units='C', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_standoff: float = INPUT(label='Standoff mode', type='NUMBER', group='pvsamv1', required='module_model=4', constraints='INTEGER,MIN=0,MAX=6', meta='0=bipv,1=>3.5in,2=2.5-3.5in,3=1.5-2.5in,4=0.5-1.5in,5=<0.5in,6=ground/rack')
-    sd11par_mounting: float = INPUT(label='Array mounting height', type='NUMBER', group='pvsamv1', required='module_model=4', constraints='INTEGER,MIN=0,MAX=1', meta='0=one story,1=two story')
-    sd11par_Vmp0: float = INPUT(label='Vmp (STC)', units='V', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_Imp0: float = INPUT(label='Imp (STC)', units='A', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_Voc0: float = INPUT(label='Voc (STC)', units='V', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_Isc0: float = INPUT(label='Isc (STC)', units='A', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_alphaIsc: float = INPUT(label='Short curcuit current temperature coefficient', units='A/C', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_n: float = INPUT(label='Diode nonideality factor', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_Il: float = INPUT(label='Light current', units='A', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_Io: float = INPUT(label='Saturation current', units='A', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_Egref: float = INPUT(label='Bandgap voltage', units='eV', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_d1: float = INPUT(label='Rs fit parameter 1', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_d2: float = INPUT(label='Rs fit parameter 2', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_d3: float = INPUT(label='Rs fit parameter 3', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_c1: float = INPUT(label='Rsh fit parameter 1', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_c2: float = INPUT(label='Rsh fit parameter 2', type='NUMBER', group='pvsamv1', required='module_model=4')
-    sd11par_c3: float = INPUT(label='Rsh fit parameter 3', type='NUMBER', group='pvsamv1', required='module_model=4')
-    mlm_N_series: float = INPUT(label='Number of cells in series', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_N_parallel: float = INPUT(label='Number of cells in parallel', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_N_diodes: float = INPUT(label='Number of diodes', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_Width: float = INPUT(label='Module width (short side)', units='m', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_Length: float = INPUT(label='Module length (long side)', units='m', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_V_mp_ref: float = INPUT(label='V_mp at STC', units='V', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_I_mp_ref: float = INPUT(label='I_mp at STC', units='A', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_V_oc_ref: float = INPUT(label='V_oc at STC', units='V', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_I_sc_ref: float = INPUT(label='I_sc at STC', units='A', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_S_ref: float = INPUT(label='Reference irradiance (Typically 1000W/m²)', units='W/m²', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_T_ref: float = INPUT(label='Reference temperature (Typically 25°C)', units='°C', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_R_shref: float = INPUT(label='Reference shunt resistance', units='V/A', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_R_sh0: float = INPUT(label='Rsh,0', units='V/A', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_R_shexp: float = INPUT(label='Rsh exponential coefficient', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_R_s: float = INPUT(label='Series resistance', units='V/A', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_alpha_isc: float = INPUT(label='Temperature coefficient for I_sc', units='A/K', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_beta_voc_spec: float = INPUT(label='Temperature coefficient for V_oc', units='V/K', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_E_g: float = INPUT(label='Reference bandgap energy', units='eV', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_n_0: float = INPUT(label='Gamma', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_mu_n: float = INPUT(label='Temperature coefficient of gamma', units='1/K', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_D2MuTau: float = INPUT(label='Coefficient for recombination losses', units='V', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_T_mode: float = INPUT(label='Cell temperature model mode', units='-', type='NUMBER', group='pvsamv1', required='module_model=5', meta='1: NOCT')
-    mlm_T_c_no_tnoct: float = INPUT(label='NOCT cell temperature', units='°C', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_T_c_no_mounting: float = INPUT(label='NOCT Array mounting height', units='-', type='NUMBER', group='pvsamv1', required='module_model=5', meta='0=one story,1=two story')
-    mlm_T_c_no_standoff: float = INPUT(label='NOCT standoff mode', units='-', type='NUMBER', group='pvsamv1', required='module_model=5', meta='0=bipv,1=>3.5in,2=2.5-3.5in,3=1.5-2.5in,4=0.5-1.5in,5=<0.5in,6=ground/rack')
-    mlm_T_c_fa_alpha: float = INPUT(label='Extended Faiman model absorptivity', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_T_c_fa_U0: float = INPUT(label='Extended Faiman model U_0', units='W/m²K', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_T_c_fa_U1: float = INPUT(label='Extended Faiman model U_1', units='W/m³sK', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_AM_mode: float = INPUT(label='Air-mass modifier mode', units='-', type='NUMBER', group='pvsamv1', required='module_model=5', meta='1: Do not consider AM effects, 2: Use Sandia polynomial [corr=f(AM)], 3: Use standard coefficients from DeSoto model [corr=f(AM)], 4: Use First Solar polynomial [corr=f(AM, p_wat)]')
-    mlm_AM_c_sa0: float = INPUT(label='Coefficient 0 for Sandia Air Mass Modifier', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_AM_c_sa1: float = INPUT(label='Coefficient 1 for Sandia Air Mass Modifier', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_AM_c_sa2: float = INPUT(label='Coefficient 2 for Sandia Air Mass Modifier', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_AM_c_sa3: float = INPUT(label='Coefficient 3 for Sandia Air Mass Modifier', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_AM_c_sa4: float = INPUT(label='Coefficient 4 for Sandia Air Mass Modifier', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_AM_c_lp0: float = INPUT(label='Coefficient 0 for Lee/Panchula Air Mass Modifier', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_AM_c_lp1: float = INPUT(label='Coefficient 1 for Lee/Panchula Air Mass Modifier', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_AM_c_lp2: float = INPUT(label='Coefficient 2 for Lee/Panchula Air Mass Modifier', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_AM_c_lp3: float = INPUT(label='Coefficient 3 for Lee/Panchula Air Mass Modifier', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_AM_c_lp4: float = INPUT(label='Coefficient 4 for Lee/Panchula Air Mass Modifier', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_AM_c_lp5: float = INPUT(label='Coefficient 5 for Lee/Panchula Air Mass Modifier', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_IAM_mode: float = INPUT(label='Incidence Angle Modifier mode', units='-', type='NUMBER', group='pvsamv1', required='module_model=5', meta='1: Use ASHRAE formula, 2: Use Sandia polynomial, 3: Use cubic spline with user-supplied data')
-    mlm_IAM_c_as: float = INPUT(label='ASHRAE incidence modifier coefficient b_0', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_IAM_c_sa0: float = INPUT(label='Sandia IAM coefficient 0', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_IAM_c_sa1: float = INPUT(label='Sandia IAM coefficient 1', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_IAM_c_sa2: float = INPUT(label='Sandia IAM coefficient 2', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_IAM_c_sa3: float = INPUT(label='Sandia IAM coefficient 3', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_IAM_c_sa4: float = INPUT(label='Sandia IAM coefficient 4', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_IAM_c_sa5: float = INPUT(label='Sandia IAM coefficient 5', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    mlm_IAM_c_cs_incAngle: Array = INPUT(label='Spline IAM - Incidence angles', units='deg', type='ARRAY', group='pvsamv1', required='module_model=5')
-    mlm_IAM_c_cs_iamValue: Array = INPUT(label='Spline IAM - IAM values', units='-', type='ARRAY', group='pvsamv1', required='module_model=5')
-    mlm_groundRelfectionFraction: float = INPUT(label='Ground reflection fraction', units='-', type='NUMBER', group='pvsamv1', required='module_model=5')
-    inverter_model: float = INPUT(label='Inverter model specifier', type='NUMBER', group='pvsamv1', required='*', constraints='INTEGER,MIN=0,MAX=4', meta='0=cec,1=datasheet,2=partload,3=coefficientgenerator,4=PVYield')
-    mppt_low_inverter: float = INPUT(label='Minimum inverter MPPT voltage window', units='Vdc', type='NUMBER', group='pvsamv1', required='?=0')
-    mppt_hi_inverter: float = INPUT(label='Maximum inverter MPPT voltage window', units='Vdc', type='NUMBER', group='pvsamv1', required='?=0')
-    inv_num_mppt: float = INPUT(label='Number of MPPT inputs', type='NUMBER', group='pvsamv1', required='?=1', constraints='INTEGER,MIN=0,MAX=4')
-    inv_snl_c0: float = INPUT(label='Curvature between AC power and DC power at ref', units='1/W', type='NUMBER', group='pvsamv1', required='inverter_model=0')
-    inv_snl_c1: float = INPUT(label='Coefficient of Pdco variation with DC input voltage', units='1/V', type='NUMBER', group='pvsamv1', required='inverter_model=0')
-    inv_snl_c2: float = INPUT(label='Coefficient of Pso variation with DC input voltage', units='1/V', type='NUMBER', group='pvsamv1', required='inverter_model=0')
-    inv_snl_c3: float = INPUT(label='Coefficient of Co variation with DC input voltage', units='1/V', type='NUMBER', group='pvsamv1', required='inverter_model=0')
-    inv_snl_paco: float = INPUT(label='AC maximum power rating', units='Wac', type='NUMBER', group='pvsamv1', required='inverter_model=0')
-    inv_snl_pdco: float = INPUT(label='DC input power at which AC power rating is achieved', units='Wdc', type='NUMBER', group='pvsamv1', required='inverter_model=0')
-    inv_snl_pnt: float = INPUT(label='AC power consumed by inverter at night', units='Wac', type='NUMBER', group='pvsamv1', required='inverter_model=0')
-    inv_snl_pso: float = INPUT(label='DC power required to enable the inversion process', units='Wdc', type='NUMBER', group='pvsamv1', required='inverter_model=0')
-    inv_snl_vdco: float = INPUT(label='DC input voltage for the rated AC power rating', units='Vdc', type='NUMBER', group='pvsamv1', required='inverter_model=0')
-    inv_snl_vdcmax: float = INPUT(label='Maximum DC input operating voltage', units='Vdc', type='NUMBER', group='pvsamv1', required='inverter_model=0')
-    inv_cec_cg_c0: float = INPUT(label='Curvature between AC power and DC power at ref', units='1/W', type='NUMBER', group='pvsamv1', required='inverter_model=3')
-    inv_cec_cg_c1: float = INPUT(label='Coefficient of Pdco variation with DC input voltage', units='1/V', type='NUMBER', group='pvsamv1', required='inverter_model=3')
-    inv_cec_cg_c2: float = INPUT(label='Coefficient of Pso variation with DC input voltage', units='1/V', type='NUMBER', group='pvsamv1', required='inverter_model=3')
-    inv_cec_cg_c3: float = INPUT(label='Coefficient of Co variation with DC input voltage', units='1/V', type='NUMBER', group='pvsamv1', required='inverter_model=3')
-    inv_cec_cg_paco: float = INPUT(label='AC maximum power rating', units='Wac', type='NUMBER', group='pvsamv1', required='inverter_model=3')
-    inv_cec_cg_pdco: float = INPUT(label='DC input power at which AC power rating is achieved', units='Wdc', type='NUMBER', group='pvsamv1', required='inverter_model=3')
-    inv_cec_cg_pnt: float = INPUT(label='AC power consumed by inverter at night', units='Wac', type='NUMBER', group='pvsamv1', required='inverter_model=3')
-    inv_cec_cg_psco: float = INPUT(label='DC power required to enable the inversion process', units='Wdc', type='NUMBER', group='pvsamv1', required='inverter_model=3')
-    inv_cec_cg_vdco: float = INPUT(label='DC input voltage for the rated AC power rating', units='Vdc', type='NUMBER', group='pvsamv1', required='inverter_model=3')
-    inv_cec_cg_vdcmax: float = INPUT(label='Maximum DC input operating voltage', units='Vdc', type='NUMBER', group='pvsamv1', required='inverter_model=3')
-    inv_ds_paco: float = INPUT(label='AC maximum power rating', units='Wac', type='NUMBER', group='pvsamv1', required='inverter_model=1')
-    inv_ds_eff: float = INPUT(label='Weighted or Peak or Nominal Efficiency', units='Wdc', type='NUMBER', group='pvsamv1', required='inverter_model=1')
-    inv_ds_pnt: float = INPUT(label='AC power consumed by inverter at night', units='Wac', type='NUMBER', group='pvsamv1', required='inverter_model=1')
-    inv_ds_pso: float = INPUT(label='DC power required to enable the inversion process', units='Wdc', type='NUMBER', group='pvsamv1', required='inverter_model=1')
-    inv_ds_vdco: float = INPUT(label='DC input voltage for the rated AC power rating', units='Vdc', type='NUMBER', group='pvsamv1', required='inverter_model=1')
-    inv_ds_vdcmax: float = INPUT(label='Maximum DC input operating voltage', units='Vdc', type='NUMBER', group='pvsamv1', required='inverter_model=1')
-    inv_pd_paco: float = INPUT(label='AC maximum power rating', units='Wac', type='NUMBER', group='pvsamv1', required='inverter_model=2')
-    inv_pd_pdco: float = INPUT(label='DC input power at which AC power rating is achieved', units='Wdc', type='NUMBER', group='pvsamv1', required='inverter_model=2')
-    inv_pd_partload: Array = INPUT(label='Partload curve partload values', units='%', type='ARRAY', group='pvsamv1', required='inverter_model=2')
-    inv_pd_efficiency: Array = INPUT(label='Partload curve efficiency values', units='%', type='ARRAY', group='pvsamv1', required='inverter_model=2')
-    inv_pd_pnt: float = INPUT(label='AC power consumed by inverter at night', units='Wac', type='NUMBER', group='pvsamv1', required='inverter_model=2')
-    inv_pd_vdco: float = INPUT(label='DC input voltage for the rated AC power rating', units='Vdc', type='NUMBER', group='pvsamv1', required='inverter_model=2')
-    inv_pd_vdcmax: float = INPUT(label='Maximum DC input operating voltage', units='Vdc', type='NUMBER', group='pvsamv1', required='inverter_model=2')
-    ond_PNomConv: float = INPUT(units='W', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_PMaxOUT: float = INPUT(units='W', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_VOutConv: float = INPUT(units='W', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_VMppMin: float = INPUT(units='V', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_VMPPMax: float = INPUT(units='V', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_VAbsMax: float = INPUT(units='V', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_PSeuil: float = INPUT(units='W', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_ModeOper: str = INPUT(units='-', type='STRING', group='pvsamv1', required='inverter_model=4')
-    ond_CompPMax: str = INPUT(units='-', type='STRING', group='pvsamv1', required='inverter_model=4')
-    ond_CompVMax: str = INPUT(units='-', type='STRING', group='pvsamv1', required='inverter_model=4')
-    ond_ModeAffEnum: str = INPUT(units='-', type='STRING', group='pvsamv1', required='inverter_model=4')
-    ond_PNomDC: float = INPUT(units='W', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_PMaxDC: float = INPUT(units='W', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_IMaxDC: float = INPUT(units='A', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_INomDC: float = INPUT(units='A', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_INomAC: float = INPUT(units='A', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_IMaxAC: float = INPUT(units='A', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_TPNom: float = INPUT(units='°C', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_TPMax: float = INPUT(units='°C', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_TPLim1: float = INPUT(units='°C', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_TPLimAbs: float = INPUT(units='°C', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_PLim1: float = INPUT(units='W', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_PLimAbs: float = INPUT(units='W', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_VNomEff: Array = INPUT(units='V', type='ARRAY', group='pvsamv1', required='inverter_model=4')
-    ond_NbInputs: float = INPUT(units='-', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_NbMPPT: float = INPUT(units='-', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_Aux_Loss: float = INPUT(units='W', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_Night_Loss: float = INPUT(units='W', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_lossRDc: float = INPUT(units='V/A', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_lossRAc: float = INPUT(units='A', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_effCurve_elements: float = INPUT(units='-', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_effCurve_Pdc: Matrix = INPUT(units='W', type='MATRIX', group='pvsamv1', required='inverter_model=4')
-    ond_effCurve_Pac: Matrix = INPUT(units='W', type='MATRIX', group='pvsamv1', required='inverter_model=4')
-    ond_effCurve_eta: Matrix = INPUT(units='-', type='MATRIX', group='pvsamv1', required='inverter_model=4')
-    ond_doAllowOverpower: float = INPUT(units='-', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    ond_doUseTemperatureLimit: float = INPUT(units='-', type='NUMBER', group='pvsamv1', required='inverter_model=4')
-    inv_tdc_cec_db: Matrix = INPUT(label='Temperature derate curves for CEC Database', units='Vdc', type='MATRIX', group='pvsamv1', required='inverter_model=0')
-    inv_tdc_cec_cg: Matrix = INPUT(label='Temperature derate curves for CEC Coef Gen', units='Vdc', type='MATRIX', group='pvsamv1', required='inverter_model=3')
-    inv_tdc_ds: Matrix = INPUT(label='Temperature derate curves for Inv Datasheet', units='Vdc', type='MATRIX', group='pvsamv1', required='inverter_model=1')
-    inv_tdc_plc: Matrix = INPUT(label='Temperature derate curves for Part Load Curve', units='C', type='MATRIX', group='pvsamv1', required='inverter_model=2')
-    en_batt: float = INPUT(label='Enable battery storage model', units='0/1', type='NUMBER', group='Battery', required='?=0')
-    load: Array = INPUT(label='Electricity load (year 1)', units='kW', type='ARRAY', group='Battery', required='?')
+    solar_resource_file: str = INPUT(label='Weather file in TMY2, TMY3, EPW, or SAM CSV', type='STRING', group='Solar Resource', required='?')
+    solar_resource_data: Table = INPUT(label='Weather data', type='TABLE', group='Solar Resource', required='?', meta='lat,lon,tz,elev,year,month,hour,minute,gh,dn,df,poa,tdry,twet,tdew,rhum,pres,Snow,alb,aod,wspd,wdir')
+    transformer_no_load_loss: float = INPUT(label='Power transformer no load loss', units='%', type='NUMBER', group='Losses', required='?=0')
+    transformer_load_loss: float = INPUT(label='Power transformer load loss', units='%', type='NUMBER', group='Losses', required='?=0')
+    system_use_lifetime_output: float = INPUT(label='PV lifetime simulation', units='0/1', type='NUMBER', group='Lifetime', required='?=0', constraints='INTEGER,MIN=0,MAX=1')
+    analysis_period: float = INPUT(label='Lifetime analysis period', units='years', type='NUMBER', group='Lifetime', required='system_use_lifetime_output=1')
+    dc_degradation: Array = INPUT(label='Annual DC degradation', units='%/year', type='ARRAY', group='Lifetime', required='system_use_lifetime_output=1')
+    dc_degrade_factor: Final[Array] = OUTPUT(label='Annual DC degradation factor', type='ARRAY', group='Lifetime', required='system_use_lifetime_output=1')
+    en_dc_lifetime_losses: float = INPUT(label='Enable lifetime daily DC losses', units='0/1', type='NUMBER', group='Lifetime', required='?=0', constraints='INTEGER,MIN=0,MAX=1')
+    dc_lifetime_losses: Array = INPUT(label='Lifetime daily DC losses', units='%', type='ARRAY', group='Lifetime', required='en_dc_lifetime_losses=1')
+    en_ac_lifetime_losses: float = INPUT(label='Enable lifetime daily AC losses', units='0/1', type='NUMBER', group='Lifetime', required='?=0', constraints='INTEGER,MIN=0,MAX=1')
+    ac_lifetime_losses: Array = INPUT(label='Lifetime daily AC losses', units='%', type='ARRAY', group='Lifetime', required='en_ac_lifetime_losses=1')
+    save_full_lifetime_variables: float = INPUT(label='Save and display vars for full lifetime', units='0/1', type='NUMBER', group='Lifetime', required='system_use_lifetime_output=1', constraints='INTEGER,MIN=0,MAX=1')
+    en_snow_model: float = INPUT(label='Toggle snow loss estimation', units='0/1', type='NUMBER', group='Losses', required='?=0', constraints='BOOLEAN')
+    system_capacity: float = INPUT(label='DC Nameplate capacity', units='kWdc', type='NUMBER', group='System Design', required='*')
+    use_wf_albedo: float = INPUT(label='Use albedo in weather file if provided', units='0/1', type='NUMBER', group='Solar Resource', required='?=1', constraints='BOOLEAN', meta='0=user-specified,1=weatherfile')
+    albedo: Array = INPUT(label='User specified ground albedo', units='0..1', type='ARRAY', group='Solar Resource', required='*', constraints='LENGTH=12')
+    irrad_mode: float = INPUT(label='Irradiance input translation mode', type='NUMBER', group='Solar Resource', required='?=0', constraints='INTEGER,MIN=0,MAX=4', meta='0=beam&diffuse,1=total&beam,2=total&diffuse,3=poa_reference,4=poa_pyranometer')
+    sky_model: float = INPUT(label='Diffuse sky model', type='NUMBER', group='Solar Resource', required='?=2', constraints='INTEGER,MIN=0,MAX=2', meta='0=isotropic,1=hkdr,2=perez')
+    inverter_count: float = INPUT(label='Number of inverters', type='NUMBER', group='System Design', required='*', constraints='INTEGER,POSITIVE')
+    enable_mismatch_vmax_calc: float = INPUT(label='Enable mismatched subarray Vmax calculation', type='NUMBER', group='System Design', required='?=0', constraints='BOOLEAN')
+    subarray1_nstrings: float = INPUT(label='Sub-array 1 Number of parallel strings', type='NUMBER', group='System Design', constraints='INTEGER')
+    subarray1_modules_per_string: float = INPUT(label='Sub-array 1 Modules per string', type='NUMBER', group='System Design', required='*', constraints='INTEGER,POSITIVE')
+    subarray1_mppt_input: float = INPUT(label='Sub-array 1 Inverter MPPT input number', type='NUMBER', group='System Design', required='?=1', constraints='INTEGER,POSITIVE')
+    subarray1_tilt: float = INPUT(label='Sub-array 1 Tilt', units='deg', type='NUMBER', group='System Design', constraints='MIN=0,MAX=90', meta='0=horizontal,90=vertical')
+    subarray1_tilt_eq_lat: float = INPUT(label='Sub-array 1 Tilt=latitude override', units='0/1', type='NUMBER', group='System Design', constraints='BOOLEAN', meta='0=false,1=override')
+    subarray1_azimuth: float = INPUT(label='Sub-array 1 Azimuth', units='deg', type='NUMBER', group='System Design', constraints='MIN=0,MAX=359.9', meta='0=N,90=E,180=S,270=W')
+    subarray1_track_mode: float = INPUT(label='Sub-array 1 Tracking mode', type='NUMBER', group='System Design', required='*', constraints='INTEGER,MIN=0,MAX=4', meta='0=fixed,1=1axis,2=2axis,3=azi,4=monthly')
+    subarray1_rotlim: float = INPUT(label='Sub-array 1 Tracker rotation limit', units='deg', type='NUMBER', group='System Design', required='?=45', constraints='MIN=0,MAX=85')
+    subarray1_shade_mode: float = INPUT(label='Sub-array 1 shading mode (fixed tilt or 1x tracking)', units='0/1/2', type='NUMBER', group='Shading', required='*', constraints='INTEGER,MIN=0,MAX=2', meta='0=none,1=standard(non-linear),2=thin film(linear)')
+    subarray1_gcr: float = INPUT(label='Sub-array 1 Ground coverage ratio', units='0..1', type='NUMBER', group='System Design', required='?=0.3', constraints='MIN=0.01,MAX=0.99')
+    subarray1_monthly_tilt: Array = INPUT(label='Sub-array 1 monthly tilt input', units='deg', type='ARRAY', group='System Design', required='subarray1_track_mode=4', constraints='LENGTH=12')
+    subarray1_shading_string_option: float = INPUT(name='subarray1_shading:string_option', label='Sub-array 1 shading string option', type='NUMBER', group='Shading', required='?=-1', constraints='INTEGER,MIN=-1,MAX=4', meta='0=shadingdb,1=shadingdb_notc,2=average,3=maximum,4=minimum')
+    subarray1_shading_timestep: Matrix = INPUT(name='subarray1_shading:timestep', label='Sub-array 1 timestep beam shading losses', units='%', type='MATRIX', group='Shading', required='?')
+    subarray1_shading_mxh: Matrix = INPUT(name='subarray1_shading:mxh', label='Sub-array 1 Month x Hour beam shading losses', units='%', type='MATRIX', group='Shading', required='?')
+    subarray1_shading_azal: Matrix = INPUT(name='subarray1_shading:azal', label='Sub-array 1 Azimuth x altitude beam shading losses', units='%', type='MATRIX', group='Shading', required='?')
+    subarray1_shading_diff: float = INPUT(name='subarray1_shading:diff', label='Sub-array 1 Diffuse shading loss', units='%', type='NUMBER', group='Shading', required='?')
+    subarray1_soiling: Array = INPUT(label='Sub-array 1 Monthly soiling loss', units='%', type='ARRAY', group='Losses', required='*', constraints='LENGTH=12')
+    subarray1_rear_irradiance_loss: float = INPUT(label='Sub-array 1 rear irradiance loss', units='%', type='NUMBER', group='Losses', required='*', constraints='MIN=0,MAX=100')
+    subarray1_mismatch_loss: float = INPUT(label='Sub-array 1 DC mismatch loss', units='%', type='NUMBER', group='Losses', required='*', constraints='MIN=0,MAX=100')
+    subarray1_diodeconn_loss: float = INPUT(label='Sub-array 1 DC diodes and connections loss', units='%', type='NUMBER', group='Losses', required='*', constraints='MIN=0,MAX=100')
+    subarray1_dcwiring_loss: float = INPUT(label='Sub-array 1 DC wiring loss', units='%', type='NUMBER', group='Losses', required='*', constraints='MIN=0,MAX=100')
+    subarray1_tracking_loss: float = INPUT(label='Sub-array 1 DC tracking error loss', units='%', type='NUMBER', group='Losses', required='*', constraints='MIN=0,MAX=100')
+    subarray1_nameplate_loss: float = INPUT(label='Sub-array 1 DC nameplate loss', units='%', type='NUMBER', group='Losses', required='*', constraints='MIN=-5,MAX=100')
+    subarray2_rear_irradiance_loss: float = INPUT(label='Sub-array 2 rear irradiance loss', units='%', type='NUMBER', group='Losses', required='subarray2_enable=1', constraints='MIN=0,MAX=100')
+    subarray2_mismatch_loss: float = INPUT(label='Sub-array 2 DC mismatch loss', units='%', type='NUMBER', group='Losses', required='?', constraints='MIN=0,MAX=100')
+    subarray2_diodeconn_loss: float = INPUT(label='Sub-array 2 DC diodes and connections loss', units='%', type='NUMBER', group='Losses', required='?', constraints='MIN=0,MAX=100')
+    subarray2_dcwiring_loss: float = INPUT(label='Sub-array 2 DC wiring loss', units='%', type='NUMBER', group='Losses', required='?', constraints='MIN=0,MAX=100')
+    subarray2_tracking_loss: float = INPUT(label='Sub-array 2 DC tracking error loss', units='%', type='NUMBER', group='Losses', required='?', constraints='MIN=0,MAX=100')
+    subarray2_nameplate_loss: float = INPUT(label='Sub-array 2 DC nameplate loss', units='%', type='NUMBER', group='Losses', required='?', constraints='MIN=-5,MAX=100')
+    subarray3_rear_irradiance_loss: float = INPUT(label='Sub-array 3 rear irradiance loss', units='%', type='NUMBER', group='Losses', required='subarray3_enable=1', constraints='MIN=0,MAX=100')
+    subarray3_mismatch_loss: float = INPUT(label='Sub-array 3 DC mismatch loss', units='%', type='NUMBER', group='Losses', required='?', constraints='MIN=0,MAX=100')
+    subarray3_diodeconn_loss: float = INPUT(label='Sub-array 3 DC diodes and connections loss', units='%', type='NUMBER', group='Losses', required='?', constraints='MIN=0,MAX=100')
+    subarray3_dcwiring_loss: float = INPUT(label='Sub-array 3 DC wiring loss', units='%', type='NUMBER', group='Losses', required='?', constraints='MIN=0,MAX=100')
+    subarray3_tracking_loss: float = INPUT(label='Sub-array 3 DC tracking error loss', units='%', type='NUMBER', group='Losses', required='?', constraints='MIN=0,MAX=100')
+    subarray3_nameplate_loss: float = INPUT(label='Sub-array 3 DC nameplate loss', units='%', type='NUMBER', group='Losses', required='?', constraints='MIN=-5,MAX=100')
+    subarray4_rear_irradiance_loss: float = INPUT(label='Sub-array 4 rear irradiance loss', units='%', type='NUMBER', group='Losses', required='subarray4_enable=1', constraints='MIN=0,MAX=100')
+    subarray4_mismatch_loss: float = INPUT(label='Sub-array 4 DC mismatch loss', units='%', type='NUMBER', group='Losses', required='?', constraints='MIN=0,MAX=100')
+    subarray4_diodeconn_loss: float = INPUT(label='Sub-array 4 DC diodes and connections loss', units='%', type='NUMBER', group='Losses', required='?', constraints='MIN=0,MAX=100', meta='?')
+    subarray4_dcwiring_loss: float = INPUT(label='Sub-array 4 DC wiring loss', units='%', type='NUMBER', group='Losses', required='?', constraints='MIN=0,MAX=100')
+    subarray4_tracking_loss: float = INPUT(label='Sub-array 4 DC tracking error loss', units='%', type='NUMBER', group='Losses', required='?', constraints='MIN=0,MAX=100')
+    subarray4_nameplate_loss: float = INPUT(label='Sub-array 4 DC nameplate loss', units='%', type='NUMBER', group='Losses', required='?', constraints='MIN=-5,MAX=100')
+    dcoptimizer_loss: float = INPUT(label='DC power optimizer loss', units='%', type='NUMBER', group='Losses', required='*', constraints='MIN=0,MAX=100')
+    acwiring_loss: float = INPUT(label='AC wiring loss', units='%', type='NUMBER', group='Losses', required='*', constraints='MIN=0,MAX=100')
+    transmission_loss: float = INPUT(label='Transmission loss', units='%', type='NUMBER', group='Losses', required='*', constraints='MIN=0,MAX=100')
+    subarray1_mod_orient: float = INPUT(label='Sub-array 1 Module orientation', units='0/1', type='NUMBER', group='Layout', required='*', constraints='INTEGER,MIN=0,MAX=1', meta='0=portrait,1=landscape')
+    subarray1_nmodx: float = INPUT(label='Sub-array 1 Number of modules along bottom of row', type='NUMBER', group='Layout', required='*', constraints='INTEGER,POSITIVE')
+    subarray1_nmody: float = INPUT(label='Sub-array 1 Number of modules along side of row', type='NUMBER', group='Layout', required='*', constraints='INTEGER,POSITIVE')
+    subarray1_backtrack: float = INPUT(label='Sub-array 1 Backtracking enabled', type='NUMBER', group='System Design', required='subarray1_track_mode=1', constraints='BOOLEAN', meta='0=no backtracking,1=backtrack')
+    subarray2_enable: float = INPUT(label='Sub-array 2 Enable', units='0/1', type='NUMBER', group='System Design', required='?=0', constraints='BOOLEAN', meta='0=disabled,1=enabled')
+    subarray2_modules_per_string: float = INPUT(label='Sub-array 2 Modules per string', type='NUMBER', group='System Design', required='subarray2_enable=1', constraints='INTEGER,MIN=1')
+    subarray2_nstrings: float = INPUT(label='Sub-array 2 Number of parallel strings', type='NUMBER', group='System Design', required='subarray2_enable=1', constraints='INTEGER,MIN=1')
+    subarray2_mppt_input: float = INPUT(label='Sub-array 2 Inverter MPPT input number', type='NUMBER', group='System Design', required='?=1', constraints='INTEGER,POSITIVE')
+    subarray2_tilt: float = INPUT(label='Sub-array 2 Tilt', units='deg', type='NUMBER', group='System Design', constraints='MIN=0,MAX=90', meta='0=horizontal,90=vertical')
+    subarray2_tilt_eq_lat: float = INPUT(label='Sub-array 2 Tilt=latitude override', units='0/1', type='NUMBER', group='System Design', constraints='BOOLEAN', meta='0=false,1=override')
+    subarray2_azimuth: float = INPUT(label='Sub-array 2 Azimuth', units='deg', type='NUMBER', group='System Design', constraints='MIN=0,MAX=359.9', meta='0=N,90=E,180=S,270=W')
+    subarray2_track_mode: float = INPUT(label='Sub-array 2 Tracking mode', type='NUMBER', group='System Design', required='subarray2_enable=1', constraints='INTEGER,MIN=0,MAX=4', meta='0=fixed,1=1axis,2=2axis,3=azi,4=monthly')
+    subarray2_rotlim: float = INPUT(label='Sub-array 2 Tracker rotation limit', units='deg', type='NUMBER', group='System Design', required='?=45', constraints='MIN=0,MAX=85')
+    subarray2_shade_mode: float = INPUT(label='Sub-array 2 Shading mode (fixed tilt or 1x tracking)', units='0/1/2', type='NUMBER', group='Shading', required='subarray2_enable=1', constraints='INTEGER,MIN=0,MAX=2', meta='0=none,1=standard(non-linear),2=thin film(linear)')
+    subarray2_gcr: float = INPUT(label='Sub-array 2 Ground coverage ratio', units='0..1', type='NUMBER', group='System Design', required='?=0.3', constraints='MIN=0.01,MAX=0.99')
+    subarray2_monthly_tilt: Array = INPUT(label='Sub-array 2 Monthly tilt input', units='deg', type='ARRAY', group='System Design', constraints='LENGTH=12')
+    subarray2_shading_string_option: float = INPUT(name='subarray2_shading:string_option', label='Sub-array 2 Shading string option', type='NUMBER', group='Shading', required='?=-1', constraints='INTEGER,MIN=-1,MAX=4', meta='0=shadingdb,1=shadingdb_notc,2=average,3=maximum,4=minimum')
+    subarray2_shading_timestep: Matrix = INPUT(name='subarray2_shading:timestep', label='Sub-array 2 Timestep beam shading losses', units='%', type='MATRIX', group='Shading', required='?')
+    subarray2_shading_mxh: Matrix = INPUT(name='subarray2_shading:mxh', label='Sub-array 2 Month x Hour beam shading losses', units='%', type='MATRIX', group='Shading', required='?')
+    subarray2_shading_azal: Matrix = INPUT(name='subarray2_shading:azal', label='Sub-array 2 Azimuth x altitude beam shading losses', units='%', type='MATRIX', group='Shading', required='?')
+    subarray2_shading_diff: float = INPUT(name='subarray2_shading:diff', label='Sub-array 2 Diffuse shading loss', units='%', type='NUMBER', group='Shading', required='?')
+    subarray2_soiling: Array = INPUT(label='Sub-array 2 Monthly soiling loss', units='%', type='ARRAY', group='Losses', required='subarray2_enable=1', constraints='LENGTH=12')
+    subarray2_mod_orient: float = INPUT(label='Sub-array 2 Module orientation', units='0/1', type='NUMBER', group='Layout', required='subarray2_enable=1', constraints='INTEGER,MIN=0,MAX=1', meta='0=portrait,1=landscape')
+    subarray2_nmodx: float = INPUT(label='Sub-array 2 Number of modules along bottom of row', type='NUMBER', group='Layout', required='subarray2_enable=1', constraints='INTEGER,POSITIVE')
+    subarray2_nmody: float = INPUT(label='Sub-array 2 Number of modules along side of row', type='NUMBER', group='Layout', required='subarray2_enable=1', constraints='INTEGER,POSITIVE')
+    subarray2_backtrack: float = INPUT(label='Sub-array 2 Backtracking enabled', type='NUMBER', group='System Design', constraints='BOOLEAN', meta='0=no backtracking,1=backtrack')
+    subarray3_enable: float = INPUT(label='Sub-array 3 Enable', units='0/1', type='NUMBER', group='System Design', required='?=0', constraints='BOOLEAN', meta='0=disabled,1=enabled')
+    subarray3_modules_per_string: float = INPUT(label='Sub-array 3 Modules per string', type='NUMBER', group='System Design', required='subarray3_enable=1', constraints='INTEGER,MIN=1')
+    subarray3_nstrings: float = INPUT(label='Sub-array 3 Number of parallel strings', type='NUMBER', group='System Design', required='subarray3_enable=1', constraints='INTEGER,MIN=1')
+    subarray3_mppt_input: float = INPUT(label='Sub-array 3 Inverter MPPT input number', type='NUMBER', group='System Design', required='?=1', constraints='INTEGER,POSITIVE')
+    subarray3_tilt: float = INPUT(label='Sub-array 3 Tilt', units='deg', type='NUMBER', group='System Design', constraints='MIN=0,MAX=90', meta='0=horizontal,90=vertical')
+    subarray3_tilt_eq_lat: float = INPUT(label='Sub-array 3 Tilt=latitude override', units='0/1', type='NUMBER', group='System Design', constraints='BOOLEAN', meta='0=false,1=override')
+    subarray3_azimuth: float = INPUT(label='Sub-array 3 Azimuth', units='deg', type='NUMBER', group='System Design', constraints='MIN=0,MAX=359.9', meta='0=N,90=E,180=S,270=W')
+    subarray3_track_mode: float = INPUT(label='Sub-array 3 Tracking mode', type='NUMBER', group='System Design', required='subarray3_enable=1', constraints='INTEGER,MIN=0,MAX=4', meta='0=fixed,1=1axis,2=2axis,3=azi,4=monthly')
+    subarray3_rotlim: float = INPUT(label='Sub-array 3 Tracker rotation limit', units='deg', type='NUMBER', group='System Design', required='?=45', constraints='MIN=0,MAX=85')
+    subarray3_shade_mode: float = INPUT(label='Sub-array 3 Shading mode (fixed tilt or 1x tracking)', units='0/1/2', type='NUMBER', group='Shading', required='subarray3_enable=1', constraints='INTEGER,MIN=0,MAX=2', meta='0=none,1=standard(non-linear),2=thin film(linear)')
+    subarray3_gcr: float = INPUT(label='Sub-array 3 Ground coverage ratio', units='0..1', type='NUMBER', group='System Design', required='?=0.3', constraints='MIN=0.01,MAX=0.99')
+    subarray3_monthly_tilt: Array = INPUT(label='Sub-array 3 Monthly tilt input', units='deg', type='ARRAY', group='System Design', constraints='LENGTH=12')
+    subarray3_shading_string_option: float = INPUT(name='subarray3_shading:string_option', label='Sub-array 3 Shading string option', type='NUMBER', group='Shading', required='?=-1', constraints='INTEGER,MIN=-1,MAX=4', meta='0=shadingdb,1=shadingdb_notc,2=average,3=maximum,4=minimum')
+    subarray3_shading_timestep: Matrix = INPUT(name='subarray3_shading:timestep', label='Sub-array 3 Timestep beam shading losses', units='%', type='MATRIX', group='Shading', required='?')
+    subarray3_shading_mxh: Matrix = INPUT(name='subarray3_shading:mxh', label='Sub-array 3 Month x Hour beam shading losses', units='%', type='MATRIX', group='Shading', required='?')
+    subarray3_shading_azal: Matrix = INPUT(name='subarray3_shading:azal', label='Sub-array 3 Azimuth x altitude beam shading losses', units='%', type='MATRIX', group='Shading', required='?')
+    subarray3_shading_diff: float = INPUT(name='subarray3_shading:diff', label='Sub-array 3 Diffuse shading loss', units='%', type='NUMBER', group='Shading', required='?')
+    subarray3_soiling: Array = INPUT(label='Sub-array 3 Monthly soiling loss', units='%', type='ARRAY', group='Losses', required='subarray3_enable=1', constraints='LENGTH=12')
+    subarray3_mod_orient: float = INPUT(label='Sub-array 3 Module orientation', units='0/1', type='NUMBER', group='Layout', required='subarray3_enable=1', constraints='INTEGER,MIN=0,MAX=1', meta='0=portrait,1=landscape')
+    subarray3_nmodx: float = INPUT(label='Sub-array 3 Number of modules along bottom of row', type='NUMBER', group='Layout', required='subarray3_enable=1', constraints='INTEGER,POSITIVE')
+    subarray3_nmody: float = INPUT(label='Sub-array 3 Number of modules along side of row', type='NUMBER', group='Layout', required='subarray3_enable=1', constraints='INTEGER,POSITIVE')
+    subarray3_backtrack: float = INPUT(label='Sub-array 3 Backtracking enabled', type='NUMBER', group='System Design', constraints='BOOLEAN', meta='0=no backtracking,1=backtrack')
+    subarray4_enable: float = INPUT(label='Sub-array 4 Enable', units='0/1', type='NUMBER', group='System Design', required='?=0', constraints='BOOLEAN', meta='0=disabled,1=enabled')
+    subarray4_modules_per_string: float = INPUT(label='Sub-array 4 Modules per string', type='NUMBER', group='System Design', required='subarray4_enable=1', constraints='INTEGER,MIN=1')
+    subarray4_nstrings: float = INPUT(label='Sub-array 4 Number of parallel strings', type='NUMBER', group='System Design', required='subarray4_enable=1', constraints='INTEGER,MIN=1')
+    subarray4_mppt_input: float = INPUT(label='Sub-array 4 Inverter MPPT input number', type='NUMBER', group='System Design', required='?=1', constraints='INTEGER,POSITIVE')
+    subarray4_tilt: float = INPUT(label='Sub-array 4 Tilt', units='deg', type='NUMBER', group='System Design', constraints='MIN=0,MAX=90', meta='0=horizontal,90=vertical')
+    subarray4_tilt_eq_lat: float = INPUT(label='Sub-array 4 Tilt=latitude override', units='0/1', type='NUMBER', group='System Design', constraints='BOOLEAN', meta='0=false,1=override')
+    subarray4_azimuth: float = INPUT(label='Sub-array 4 Azimuth', units='deg', type='NUMBER', group='System Design', constraints='MIN=0,MAX=359.9', meta='0=N,90=E,180=S,270=W')
+    subarray4_track_mode: float = INPUT(label='Sub-array 4 Tracking mode', type='NUMBER', group='System Design', required='subarray4_enable=1', constraints='INTEGER,MIN=0,MAX=4', meta='0=fixed,1=1axis,2=2axis,3=azi,4=monthly')
+    subarray4_rotlim: float = INPUT(label='Sub-array 4 Tracker rotation limit', units='deg', type='NUMBER', group='System Design', required='?=45', constraints='MIN=0,MAX=85')
+    subarray4_shade_mode: float = INPUT(label='Sub-array 4 shading mode (fixed tilt or 1x tracking)', units='0/1/2', type='NUMBER', group='Shading', required='subarray4_enable=1', constraints='INTEGER,MIN=0,MAX=2', meta='0=none,1=standard(non-linear),2=thin film(linear)')
+    subarray4_gcr: float = INPUT(label='Sub-array 4 Ground coverage ratio', units='0..1', type='NUMBER', group='System Design', required='?=0.3', constraints='MIN=0.01,MAX=0.99')
+    subarray4_monthly_tilt: Array = INPUT(label='Sub-array 4 Monthly tilt input', units='deg', type='ARRAY', group='System Design', constraints='LENGTH=12')
+    subarray4_shading_string_option: float = INPUT(name='subarray4_shading:string_option', label='Sub-array 4 Shading string option', type='NUMBER', group='Shading', required='?=-1', constraints='INTEGER,MIN=-1,MAX=4', meta='0=shadingdb,1=shadingdb_notc,2=average,3=maximum,4=minimum')
+    subarray4_shading_timestep: Matrix = INPUT(name='subarray4_shading:timestep', label='Sub-array 4 Timestep beam shading losses', units='%', type='MATRIX', group='Shading', required='?')
+    subarray4_shading_mxh: Matrix = INPUT(name='subarray4_shading:mxh', label='Sub-array 4 Month x Hour beam shading losses', units='%', type='MATRIX', group='Shading', required='?')
+    subarray4_shading_azal: Matrix = INPUT(name='subarray4_shading:azal', label='Sub-array 4 Azimuth x altitude beam shading losses', units='%', type='MATRIX', group='Shading', required='?')
+    subarray4_shading_diff: float = INPUT(name='subarray4_shading:diff', label='Sub-array 4 Diffuse shading loss', units='%', type='NUMBER', group='Shading', required='?')
+    subarray4_soiling: Array = INPUT(label='Sub-array 4 Monthly soiling loss', units='%', type='ARRAY', group='Losses', required='subarray4_enable=1', constraints='LENGTH=12')
+    subarray4_mod_orient: float = INPUT(label='Sub-array 4 Module orientation', units='0/1', type='NUMBER', group='Layout', required='subarray4_enable=1', constraints='INTEGER,MIN=0,MAX=1', meta='0=portrait,1=landscape')
+    subarray4_nmodx: float = INPUT(label='Sub-array 4 Number of modules along bottom of row', type='NUMBER', group='Layout', required='subarray4_enable=1', constraints='INTEGER,POSITIVE')
+    subarray4_nmody: float = INPUT(label='Sub-array 4 Number of modules along side of row', type='NUMBER', group='Layout', required='subarray4_enable=1', constraints='INTEGER,POSITIVE')
+    subarray4_backtrack: float = INPUT(label='Sub-array 4 Backtracking enabled', type='NUMBER', group='System Design', constraints='BOOLEAN', meta='0=no backtracking,1=backtrack')
+    module_model: float = INPUT(label='Photovoltaic module model specifier', type='NUMBER', group='Module', required='*', constraints='INTEGER,MIN=0,MAX=5', meta='0=spe,1=cec,2=6par_user,3=snl,4=sd11-iec61853,5=PVYield')
+    module_aspect_ratio: float = INPUT(label='Module aspect ratio', type='NUMBER', group='Layout', required='?=1.7', constraints='POSITIVE')
+    spe_area: float = INPUT(label='Module area', units='m2', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0')
+    spe_rad0: float = INPUT(label='Irradiance level 0', units='W/m2', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0')
+    spe_rad1: float = INPUT(label='Irradiance level 1', units='W/m2', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0')
+    spe_rad2: float = INPUT(label='Irradiance level 2', units='W/m2', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0')
+    spe_rad3: float = INPUT(label='Irradiance level 3', units='W/m2', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0')
+    spe_rad4: float = INPUT(label='Irradiance level 4', units='W/m2', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0')
+    spe_eff0: float = INPUT(label='Efficiency at irradiance level 0', units='%', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0')
+    spe_eff1: float = INPUT(label='Efficiency at irradiance level 1', units='%', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0')
+    spe_eff2: float = INPUT(label='Efficiency at irradiance level 2', units='%', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0')
+    spe_eff3: float = INPUT(label='Efficiency at irradiance level 3', units='%', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0')
+    spe_eff4: float = INPUT(label='Efficiency at irradiance level 4', units='%', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0')
+    spe_reference: float = INPUT(label='Reference irradiance level', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0', constraints='INTEGER,MIN=0,MAX=4')
+    spe_module_structure: float = INPUT(label='Mounting and module structure', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0', constraints='INTEGER,MIN=0,MAX=5', meta='0=glass/cell/polymer sheet - open rack,1=glass/cell/glass - open rack,2=polymer/thin film/steel - open rack,3=Insulated back, building-integrated PV,4=close roof mount,5=user-defined')
+    spe_a: float = INPUT(label='Cell temp parameter a', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0')
+    spe_b: float = INPUT(label='Cell temp parameter b', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0')
+    spe_dT: float = INPUT(label='Cell temp parameter dT', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0')
+    spe_temp_coeff: float = INPUT(label='Temperature coefficient', units='%/C', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0')
+    spe_fd: float = INPUT(label='Diffuse fraction', units='0..1', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0', constraints='MIN=0,MAX=1')
+    spe_vmp: float = INPUT(label='Nominal max power voltage', units='V', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0', constraints='POSITIVE')
+    spe_voc: float = INPUT(label='Nominal open circuit voltage', units='V', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0', constraints='POSITIVE')
+    spe_is_bifacial: float = INPUT(label='Modules are bifacial', units='0/1', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0')
+    spe_bifacial_transmission_factor: float = INPUT(label='Bifacial transmission factor', units='0-1', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0')
+    spe_bifaciality: float = INPUT(label='Bifaciality factor', units='%', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0')
+    spe_bifacial_ground_clearance_height: float = INPUT(label='Module ground clearance height', units='m', type='NUMBER', group='Simple Efficiency Module Model', required='module_model=0')
+    cec_area: float = INPUT(label='Module area', units='m2', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1')
+    cec_a_ref: float = INPUT(label='Nonideality factor a', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1')
+    cec_adjust: float = INPUT(label='Temperature coefficient adjustment', units='%', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1')
+    cec_alpha_sc: float = INPUT(label='Short circuit current temperature coefficient', units='A/C', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1')
+    cec_beta_oc: float = INPUT(label='Open circuit voltage temperature coefficient', units='V/C', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1')
+    cec_gamma_r: float = INPUT(label='Maximum power point temperature coefficient', units='%/C', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1')
+    cec_i_l_ref: float = INPUT(label='Light current', units='A', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1')
+    cec_i_mp_ref: float = INPUT(label='Maximum power point current', units='A', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1')
+    cec_i_o_ref: float = INPUT(label='Saturation current', units='A', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1')
+    cec_i_sc_ref: float = INPUT(label='Short circuit current', units='A', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1')
+    cec_n_s: float = INPUT(label='Number of cells in series', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1', constraints='POSITIVE')
+    cec_r_s: float = INPUT(label='Series resistance', units='ohm', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1')
+    cec_r_sh_ref: float = INPUT(label='Shunt resistance', units='ohm', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1')
+    cec_t_noct: float = INPUT(label='Nominal operating cell temperature', units='C', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1')
+    cec_v_mp_ref: float = INPUT(label='Maximum power point voltage', units='V', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1')
+    cec_v_oc_ref: float = INPUT(label='Open circuit voltage', units='V', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1')
+    cec_temp_corr_mode: float = INPUT(label='Cell temperature model selection', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1', constraints='INTEGER,MIN=0,MAX=1', meta='0=noct,1=mc')
+    cec_is_bifacial: float = INPUT(label='Modules are bifacial', units='0/1', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1')
+    cec_bifacial_transmission_factor: float = INPUT(label='Bifacial transmission factor', units='0-1', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1')
+    cec_bifaciality: float = INPUT(label='Bifaciality factor', units='%', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1')
+    cec_bifacial_ground_clearance_height: float = INPUT(label='Module ground clearance height', units='m', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1')
+    cec_standoff: float = INPUT(label='Standoff mode', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1', constraints='INTEGER,MIN=0,MAX=6', meta='0=bipv,1=>3.5in,2=2.5-3.5in,3=1.5-2.5in,4=0.5-1.5in,5=<0.5in,6=ground/rack')
+    cec_height: float = INPUT(label='Array mounting height', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1', constraints='INTEGER,MIN=0,MAX=1', meta='0=one story,1=two story')
+    cec_mounting_config: float = INPUT(label='Mounting configuration', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1&cec_temp_corr_mode=1', constraints='INTEGER,MIN=0,MAX=3', meta='0=rack,1=flush,2=integrated,3=gap')
+    cec_heat_transfer: float = INPUT(label='Heat transfer dimensions', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1&cec_temp_corr_mode=1', constraints='INTEGER,MIN=0,MAX=1', meta='0=module,1=array')
+    cec_mounting_orientation: float = INPUT(label='Mounting structure orientation', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1&cec_temp_corr_mode=1', constraints='INTEGER,MIN=0,MAX=2', meta='0=do not impede flow,1=vertical supports,2=horizontal supports')
+    cec_gap_spacing: float = INPUT(label='Gap spacing', units='m', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1&cec_temp_corr_mode=1')
+    cec_module_width: float = INPUT(label='Module width', units='m', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1&cec_temp_corr_mode=1')
+    cec_module_length: float = INPUT(label='Module height', units='m', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1&cec_temp_corr_mode=1')
+    cec_array_rows: float = INPUT(label='Rows of modules in array', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1&cec_temp_corr_mode=1')
+    cec_array_cols: float = INPUT(label='Columns of modules in array', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1&cec_temp_corr_mode=1')
+    cec_backside_temp: float = INPUT(label='Module backside temperature', units='C', type='NUMBER', group='CEC Performance Model with Module Database', required='module_model=1&cec_temp_corr_mode=1', constraints='POSITIVE')
+    _6par_celltech: float = INPUT(name='6par_celltech', label='Solar cell technology type', type='NUMBER', group='CEC Performance Model with User Entered Specifications', required='module_model=2', constraints='INTEGER,MIN=0,MAX=5', meta='monoSi=0,multiSi=1,CdTe=2,CIS=3,CIGS=4,Amorphous=5')
+    _6par_vmp: float = INPUT(name='6par_vmp', label='Maximum power point voltage', units='V', type='NUMBER', group='CEC Performance Model with User Entered Specifications', required='module_model=2')
+    _6par_imp: float = INPUT(name='6par_imp', label='Imp', units='A', type='NUMBER', group='CEC Performance Model with User Entered Specifications', required='module_model=2')
+    _6par_voc: float = INPUT(name='6par_voc', label='Voc', units='V', type='NUMBER', group='CEC Performance Model with User Entered Specifications', required='module_model=2')
+    _6par_isc: float = INPUT(name='6par_isc', label='Isc', units='A', type='NUMBER', group='CEC Performance Model with User Entered Specifications', required='module_model=2')
+    _6par_bvoc: float = INPUT(name='6par_bvoc', label='Open circuit voltage temperature coefficient', units='V/C', type='NUMBER', group='CEC Performance Model with User Entered Specifications', required='module_model=2')
+    _6par_aisc: float = INPUT(name='6par_aisc', label='Short circuit current temperature coefficient', units='A/C', type='NUMBER', group='CEC Performance Model with User Entered Specifications', required='module_model=2')
+    _6par_gpmp: float = INPUT(name='6par_gpmp', label='Maximum power point temperature coefficient', units='%/C', type='NUMBER', group='CEC Performance Model with User Entered Specifications', required='module_model=2')
+    _6par_nser: float = INPUT(name='6par_nser', label='Nseries', type='NUMBER', group='CEC Performance Model with User Entered Specifications', required='module_model=2', constraints='INTEGER,POSITIVE')
+    _6par_area: float = INPUT(name='6par_area', label='Module area', units='m2', type='NUMBER', group='CEC Performance Model with User Entered Specifications', required='module_model=2')
+    _6par_tnoct: float = INPUT(name='6par_tnoct', label='Nominal operating cell temperature', units='C', type='NUMBER', group='CEC Performance Model with User Entered Specifications', required='module_model=2')
+    _6par_standoff: float = INPUT(name='6par_standoff', label='Standoff mode', type='NUMBER', group='CEC Performance Model with User Entered Specifications', required='module_model=2', constraints='INTEGER,MIN=0,MAX=6', meta='0=bipv,1=>3.5in,2=2.5-3.5in,3=1.5-2.5in,4=0.5-1.5in,5=<0.5in,6=ground/rack')
+    _6par_mounting: float = INPUT(name='6par_mounting', label='Array mounting height', type='NUMBER', group='CEC Performance Model with User Entered Specifications', required='module_model=2', constraints='INTEGER,MIN=0,MAX=1', meta='0=one story,1=two story')
+    _6par_is_bifacial: float = INPUT(name='6par_is_bifacial', label='Modules are bifacial', units='0/1', type='NUMBER', group='CEC Performance Model with User Entered Specifications', required='module_model=2')
+    _6par_bifacial_transmission_factor: float = INPUT(name='6par_bifacial_transmission_factor', label='Bifacial transmission factor', units='0-1', type='NUMBER', group='CEC Performance Model with User Entered Specifications', required='module_model=2')
+    _6par_bifaciality: float = INPUT(name='6par_bifaciality', label='Bifaciality factor', units='%', type='NUMBER', group='CEC Performance Model with User Entered Specifications', required='module_model=2')
+    _6par_bifacial_ground_clearance_height: float = INPUT(name='6par_bifacial_ground_clearance_height', label='Module ground clearance height', units='m', type='NUMBER', group='CEC Performance Model with User Entered Specifications', required='module_model=2')
+    snl_module_structure: float = INPUT(label='Module and mounting structure configuration', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3', constraints='INTEGER,MIN=0,MAX=6', meta='0=Use Database Values,1=glass/cell/polymer sheet-open rack,2=glass/cell/glass-open rack,3=polymer/thin film/steel-open rack,4=Insulated back BIPV,5=close roof mount,6=user-defined')
+    snl_a: float = INPUT(label='Temperature coefficient a', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_b: float = INPUT(label='Temperature coefficient b', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_dtc: float = INPUT(label='Temperature coefficient dT', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_ref_a: float = INPUT(label='User-specified a', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_ref_b: float = INPUT(label='User-specified b', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_ref_dT: float = INPUT(label='User-specified dT', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_fd: float = INPUT(label='Diffuse fraction', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_a0: float = INPUT(label='Air mass polynomial coeff 0', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_a1: float = INPUT(label='Air mass polynomial coeff 1', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_a2: float = INPUT(label='Air mass polynomial coeff 2', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_a3: float = INPUT(label='Air mass polynomial coeff 3', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_a4: float = INPUT(label='Air mass polynomial coeff 4', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_aimp: float = INPUT(label='Max power point current temperature coefficient', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_aisc: float = INPUT(label='Short circuit current temperature coefficient', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_area: float = INPUT(label='Module area', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_b0: float = INPUT(label='Incidence angle modifier polynomial coeff 0', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_b1: float = INPUT(label='Incidence angle modifier polynomial coeff 1', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_b2: float = INPUT(label='Incidence angle modifier polynomial coeff 2', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_b3: float = INPUT(label='Incidence angle modifier polynomial coeff 3', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_b4: float = INPUT(label='Incidence angle modifier polynomial coeff 4', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_b5: float = INPUT(label='Incidence angle modifier polynomial coeff 5', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_bvmpo: float = INPUT(label='Max power point voltage temperature coefficient', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_bvoco: float = INPUT(label='Open circuit voltage temperature coefficient', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_c0: float = INPUT(label='C0', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_c1: float = INPUT(label='C1', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_c2: float = INPUT(label='C2', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_c3: float = INPUT(label='C3', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_c4: float = INPUT(label='C4', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_c5: float = INPUT(label='C5', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_c6: float = INPUT(label='C6', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_c7: float = INPUT(label='C7', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_impo: float = INPUT(label='Max power point current', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_isco: float = INPUT(label='Short circuit current', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_ixo: float = INPUT(label='Ix midpoint current', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_ixxo: float = INPUT(label='Ixx midpoint current', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_mbvmp: float = INPUT(label='Irradiance dependence of Vmp temperature coefficient', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_mbvoc: float = INPUT(label='Irradiance dependence of Voc temperature coefficient', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_n: float = INPUT(label='Diode factor', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_series_cells: float = INPUT(label='Number of cells in series', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3', constraints='INTEGER')
+    snl_vmpo: float = INPUT(label='Max power point voltage', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    snl_voco: float = INPUT(label='Open circuit voltage', type='NUMBER', group='Sandia PV Array Performance Model with Module Database', required='module_model=3')
+    sd11par_nser: float = INPUT(label='Nseries', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4', constraints='INTEGER,POSITIVE')
+    sd11par_area: float = INPUT(label='Module area', units='m2', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_AMa0: float = INPUT(label='Air mass modifier coeff 0', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_AMa1: float = INPUT(label='Air mass modifier coeff 1', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_AMa2: float = INPUT(label='Air mass modifier coeff 2', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_AMa3: float = INPUT(label='Air mass modifier coeff 3', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_AMa4: float = INPUT(label='Air mass modifier coeff 4', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_glass: float = INPUT(label='Module cover glass type', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4', meta='0=normal,1=AR glass')
+    sd11par_tnoct: float = INPUT(label='Nominal operating cell temperature', units='C', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_standoff: float = INPUT(label='Standoff mode', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4', constraints='INTEGER,MIN=0,MAX=6', meta='0=bipv,1=>3.5in,2=2.5-3.5in,3=1.5-2.5in,4=0.5-1.5in,5=<0.5in,6=ground/rack')
+    sd11par_mounting: float = INPUT(label='Array mounting height', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4', constraints='INTEGER,MIN=0,MAX=1', meta='0=one story,1=two story')
+    sd11par_Vmp0: float = INPUT(label='Vmp (STC)', units='V', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_Imp0: float = INPUT(label='Imp (STC)', units='A', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_Voc0: float = INPUT(label='Voc (STC)', units='V', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_Isc0: float = INPUT(label='Isc (STC)', units='A', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_alphaIsc: float = INPUT(label='Short curcuit current temperature coefficient', units='A/C', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_n: float = INPUT(label='Diode nonideality factor', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_Il: float = INPUT(label='Light current', units='A', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_Io: float = INPUT(label='Saturation current', units='A', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_Egref: float = INPUT(label='Bandgap voltage', units='eV', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_d1: float = INPUT(label='Rs fit parameter 1', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_d2: float = INPUT(label='Rs fit parameter 2', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_d3: float = INPUT(label='Rs fit parameter 3', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_c1: float = INPUT(label='Rsh fit parameter 1', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_c2: float = INPUT(label='Rsh fit parameter 2', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    sd11par_c3: float = INPUT(label='Rsh fit parameter 3', type='NUMBER', group='IEC61853 Single Diode Model', required='module_model=4')
+    mlm_N_series: float = INPUT(label='Number of cells in series', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_N_parallel: float = INPUT(label='Number of cells in parallel', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_N_diodes: float = INPUT(label='Number of diodes', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_Width: float = INPUT(label='Module width (short side)', units='m', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_Length: float = INPUT(label='Module length (long side)', units='m', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_V_mp_ref: float = INPUT(label='V_mp at STC', units='V', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_I_mp_ref: float = INPUT(label='I_mp at STC', units='A', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_V_oc_ref: float = INPUT(label='V_oc at STC', units='V', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_I_sc_ref: float = INPUT(label='I_sc at STC', units='A', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_S_ref: float = INPUT(label='Reference irradiance (Typically 1000W/m²)', units='W/m²', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_T_ref: float = INPUT(label='Reference temperature (Typically 25°C)', units='°C', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_R_shref: float = INPUT(label='Reference shunt resistance', units='V/A', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_R_sh0: float = INPUT(label='Rsh,0', units='V/A', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_R_shexp: float = INPUT(label='Rsh exponential coefficient', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_R_s: float = INPUT(label='Series resistance', units='V/A', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_alpha_isc: float = INPUT(label='Temperature coefficient for I_sc', units='A/K', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_beta_voc_spec: float = INPUT(label='Temperature coefficient for V_oc', units='V/K', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_E_g: float = INPUT(label='Reference bandgap energy', units='eV', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_n_0: float = INPUT(label='Gamma', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_mu_n: float = INPUT(label='Temperature coefficient of gamma', units='1/K', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_D2MuTau: float = INPUT(label='Coefficient for recombination losses', units='V', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_T_mode: float = INPUT(label='Cell temperature model mode', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5', meta='1: NOCT')
+    mlm_T_c_no_tnoct: float = INPUT(label='NOCT cell temperature', units='°C', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_T_c_no_mounting: float = INPUT(label='NOCT Array mounting height', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5', meta='0=one story,1=two story')
+    mlm_T_c_no_standoff: float = INPUT(label='NOCT standoff mode', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5', meta='0=bipv,1=>3.5in,2=2.5-3.5in,3=1.5-2.5in,4=0.5-1.5in,5=<0.5in,6=ground/rack')
+    mlm_T_c_fa_alpha: float = INPUT(label='Extended Faiman model absorptivity', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_T_c_fa_U0: float = INPUT(label='Extended Faiman model U_0', units='W/m²K', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_T_c_fa_U1: float = INPUT(label='Extended Faiman model U_1', units='W/m³sK', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_AM_mode: float = INPUT(label='Air-mass modifier mode', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5', meta='1: Do not consider AM effects, 2: Use Sandia polynomial [corr=f(AM)], 3: Use standard coefficients from DeSoto model [corr=f(AM)], 4: Use First Solar polynomial [corr=f(AM, p_wat)]')
+    mlm_AM_c_sa0: float = INPUT(label='Coefficient 0 for Sandia Air Mass Modifier', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_AM_c_sa1: float = INPUT(label='Coefficient 1 for Sandia Air Mass Modifier', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_AM_c_sa2: float = INPUT(label='Coefficient 2 for Sandia Air Mass Modifier', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_AM_c_sa3: float = INPUT(label='Coefficient 3 for Sandia Air Mass Modifier', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_AM_c_sa4: float = INPUT(label='Coefficient 4 for Sandia Air Mass Modifier', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_AM_c_lp0: float = INPUT(label='Coefficient 0 for Lee/Panchula Air Mass Modifier', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_AM_c_lp1: float = INPUT(label='Coefficient 1 for Lee/Panchula Air Mass Modifier', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_AM_c_lp2: float = INPUT(label='Coefficient 2 for Lee/Panchula Air Mass Modifier', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_AM_c_lp3: float = INPUT(label='Coefficient 3 for Lee/Panchula Air Mass Modifier', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_AM_c_lp4: float = INPUT(label='Coefficient 4 for Lee/Panchula Air Mass Modifier', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_AM_c_lp5: float = INPUT(label='Coefficient 5 for Lee/Panchula Air Mass Modifier', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_IAM_mode: float = INPUT(label='Incidence Angle Modifier mode', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5', meta='1: Use ASHRAE formula, 2: Use Sandia polynomial, 3: Use cubic spline with user-supplied data')
+    mlm_IAM_c_as: float = INPUT(label='ASHRAE incidence modifier coefficient b_0', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_IAM_c_sa0: float = INPUT(label='Sandia IAM coefficient 0', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_IAM_c_sa1: float = INPUT(label='Sandia IAM coefficient 1', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_IAM_c_sa2: float = INPUT(label='Sandia IAM coefficient 2', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_IAM_c_sa3: float = INPUT(label='Sandia IAM coefficient 3', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_IAM_c_sa4: float = INPUT(label='Sandia IAM coefficient 4', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_IAM_c_sa5: float = INPUT(label='Sandia IAM coefficient 5', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_IAM_c_cs_incAngle: Array = INPUT(label='Spline IAM - Incidence angles', units='deg', type='ARRAY', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_IAM_c_cs_iamValue: Array = INPUT(label='Spline IAM - IAM values', units='-', type='ARRAY', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    mlm_groundRelfectionFraction: float = INPUT(label='Ground reflection fraction', units='-', type='NUMBER', group='Mermoud Lejeune Single Diode Model', required='module_model=5')
+    inverter_model: float = INPUT(label='Inverter model specifier', type='NUMBER', group='Inverter', required='*', constraints='INTEGER,MIN=0,MAX=4', meta='0=cec,1=datasheet,2=partload,3=coefficientgenerator,4=PVYield')
+    mppt_low_inverter: float = INPUT(label='Minimum inverter MPPT voltage window', units='Vdc', type='NUMBER', group='Inverter', required='?=0')
+    mppt_hi_inverter: float = INPUT(label='Maximum inverter MPPT voltage window', units='Vdc', type='NUMBER', group='Inverter', required='?=0')
+    inv_num_mppt: float = INPUT(label='Number of MPPT inputs', type='NUMBER', group='Inverter', required='?=1', constraints='INTEGER,MIN=0,MAX=4')
+    inv_snl_c0: float = INPUT(label='Curvature between AC power and DC power at ref', units='1/W', type='NUMBER', group='Inverter CEC Database', required='inverter_model=0')
+    inv_snl_c1: float = INPUT(label='Coefficient of Pdco variation with DC input voltage', units='1/V', type='NUMBER', group='Inverter CEC Database', required='inverter_model=0')
+    inv_snl_c2: float = INPUT(label='Coefficient of Pso variation with DC input voltage', units='1/V', type='NUMBER', group='Inverter CEC Database', required='inverter_model=0')
+    inv_snl_c3: float = INPUT(label='Coefficient of Co variation with DC input voltage', units='1/V', type='NUMBER', group='Inverter CEC Database', required='inverter_model=0')
+    inv_snl_paco: float = INPUT(label='AC maximum power rating', units='Wac', type='NUMBER', group='Inverter CEC Database', required='inverter_model=0')
+    inv_snl_pdco: float = INPUT(label='DC input power at which AC power rating is achieved', units='Wdc', type='NUMBER', group='Inverter CEC Database', required='inverter_model=0')
+    inv_snl_pnt: float = INPUT(label='AC power consumed by inverter at night', units='Wac', type='NUMBER', group='Inverter CEC Database', required='inverter_model=0')
+    inv_snl_pso: float = INPUT(label='DC power required to enable the inversion process', units='Wdc', type='NUMBER', group='Inverter CEC Database', required='inverter_model=0')
+    inv_snl_vdco: float = INPUT(label='DC input voltage for the rated AC power rating', units='Vdc', type='NUMBER', group='Inverter CEC Database', required='inverter_model=0')
+    inv_snl_vdcmax: float = INPUT(label='Maximum DC input operating voltage', units='Vdc', type='NUMBER', group='Inverter CEC Database', required='inverter_model=0')
+    inv_cec_cg_c0: float = INPUT(label='Curvature between AC power and DC power at ref', units='1/W', type='NUMBER', group='Inverter CEC Coefficient Generator', required='inverter_model=3')
+    inv_cec_cg_c1: float = INPUT(label='Coefficient of Pdco variation with DC input voltage', units='1/V', type='NUMBER', group='Inverter CEC Coefficient Generator', required='inverter_model=3')
+    inv_cec_cg_c2: float = INPUT(label='Coefficient of Pso variation with DC input voltage', units='1/V', type='NUMBER', group='Inverter CEC Coefficient Generator', required='inverter_model=3')
+    inv_cec_cg_c3: float = INPUT(label='Coefficient of Co variation with DC input voltage', units='1/V', type='NUMBER', group='Inverter CEC Coefficient Generator', required='inverter_model=3')
+    inv_cec_cg_paco: float = INPUT(label='AC maximum power rating', units='Wac', type='NUMBER', group='Inverter CEC Coefficient Generator', required='inverter_model=3')
+    inv_cec_cg_pdco: float = INPUT(label='DC input power at which AC power rating is achieved', units='Wdc', type='NUMBER', group='Inverter CEC Coefficient Generator', required='inverter_model=3')
+    inv_cec_cg_pnt: float = INPUT(label='AC power consumed by inverter at night', units='Wac', type='NUMBER', group='Inverter CEC Coefficient Generator', required='inverter_model=3')
+    inv_cec_cg_psco: float = INPUT(label='DC power required to enable the inversion process', units='Wdc', type='NUMBER', group='Inverter CEC Coefficient Generator', required='inverter_model=3')
+    inv_cec_cg_vdco: float = INPUT(label='DC input voltage for the rated AC power rating', units='Vdc', type='NUMBER', group='Inverter CEC Coefficient Generator', required='inverter_model=3')
+    inv_cec_cg_vdcmax: float = INPUT(label='Maximum DC input operating voltage', units='Vdc', type='NUMBER', group='Inverter CEC Coefficient Generator', required='inverter_model=3')
+    inv_ds_paco: float = INPUT(label='AC maximum power rating', units='Wac', type='NUMBER', group='Inverter Datasheet', required='inverter_model=1')
+    inv_ds_eff: float = INPUT(label='Weighted or Peak or Nominal Efficiency', units='Wdc', type='NUMBER', group='Inverter Datasheet', required='inverter_model=1')
+    inv_ds_pnt: float = INPUT(label='AC power consumed by inverter at night', units='Wac', type='NUMBER', group='Inverter Datasheet', required='inverter_model=1')
+    inv_ds_pso: float = INPUT(label='DC power required to enable the inversion process', units='Wdc', type='NUMBER', group='Inverter Datasheet', required='inverter_model=1')
+    inv_ds_vdco: float = INPUT(label='DC input voltage for the rated AC power rating', units='Vdc', type='NUMBER', group='Inverter Datasheet', required='inverter_model=1')
+    inv_ds_vdcmax: float = INPUT(label='Maximum DC input operating voltage', units='Vdc', type='NUMBER', group='Inverter Datasheet', required='inverter_model=1')
+    inv_pd_paco: float = INPUT(label='AC maximum power rating', units='Wac', type='NUMBER', group='Inverter Part Load Curve', required='inverter_model=2')
+    inv_pd_pdco: float = INPUT(label='DC input power at which AC power rating is achieved', units='Wdc', type='NUMBER', group='Inverter Part Load Curve', required='inverter_model=2')
+    inv_pd_partload: Array = INPUT(label='Partload curve partload values', units='%', type='ARRAY', group='Inverter Part Load Curve', required='inverter_model=2')
+    inv_pd_efficiency: Array = INPUT(label='Partload curve efficiency values', units='%', type='ARRAY', group='Inverter Part Load Curve', required='inverter_model=2')
+    inv_pd_pnt: float = INPUT(label='AC power consumed by inverter at night', units='Wac', type='NUMBER', group='Inverter Part Load Curve', required='inverter_model=2')
+    inv_pd_vdco: float = INPUT(label='DC input voltage for the rated AC power rating', units='Vdc', type='NUMBER', group='Inverter Part Load Curve', required='inverter_model=2')
+    inv_pd_vdcmax: float = INPUT(label='Maximum DC input operating voltage', units='Vdc', type='NUMBER', group='Inverter Part Load Curve', required='inverter_model=2')
+    ond_PNomConv: float = INPUT(units='W', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_PMaxOUT: float = INPUT(units='W', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_VOutConv: float = INPUT(units='W', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_VMppMin: float = INPUT(units='V', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_VMPPMax: float = INPUT(units='V', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_VAbsMax: float = INPUT(units='V', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_PSeuil: float = INPUT(units='W', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_ModeOper: str = INPUT(units='-', type='STRING', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_CompPMax: str = INPUT(units='-', type='STRING', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_CompVMax: str = INPUT(units='-', type='STRING', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_ModeAffEnum: str = INPUT(units='-', type='STRING', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_PNomDC: float = INPUT(units='W', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_PMaxDC: float = INPUT(units='W', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_IMaxDC: float = INPUT(units='A', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_INomDC: float = INPUT(units='A', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_INomAC: float = INPUT(units='A', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_IMaxAC: float = INPUT(units='A', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_TPNom: float = INPUT(units='°C', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_TPMax: float = INPUT(units='°C', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_TPLim1: float = INPUT(units='°C', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_TPLimAbs: float = INPUT(units='°C', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_PLim1: float = INPUT(units='W', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_PLimAbs: float = INPUT(units='W', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_VNomEff: Array = INPUT(units='V', type='ARRAY', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_NbInputs: float = INPUT(units='-', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_NbMPPT: float = INPUT(units='-', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_Aux_Loss: float = INPUT(units='W', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_Night_Loss: float = INPUT(units='W', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_lossRDc: float = INPUT(units='V/A', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_lossRAc: float = INPUT(units='A', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_effCurve_elements: float = INPUT(units='-', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_effCurve_Pdc: Matrix = INPUT(units='W', type='MATRIX', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_effCurve_Pac: Matrix = INPUT(units='W', type='MATRIX', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_effCurve_eta: Matrix = INPUT(units='-', type='MATRIX', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_doAllowOverpower: float = INPUT(units='-', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    ond_doUseTemperatureLimit: float = INPUT(units='-', type='NUMBER', group='Inverter Mermoud Lejeune Model', required='inverter_model=4')
+    inv_tdc_cec_db: Matrix = INPUT(label='Temperature derate curves for CEC Database', units='(Vdc, C, %/C)', type='MATRIX', group='Inverter CEC Database', required='inverter_model=0')
+    inv_tdc_cec_cg: Matrix = INPUT(label='Temperature derate curves for CEC Coef Gen', units='(Vdc, C, %/C)', type='MATRIX', group='Inverter CEC Coefficient Generator', required='inverter_model=3')
+    inv_tdc_ds: Matrix = INPUT(label='Temperature derate curves for Inv Datasheet', units='(Vdc, C, %/C)', type='MATRIX', group='Inverter Datasheet', required='inverter_model=1')
+    inv_tdc_plc: Matrix = INPUT(label='Temperature derate curves for Part Load Curve', units='(Vdc, C, %/C)', type='MATRIX', group='Inverter Part Load Curve', required='inverter_model=2')
+    en_batt: float = INPUT(label='Enable battery storage model', units='0/1', type='NUMBER', group='BatterySystem', required='?=0')
+    load: Array = INPUT(label='Electricity load (year 1)', units='kW', type='ARRAY', group='Load', required='?')
+    crit_load: Array = INPUT(label='Critical Electricity load (year 1)', units='kW', type='ARRAY', group='Load')
     gh: Final[Array] = OUTPUT(label='Irradiance GHI from weather file', units='W/m2', type='ARRAY', group='Time Series', required='*')
     dn: Final[Array] = OUTPUT(label='Irradiance DNI from weather file', units='W/m2', type='ARRAY', group='Time Series', required='*')
     df: Final[Array] = OUTPUT(label='Irradiance DHI from weather file', units='W/m2', type='ARRAY', group='Time Series', required='*')
@@ -1293,6 +1336,7 @@ class Data(ssc.DataDict):
     subarray1_snow_loss: Final[Array] = OUTPUT(label='Subarray 1 Snow cover DC power loss', units='kW', type='ARRAY', group='Time Series (Subarray 1)')
     subarray1_modeff: Final[Array] = OUTPUT(label='Subarray 1 Module efficiency', units='%', type='ARRAY', group='Time Series (Subarray 1)', required='*')
     subarray1_celltemp: Final[Array] = OUTPUT(label='Subarray 1 Cell temperature', units='C', type='ARRAY', group='Time Series (Subarray 1)', required='*')
+    subarray1_celltempSS: Final[Array] = OUTPUT(label='Subarray 1 Cell temperature (steady state)', units='C', type='ARRAY', group='Time Series (Subarray 1)', required='*')
     subarray1_dc_voltage: Final[Array] = OUTPUT(label='Subarray 1 Operating DC voltage', units='V', type='ARRAY', group='Time Series (Subarray 1)', required='*')
     subarray1_dc_gross: Final[Array] = OUTPUT(label='Subarray 1 DC power gross', units='kW', type='ARRAY', group='Time Series (Subarray 1)', required='*')
     subarray1_voc: Final[Array] = OUTPUT(label='Subarray 1 Open circuit DC voltage', units='V', type='ARRAY', group='Time Series (Subarray 1)')
@@ -1322,6 +1366,7 @@ class Data(ssc.DataDict):
     subarray2_snow_loss: Final[Array] = OUTPUT(label='Subarray 2 Snow cover DC power loss', units='kW', type='ARRAY', group='Time Series (Subarray 2)')
     subarray2_modeff: Final[Array] = OUTPUT(label='Subarray 2 Module efficiency', units='%', type='ARRAY', group='Time Series (Subarray 2)')
     subarray2_celltemp: Final[Array] = OUTPUT(label='Subarray 2 Cell temperature', units='C', type='ARRAY', group='Time Series (Subarray 2)')
+    subarray2_celltempSS: Final[Array] = OUTPUT(label='Subarray 2 Cell temperature (steady state)', units='C', type='ARRAY', group='Time Series (Subarray 2)')
     subarray2_dc_voltage: Final[Array] = OUTPUT(label='Subarray 2 Operating DC voltage', units='V', type='ARRAY', group='Time Series (Subarray 2)')
     subarray2_dc_gross: Final[Array] = OUTPUT(label='Subarray 2 DC power gross', units='kW', type='ARRAY', group='Time Series (Subarray 2)')
     subarray2_voc: Final[Array] = OUTPUT(label='Subarray 2 Open circuit DC voltage', units='V', type='ARRAY', group='Time Series (Subarray 2)')
@@ -1351,6 +1396,7 @@ class Data(ssc.DataDict):
     subarray3_snow_loss: Final[Array] = OUTPUT(label='Subarray 3 Snow cover DC power loss', units='kW', type='ARRAY', group='Time Series (Subarray 3)')
     subarray3_modeff: Final[Array] = OUTPUT(label='Subarray 3 Module efficiency', units='%', type='ARRAY', group='Time Series (Subarray 3)')
     subarray3_celltemp: Final[Array] = OUTPUT(label='Subarray 3 Cell temperature', units='C', type='ARRAY', group='Time Series (Subarray 3)')
+    subarray3_celltempSS: Final[Array] = OUTPUT(label='Subarray 3 Cell temperature (steady state)', units='C', type='ARRAY', group='Time Series (Subarray 3)')
     subarray3_dc_voltage: Final[Array] = OUTPUT(label='Subarray 3 Operating DC voltage', units='V', type='ARRAY', group='Time Series (Subarray 3)')
     subarray3_dc_gross: Final[Array] = OUTPUT(label='Subarray 3 DC power gross', units='kW', type='ARRAY', group='Time Series (Subarray 3)')
     subarray3_voc: Final[Array] = OUTPUT(label='Subarray 3 Open circuit DC voltage', units='V', type='ARRAY', group='Time Series (Subarray 3)')
@@ -1380,6 +1426,7 @@ class Data(ssc.DataDict):
     subarray4_snow_loss: Final[Array] = OUTPUT(label='Subarray 4 Snow cover DC power loss', units='kW', type='ARRAY', group='Time Series (Subarray 4)')
     subarray4_modeff: Final[Array] = OUTPUT(label='Subarray 4 Module efficiency', units='%', type='ARRAY', group='Time Series (Subarray 4)')
     subarray4_celltemp: Final[Array] = OUTPUT(label='Subarray 4 Cell temperature', units='C', type='ARRAY', group='Time Series (Subarray 4)')
+    subarray4_celltempSS: Final[Array] = OUTPUT(label='Subarray 4 Cell temperature (steady state)', units='C', type='ARRAY', group='Time Series (Subarray 4)')
     subarray4_dc_voltage: Final[Array] = OUTPUT(label='Subarray 4 Operating DC voltage', units='V', type='ARRAY', group='Time Series (Subarray 4)')
     subarray4_dc_gross: Final[Array] = OUTPUT(label='Subarray 4 DC power gross', units='kW', type='ARRAY', group='Time Series (Subarray 4)')
     subarray4_voc: Final[Array] = OUTPUT(label='Subarray 4 Open circuit DC voltage', units='V', type='ARRAY', group='Time Series (Subarray 4)')
@@ -1483,7 +1530,7 @@ class Data(ssc.DataDict):
     annual_poa_soiling_loss_percent: Final[float] = OUTPUT(label='POA front-side soiling loss', units='%', type='NUMBER', group='Loss', required='*')
     annual_poa_cover_loss_percent: Final[float] = OUTPUT(label='POA front-side reflection (IAM) loss', units='%', type='NUMBER', group='Loss', required='*')
     annual_poa_rear_gain_percent: Final[float] = OUTPUT(label='POA rear-side bifacial gain', units='%', type='NUMBER', group='Loss', required='*')
-    annual_dc_module_loss_percent: Final[float] = OUTPUT(label='DC module modeled loss', units='%', type='NUMBER', group='Loss', required='*')
+    annual_dc_module_loss_percent: Final[float] = OUTPUT(label='DC module deviation from STC', units='%', type='NUMBER', group='Loss', required='*')
     annual_dc_snow_loss_percent: Final[float] = OUTPUT(label='DC snow loss', units='%', type='NUMBER', group='Loss', required='*')
     annual_dc_mppt_clip_loss_percent: Final[float] = OUTPUT(label='DC inverter MPPT clipping loss', units='%', type='NUMBER', group='Loss', required='*')
     annual_dc_mismatch_loss_percent: Final[float] = OUTPUT(label='DC mismatch loss', units='%', type='NUMBER', group='Loss', required='*')
@@ -1508,6 +1555,7 @@ class Data(ssc.DataDict):
     annual_ac_perf_adj_loss_percent: Final[float] = OUTPUT(label='AC performance adjustment loss', units='%', type='NUMBER', group='Loss', required='*')
     annual_ac_wiring_loss: Final[float] = OUTPUT(label='AC wiring loss', units='kWh', type='NUMBER', group='Annual (Year 1)', required='*')
     annual_transmission_loss: Final[float] = OUTPUT(label='Transmission loss', units='kWh', type='NUMBER', group='Annual (Year 1)', required='*')
+    annual_total_loss_percent: Final[float] = OUTPUT(label='PV System Loss, from Nominal POA to Net AC', units='kWh', type='NUMBER', group='Annual (Year 1)', required='*')
     _6par_a: Final[float] = OUTPUT(name='6par_a', label='CEC 6-parameter: a', type='NUMBER', group='Module CEC 6-parameter model parameters', required='*')
     _6par_Io: Final[float] = OUTPUT(name='6par_Io', label='CEC 6-parameter: Io', type='NUMBER', group='Module CEC 6-parameter model parameters', required='*')
     _6par_Il: Final[float] = OUTPUT(name='6par_Il', label='CEC 6-parameter: Il', type='NUMBER', group='Module CEC 6-parameter model parameters', required='*')
@@ -1517,109 +1565,127 @@ class Data(ssc.DataDict):
     performance_ratio: Final[float] = OUTPUT(label='Performance ratio', type='NUMBER', group='Annual (Year 1)', required='*')
     capacity_factor: Final[float] = OUTPUT(label='Capacity factor', units='%', type='NUMBER', group='Annual (Year 1)', required='*')
     capacity_factor_ac: Final[float] = OUTPUT(label='Capacity factor based on AC system capacity', units='%', type='NUMBER', group='Annual (Year 1)', required='*')
-    kwh_per_kw: Final[float] = OUTPUT(label='First year kWh(AC)/kW(DC)', units='kWh/kW', type='NUMBER', group='Annual (Year 1)', required='*')
+    kwh_per_kw: Final[float] = OUTPUT(label='Energy yield', units='kWh/kW', type='NUMBER', group='Annual (Year 1)', required='*')
     ts_shift_hours: Final[float] = OUTPUT(label='Sun position time offset', units='hours', type='NUMBER', group='Miscellaneous', required='*')
     nameplate_dc_rating: Final[float] = OUTPUT(label='System nameplate DC rating', units='kW', type='NUMBER', group='Miscellaneous', required='*')
-    adjust_constant: float = INPUT(name='adjust:constant', label='Constant loss adjustment', units='%', type='NUMBER', group='Loss Adjustments', required='*', constraints='MAX=100')
-    adjust_hourly: Array = INPUT(name='adjust:hourly', label='Hourly loss adjustments', units='%', type='ARRAY', group='Loss Adjustments', required='?', constraints='LENGTH=8760')
-    adjust_periods: Matrix = INPUT(name='adjust:periods', label='Period-based loss adjustments', units='%', type='MATRIX', group='Loss Adjustments', required='?', constraints='COLS=3', meta='n x 3 matrix [ start, end, loss ]')
-    dc_adjust_constant: float = INPUT(name='dc_adjust:constant', label='DC Constant loss adjustment', units='%', type='NUMBER', group='Loss Adjustments', constraints='MAX=100')
-    dc_adjust_hourly: Array = INPUT(name='dc_adjust:hourly', label='DC Hourly loss adjustments', units='%', type='ARRAY', group='Loss Adjustments', constraints='LENGTH=8760')
-    dc_adjust_periods: Matrix = INPUT(name='dc_adjust:periods', label='DC Period-based loss adjustments', units='%', type='MATRIX', group='Loss Adjustments', constraints='COLS=3', meta='n x 3 matrix [ start, end, loss ]')
+    adjust_constant: float = INPUT(name='adjust:constant', label='Constant loss adjustment', units='%', type='NUMBER', group='Adjustment Factors', required='*', constraints='MAX=100')
+    adjust_hourly: Array = INPUT(name='adjust:hourly', label='Hourly Adjustment Factors', units='%', type='ARRAY', group='Adjustment Factors', required='?', constraints='LENGTH=8760')
+    adjust_periods: Matrix = INPUT(name='adjust:periods', label='Period-based Adjustment Factors', units='%', type='MATRIX', group='Adjustment Factors', required='?', constraints='COLS=3', meta='n x 3 matrix [ start, end, loss ]')
+    dc_adjust_constant: float = INPUT(name='dc_adjust:constant', label='DC Constant loss adjustment', units='%', type='NUMBER', group='Adjustment Factors', constraints='MAX=100')
+    dc_adjust_hourly: Array = INPUT(name='dc_adjust:hourly', label='DC Hourly Adjustment Factors', units='%', type='ARRAY', group='Adjustment Factors', constraints='LENGTH=8760')
+    dc_adjust_periods: Matrix = INPUT(name='dc_adjust:periods', label='DC Period-based Adjustment Factors', units='%', type='MATRIX', group='Adjustment Factors', constraints='COLS=3', meta='n x 3 matrix [ start, end, loss ]')
     gen: Final[Array] = OUTPUT(label='System power generated', units='kW', type='ARRAY', group='Time Series', required='*')
-    batt_chem: float = INPUT(label='Battery chemistry', type='NUMBER', group='Battery', meta='0=LeadAcid,1=LiIon')
-    inv_snl_eff_cec: float = INPUT(label='Inverter Sandia CEC Efficiency', units='%', type='NUMBER', group='pvsamv1')
-    inv_pd_eff: float = INPUT(label='Inverter Partload Efficiency', units='%', type='NUMBER', group='pvsamv1')
-    inv_cec_cg_eff_cec: float = INPUT(label='Inverter Coefficient Generator CEC Efficiency', units='%', type='NUMBER', group='pvsamv1')
-    batt_ac_or_dc: float = INPUT(label='Battery interconnection (AC or DC)', type='NUMBER', group='Battery', meta='0=DC_Connected,1=AC_Connected')
-    batt_dc_dc_efficiency: float = INPUT(label='PV DC to battery DC efficiency', type='NUMBER', group='Battery')
-    batt_dc_ac_efficiency: float = INPUT(label='Battery DC to AC efficiency', type='NUMBER', group='Battery')
-    batt_ac_dc_efficiency: float = INPUT(label='Inverter AC to battery DC efficiency', type='NUMBER', group='Battery')
-    batt_meter_position: float = INPUT(label='Position of battery relative to electric meter', type='NUMBER', group='Battery', meta='0=BehindTheMeter,1=FrontOfMeter')
-    batt_losses: Array = INPUT(label='Battery system losses at each timestep', units='kW', type='ARRAY', group='Battery', required='?=0')
-    batt_losses_charging: Array = INPUT(label='Battery system losses when charging', units='kW', type='ARRAY', group='Battery', required='?=0')
-    batt_losses_discharging: Array = INPUT(label='Battery system losses when discharging', units='kW', type='ARRAY', group='Battery', required='?=0')
-    batt_losses_idle: Array = INPUT(label='Battery system losses when idle', units='kW', type='ARRAY', group='Battery', required='?=0')
-    batt_loss_choice: float = INPUT(label='Loss power input option', units='0/1', type='NUMBER', group='Battery', required='?=0', meta='0=Monthly,1=TimeSeries')
-    batt_current_choice: float = INPUT(label='Limit cells by current or power', type='NUMBER', group='Battery')
-    batt_computed_strings: float = INPUT(label='Number of strings of cells', type='NUMBER', group='Battery')
-    batt_computed_series: float = INPUT(label='Number of cells in series', type='NUMBER', group='Battery')
-    batt_computed_bank_capacity: float = INPUT(label='Computed bank capacity', units='kWh', type='NUMBER', group='Battery')
-    batt_current_charge_max: float = INPUT(label='Maximum charge current', units='A', type='NUMBER', group='Battery')
-    batt_current_discharge_max: float = INPUT(label='Maximum discharge current', units='A', type='NUMBER', group='Battery')
-    batt_power_charge_max: float = INPUT(label='Maximum charge power', units='kW', type='NUMBER', group='Battery')
-    batt_power_discharge_max: float = INPUT(label='Maximum discharge power', units='kW', type='NUMBER', group='Battery')
-    batt_voltage_choice: float = INPUT(label='Battery voltage input option', units='0/1', type='NUMBER', group='Battery', required='?=0', meta='0=UseVoltageModel,1=InputVoltageTable')
-    batt_Vfull: float = INPUT(label='Fully charged cell voltage', units='V', type='NUMBER', group='Battery')
-    batt_Vexp: float = INPUT(label='Cell voltage at end of exponential zone', units='V', type='NUMBER', group='Battery')
-    batt_Vnom: float = INPUT(label='Cell voltage at end of nominal zone', units='V', type='NUMBER', group='Battery')
-    batt_Vnom_default: float = INPUT(label='Default nominal cell voltage', units='V', type='NUMBER', group='Battery')
-    batt_Qfull: float = INPUT(label='Fully charged cell capacity', units='Ah', type='NUMBER', group='Battery')
-    batt_Qfull_flow: float = INPUT(label='Fully charged flow battery capacity', units='Ah', type='NUMBER', group='Battery')
-    batt_Qexp: float = INPUT(label='Cell capacity at end of exponential zone', units='Ah', type='NUMBER', group='Battery')
-    batt_Qnom: float = INPUT(label='Cell capacity at end of nominal zone', units='Ah', type='NUMBER', group='Battery')
-    batt_C_rate: float = INPUT(label='Rate at which voltage vs. capacity curve input', type='NUMBER', group='Battery')
-    batt_resistance: float = INPUT(label='Internal resistance', units='Ohm', type='NUMBER', group='Battery')
-    batt_voltage_matrix: Matrix = INPUT(label='Battery voltage vs. depth-of-discharge', type='MATRIX', group='Battery')
-    LeadAcid_q20_computed: float = INPUT(label='Capacity at 20-hour discharge rate', units='Ah', type='NUMBER', group='Battery')
-    LeadAcid_q10_computed: float = INPUT(label='Capacity at 10-hour discharge rate', units='Ah', type='NUMBER', group='Battery')
-    LeadAcid_qn_computed: float = INPUT(label='Capacity at discharge rate for n-hour rate', units='Ah', type='NUMBER', group='Battery')
-    LeadAcid_tn: float = INPUT(label='Time to discharge', units='h', type='NUMBER', group='Battery')
-    batt_initial_SOC: float = INPUT(label='Initial state-of-charge', units='%', type='NUMBER', group='Battery')
-    batt_minimum_SOC: float = INPUT(label='Minimum allowed state-of-charge', units='%', type='NUMBER', group='Battery')
-    batt_maximum_SOC: float = INPUT(label='Maximum allowed state-of-charge', units='%', type='NUMBER', group='Battery')
-    batt_minimum_modetime: float = INPUT(label='Minimum time at charge state', units='min', type='NUMBER', group='Battery')
-    batt_lifetime_matrix: Matrix = INPUT(label='Cycles vs capacity at different depths-of-discharge', type='MATRIX', group='Battery')
-    batt_calendar_choice: float = INPUT(label='Calendar life degradation input option', units='0/1/2', type='NUMBER', group='Battery', meta='0=NoCalendarDegradation,1=LithiomIonModel,2=InputLossTable')
-    batt_calendar_lifetime_matrix: Matrix = INPUT(label='Days vs capacity', type='MATRIX', group='Battery')
-    batt_calendar_q0: float = INPUT(label='Calendar life model initial capacity cofficient', type='NUMBER', group='Battery')
-    batt_calendar_a: float = INPUT(label='Calendar life model coefficient', units='1/sqrt(day)', type='NUMBER', group='Battery')
-    batt_calendar_b: float = INPUT(label='Calendar life model coefficient', units='K', type='NUMBER', group='Battery')
-    batt_calendar_c: float = INPUT(label='Calendar life model coefficient', units='K', type='NUMBER', group='Battery')
-    batt_replacement_capacity: float = INPUT(label='Capacity degradation at which to replace battery', units='%', type='NUMBER', group='Battery')
-    batt_replacement_option: float = INPUT(label='Enable battery replacement?', units='0=none,1=capacity based,2=user schedule', type='NUMBER', group='Battery', required='?=0', constraints='INTEGER,MIN=0,MAX=2')
-    batt_replacement_schedule: Array = INPUT(label='Battery bank replacements per year (user specified)', units='number/year', type='ARRAY', group='Battery', required='batt_replacement_option=2')
-    batt_replacement_cost: float = INPUT(label='Cost to replace battery per kWh', units='$/kWh', type='NUMBER', group='Battery')
-    batt_mass: float = INPUT(label='Battery mass', units='kg', type='NUMBER', group='Battery')
-    batt_length: float = INPUT(label='Battery length', units='m', type='NUMBER', group='Battery')
-    batt_width: float = INPUT(label='Battery width', units='m', type='NUMBER', group='Battery')
-    batt_height: float = INPUT(label='Battery height', units='m', type='NUMBER', group='Battery')
-    batt_Cp: float = INPUT(label='Battery specific heat capacity', units='J/KgK', type='NUMBER', group='Battery')
-    batt_h_to_ambient: float = INPUT(label='Heat transfer between battery and environment', units='W/m2K', type='NUMBER', group='Battery')
-    T_room: float = INPUT(label='Temperature of storage room', units='C', type='NUMBER', group='Battery')
-    cap_vs_temp: Matrix = INPUT(label='Effective capacity as function of temperature', units='C,%', type='MATRIX', group='Battery')
-    dispatch_manual_charge: Array = INPUT(label='Periods 1-6 charging allowed?', type='ARRAY', group='Battery', required='en_batt=1&batt_dispatch_choice=4')
-    dispatch_manual_discharge: Array = INPUT(label='Periods 1-6 discharging allowed?', type='ARRAY', group='Battery', required='en_batt=1&batt_dispatch_choice=4')
-    dispatch_manual_gridcharge: Array = INPUT(label='Periods 1-6 grid charging allowed?', type='ARRAY', group='Battery', required='en_batt=1&batt_dispatch_choice=4')
-    dispatch_manual_percent_discharge: Array = INPUT(label='Periods 1-6 discharge percent', units='%', type='ARRAY', group='Battery', required='en_batt=1&batt_dispatch_choice=4')
-    dispatch_manual_percent_gridcharge: Array = INPUT(label='Periods 1-6 gridcharge percent', units='%', type='ARRAY', group='Battery', required='en_batt=1&batt_dispatch_choice=4')
-    dispatch_manual_sched: Matrix = INPUT(label='Battery dispatch schedule for weekday', type='MATRIX', group='Battery', required='en_batt=1&batt_dispatch_choice=4')
-    dispatch_manual_sched_weekend: Matrix = INPUT(label='Battery dispatch schedule for weekend', type='MATRIX', group='Battery', required='en_batt=1&batt_dispatch_choice=4')
-    batt_target_power: Array = INPUT(label='Grid target power (AC) for every time step', units='kWac', type='ARRAY', group='Battery', required='en_batt=1&batt_meter_position=0&batt_dispatch_choice=2')
-    batt_target_power_monthly: Array = INPUT(label='Grid target power (AC) on monthly basis', units='kWac', type='ARRAY', group='Battery', required='en_batt=1&batt_meter_position=0&batt_dispatch_choice=2')
-    batt_target_choice: float = INPUT(label='Target power input option', units='0/1', type='NUMBER', group='Battery', required='en_batt=1&batt_meter_position=0&batt_dispatch_choice=2', meta='0=InputMonthlyTarget,1=InputFullTimeSeries')
-    batt_custom_dispatch: Array = INPUT(label='Custom battery power (DC) for every time step', units='kWdc', type='ARRAY', group='Battery', required='en_batt=1&batt_dispatch_choice=3')
-    batt_dispatch_choice: float = INPUT(label='Battery dispatch algorithm', units='0/1/2/3/4', type='NUMBER', group='Battery', required='en_batt=1', meta='If behind the meter: 0=PeakShavingLookAhead,1=PeakShavingLookBehind,2=InputGridTarget,3=InputBatteryPower,4=ManualDispatch, if front of meter: 0=AutomatedLookAhead,1=AutomatedLookBehind,2=AutomatedInputForecast,3=InputBatteryPower,4=ManualDispatch')
-    batt_pv_clipping_forecast: Array = INPUT(label='PV clipping forecast', units='kW', type='ARRAY', group='Battery', required='en_batt=1&batt_meter_position=1&batt_dispatch_choice=2')
-    batt_pv_dc_forecast: Array = INPUT(label='PV dc power forecast', units='kW', type='ARRAY', group='Battery', required='en_batt=1&batt_meter_position=1&batt_dispatch_choice=2')
-    batt_dispatch_auto_can_gridcharge: float = INPUT(label='Grid charging allowed for automated dispatch?', units='kW', type='NUMBER', group='Battery')
-    batt_dispatch_auto_can_charge: float = INPUT(label='PV charging allowed for automated dispatch?', units='kW', type='NUMBER', group='Battery')
-    batt_dispatch_auto_can_clipcharge: float = INPUT(label='Battery can charge from clipped PV for automated dispatch?', units='kW', type='NUMBER', group='Battery')
-    batt_auto_gridcharge_max_daily: float = INPUT(label='Allowed grid charging percent per day for automated dispatch', units='kW', type='NUMBER', group='Battery')
-    batt_look_ahead_hours: float = INPUT(label='Hours to look ahead in automated dispatch', units='hours', type='NUMBER', group='Battery')
-    batt_dispatch_update_frequency_hours: float = INPUT(label='Frequency to update the look-ahead dispatch', units='hours', type='NUMBER', group='Battery')
-    batt_cycle_cost_choice: float = INPUT(label='Use SAM model for cycle costs or input custom', units='0/1', type='NUMBER', group='Battery', meta='0=UseCostModel,1=InputCost')
-    batt_cycle_cost: float = INPUT(label='Input battery cycle costs', units='$/cycle-kWh', type='NUMBER', group='Battery')
-    en_electricity_rates: float = INPUT(label='Enable Electricity Rates', type='NUMBER', group='0=EnableElectricityRates,1=NoRates', meta='0/1')
-    ur_ec_sched_weekday: Matrix = INPUT(label='Energy charge weekday schedule', type='MATRIX', required='en_batt=1&batt_meter_position=1&batt_dispatch_choice=2', meta='12 x 24 matrix')
-    ur_ec_sched_weekend: Matrix = INPUT(label='Energy charge weekend schedule', type='MATRIX', required='en_batt=1&batt_meter_position=1&batt_dispatch_choice=2', meta='12 x 24 matrix')
-    ur_ec_tou_mat: Matrix = INPUT(label='Energy rates table', type='MATRIX', required='en_batt=1&batt_meter_position=1&batt_dispatch_choice=2')
-    ppa_price_input: float = INPUT(label='PPA Price Input', type='NUMBER', group='Time of Delivery', required='en_batt=1&batt_meter_position=1&batt_dispatch_choice=2')
-    ppa_multiplier_model: float = INPUT(label='PPA multiplier model', units='0/1', type='NUMBER', group='Time of Delivery', required='?=0', constraints='INTEGER,MIN=0', meta='0=diurnal,1=timestep')
-    dispatch_factors_ts: Array = INPUT(label='Dispatch payment factor time step', type='ARRAY', group='Time of Delivery', required='en_batt=1&batt_meter_position=1&batt_dispatch_choice=2&ppa_multiplier_model=1')
-    dispatch_tod_factors: Array = INPUT(label='TOD factors for periods 1-9', type='ARRAY', group='Time of Delivery', required='en_batt=1&batt_meter_position=1&batt_dispatch_choice=2&ppa_multiplier_model=0')
-    dispatch_sched_weekday: Matrix = INPUT(label='Diurnal weekday TOD periods', units='1..9', type='MATRIX', group='Time of Delivery', required='en_batt=1&batt_meter_position=1&batt_dispatch_choice=2&ppa_multiplier_model=0', meta='12 x 24 matrix')
-    dispatch_sched_weekend: Matrix = INPUT(label='Diurnal weekend TOD periods', units='1..9', type='MATRIX', group='Time of Delivery', required='en_batt=1&batt_meter_position=1&batt_dispatch_choice=2&ppa_multiplier_model=0', meta='12 x 24 matrix')
+    batt_chem: float = INPUT(label='Battery chemistry', type='NUMBER', group='BatteryCell', meta='0=LeadAcid,1=LiIon')
+    inv_snl_eff_cec: float = INPUT(label='Inverter Sandia CEC Efficiency', units='%', type='NUMBER', group='Inverter')
+    inv_pd_eff: float = INPUT(label='Inverter Partload Efficiency', units='%', type='NUMBER', group='Inverter')
+    inv_cec_cg_eff_cec: float = INPUT(label='Inverter Coefficient Generator CEC Efficiency', units='%', type='NUMBER', group='Inverter')
+    batt_ac_or_dc: float = INPUT(label='Battery interconnection (AC or DC)', type='NUMBER', group='BatterySystem', meta='0=DC_Connected,1=AC_Connected')
+    batt_dc_dc_efficiency: float = INPUT(label='System DC to battery DC efficiency', type='NUMBER', group='BatterySystem')
+    batt_dc_ac_efficiency: float = INPUT(label='Battery DC to AC efficiency', type='NUMBER', group='BatterySystem')
+    batt_ac_dc_efficiency: float = INPUT(label='Inverter AC to battery DC efficiency', type='NUMBER', group='BatterySystem')
+    batt_meter_position: float = INPUT(label='Position of battery relative to electric meter', type='NUMBER', group='BatterySystem', meta='0=BehindTheMeter,1=FrontOfMeter')
+    batt_inverter_efficiency_cutoff: float = INPUT(label='Inverter efficiency at which to cut battery charge or discharge off', units='%', type='NUMBER', group='BatterySystem')
+    batt_losses: Array = INPUT(label='Battery system losses at each timestep', units='kW', type='ARRAY', group='BatterySystem', required='?=0')
+    batt_losses_charging: Array = INPUT(label='Battery system losses when charging', units='kW', type='ARRAY', group='BatterySystem', required='?=0')
+    batt_losses_discharging: Array = INPUT(label='Battery system losses when discharging', units='kW', type='ARRAY', group='BatterySystem', required='?=0')
+    batt_losses_idle: Array = INPUT(label='Battery system losses when idle', units='kW', type='ARRAY', group='BatterySystem', required='?=0')
+    batt_loss_choice: float = INPUT(label='Loss power input option', units='0/1', type='NUMBER', group='BatterySystem', required='?=0', meta='0=Monthly,1=TimeSeries')
+    batt_current_choice: float = INPUT(label='Limit cells by current or power', type='NUMBER', group='BatterySystem')
+    batt_computed_strings: float = INPUT(label='Number of strings of cells', type='NUMBER', group='BatterySystem')
+    batt_computed_series: float = INPUT(label='Number of cells in series', type='NUMBER', group='BatterySystem')
+    batt_computed_bank_capacity: float = INPUT(label='Computed bank capacity', units='kWh', type='NUMBER', group='BatterySystem')
+    batt_current_charge_max: float = INPUT(label='Maximum charge current', units='A', type='NUMBER', group='BatterySystem')
+    batt_current_discharge_max: float = INPUT(label='Maximum discharge current', units='A', type='NUMBER', group='BatterySystem')
+    batt_power_charge_max_kwdc: float = INPUT(label='Maximum charge power (DC)', units='kWdc', type='NUMBER', group='BatterySystem')
+    batt_power_discharge_max_kwdc: float = INPUT(label='Maximum discharge power (DC)', units='kWdc', type='NUMBER', group='BatterySystem')
+    batt_power_charge_max_kwac: float = INPUT(label='Maximum charge power (AC)', units='kWac', type='NUMBER', group='BatterySystem')
+    batt_power_discharge_max_kwac: float = INPUT(label='Maximum discharge power (AC)', units='kWac', type='NUMBER', group='BatterySystem')
+    batt_voltage_choice: float = INPUT(label='Battery voltage input option', units='0/1', type='NUMBER', group='BatteryCell', required='?=0', meta='0=UseVoltageModel,1=InputVoltageTable')
+    batt_Vfull: float = INPUT(label='Fully charged cell voltage', units='V', type='NUMBER', group='BatteryCell')
+    batt_Vexp: float = INPUT(label='Cell voltage at end of exponential zone', units='V', type='NUMBER', group='BatteryCell')
+    batt_Vnom: float = INPUT(label='Cell voltage at end of nominal zone', units='V', type='NUMBER', group='BatteryCell')
+    batt_Vnom_default: float = INPUT(label='Default nominal cell voltage', units='V', type='NUMBER', group='BatteryCell')
+    batt_Qfull: float = INPUT(label='Fully charged cell capacity', units='Ah', type='NUMBER', group='BatteryCell')
+    batt_Qfull_flow: float = INPUT(label='Fully charged flow battery capacity', units='Ah', type='NUMBER', group='BatteryCell')
+    batt_Qexp: float = INPUT(label='Cell capacity at end of exponential zone', units='Ah', type='NUMBER', group='BatteryCell')
+    batt_Qnom: float = INPUT(label='Cell capacity at end of nominal zone', units='Ah', type='NUMBER', group='BatteryCell')
+    batt_C_rate: float = INPUT(label='Rate at which voltage vs. capacity curve input', type='NUMBER', group='BatteryCell')
+    batt_resistance: float = INPUT(label='Internal resistance', units='Ohm', type='NUMBER', group='BatteryCell')
+    batt_voltage_matrix: Matrix = INPUT(label='Battery voltage vs. depth-of-discharge', type='MATRIX', group='BatteryCell')
+    LeadAcid_q20_computed: float = INPUT(label='Capacity at 20-hour discharge rate', units='Ah', type='NUMBER', group='BatteryCell')
+    LeadAcid_q10_computed: float = INPUT(label='Capacity at 10-hour discharge rate', units='Ah', type='NUMBER', group='BatteryCell')
+    LeadAcid_qn_computed: float = INPUT(label='Capacity at discharge rate for n-hour rate', units='Ah', type='NUMBER', group='BatteryCell')
+    LeadAcid_tn: float = INPUT(label='Time to discharge', units='h', type='NUMBER', group='BatteryCell')
+    batt_initial_SOC: float = INPUT(label='Initial state-of-charge', units='%', type='NUMBER', group='BatteryCell')
+    batt_minimum_SOC: float = INPUT(label='Minimum allowed state-of-charge', units='%', type='NUMBER', group='BatteryCell')
+    batt_maximum_SOC: float = INPUT(label='Maximum allowed state-of-charge', units='%', type='NUMBER', group='BatteryCell')
+    batt_minimum_modetime: float = INPUT(label='Minimum time at charge state', units='min', type='NUMBER', group='BatteryCell')
+    batt_lifetime_matrix: Matrix = INPUT(label='Cycles vs capacity at different depths-of-discharge', type='MATRIX', group='BatteryCell')
+    batt_calendar_choice: float = INPUT(label='Calendar life degradation input option', units='0/1/2', type='NUMBER', group='BatteryCell', meta='0=NoCalendarDegradation,1=LithiomIonModel,2=InputLossTable')
+    batt_calendar_lifetime_matrix: Matrix = INPUT(label='Days vs capacity', type='MATRIX', group='BatteryCell')
+    batt_calendar_q0: float = INPUT(label='Calendar life model initial capacity cofficient', type='NUMBER', group='BatteryCell')
+    batt_calendar_a: float = INPUT(label='Calendar life model coefficient', units='1/sqrt(day)', type='NUMBER', group='BatteryCell')
+    batt_calendar_b: float = INPUT(label='Calendar life model coefficient', units='K', type='NUMBER', group='BatteryCell')
+    batt_calendar_c: float = INPUT(label='Calendar life model coefficient', units='K', type='NUMBER', group='BatteryCell')
+    batt_replacement_capacity: float = INPUT(label='Capacity degradation at which to replace battery', units='%', type='NUMBER', group='BatterySystem')
+    batt_replacement_option: float = INPUT(label='Enable battery replacement?', units='0=none,1=capacity based,2=user schedule', type='NUMBER', group='BatterySystem', required='?=0', constraints='INTEGER,MIN=0,MAX=2')
+    batt_replacement_schedule: Array = INPUT(label='Battery bank number of replacements in each year', units='number/year', type='ARRAY', group='BatterySystem', required='batt_replacement_option=2', meta='length <= analysis_period')
+    batt_replacement_schedule_percent: Array = INPUT(label='Percentage of battery capacity to replace in each year', units='%', type='ARRAY', group='BatterySystem', required='batt_replacement_option=2', meta='length <= analysis_period')
+    om_replacement_cost1: Array = INPUT(label='Cost to replace battery per kWh', units='$/kWh', type='ARRAY', group='BatterySystem')
+    batt_mass: float = INPUT(label='Battery mass', units='kg', type='NUMBER', group='BatterySystem')
+    batt_surface_area: float = INPUT(label='Battery surface area', units='m^2', type='NUMBER', group='BatterySystem')
+    batt_Cp: float = INPUT(label='Battery specific heat capacity', units='J/KgK', type='NUMBER', group='BatteryCell')
+    batt_h_to_ambient: float = INPUT(label='Heat transfer between battery and environment', units='W/m2K', type='NUMBER', group='BatteryCell')
+    batt_room_temperature_celsius: Array = INPUT(label='Temperature of storage room', units='C', type='ARRAY', group='BatteryCell')
+    cap_vs_temp: Matrix = INPUT(label='Effective capacity as function of temperature', units='C,%', type='MATRIX', group='BatteryCell')
+    dispatch_manual_charge: Array = INPUT(label='Periods 1-6 charging from system allowed?', type='ARRAY', group='BatteryDispatch', required='en_batt=1&batt_dispatch_choice=4')
+    dispatch_manual_fuelcellcharge: Array = INPUT(label='Periods 1-6 charging from fuel cell allowed?', type='ARRAY', group='BatteryDispatch')
+    dispatch_manual_discharge: Array = INPUT(label='Periods 1-6 discharging allowed?', type='ARRAY', group='BatteryDispatch', required='en_batt=1&batt_dispatch_choice=4')
+    dispatch_manual_gridcharge: Array = INPUT(label='Periods 1-6 grid charging allowed?', type='ARRAY', group='BatteryDispatch', required='en_batt=1&batt_dispatch_choice=4')
+    dispatch_manual_percent_discharge: Array = INPUT(label='Periods 1-6 discharge percent', units='%', type='ARRAY', group='BatteryDispatch', required='en_batt=1&batt_dispatch_choice=4')
+    dispatch_manual_percent_gridcharge: Array = INPUT(label='Periods 1-6 gridcharge percent', units='%', type='ARRAY', group='BatteryDispatch', required='en_batt=1&batt_dispatch_choice=4')
+    dispatch_manual_sched: Matrix = INPUT(label='Battery dispatch schedule for weekday', type='MATRIX', group='BatteryDispatch', required='en_batt=1&batt_dispatch_choice=4')
+    dispatch_manual_sched_weekend: Matrix = INPUT(label='Battery dispatch schedule for weekend', type='MATRIX', group='BatteryDispatch', required='en_batt=1&batt_dispatch_choice=4')
+    batt_target_power: Array = INPUT(label='Grid target power for every time step', units='kW', type='ARRAY', group='BatteryDispatch', required='en_batt=1&batt_meter_position=0&batt_dispatch_choice=2')
+    batt_target_power_monthly: Array = INPUT(label='Grid target power on monthly basis', units='kW', type='ARRAY', group='BatteryDispatch', required='en_batt=1&batt_meter_position=0&batt_dispatch_choice=2')
+    batt_target_choice: float = INPUT(label='Target power input option', units='0/1', type='NUMBER', group='BatteryDispatch', required='en_batt=1&batt_meter_position=0&batt_dispatch_choice=2', meta='0=InputMonthlyTarget,1=InputFullTimeSeries')
+    batt_custom_dispatch: Array = INPUT(label='Custom battery power for every time step', units='kW', type='ARRAY', group='BatteryDispatch', required='en_batt=1&batt_dispatch_choice=3', meta='kWAC if AC-connected, else kWDC')
+    batt_dispatch_choice: float = INPUT(label='Battery dispatch algorithm', units='0/1/2/3/4', type='NUMBER', group='BatteryDispatch', required='en_batt=1', meta='If behind the meter: 0=PeakShavingLookAhead,1=PeakShavingLookBehind,2=InputGridTarget,3=InputBatteryPower,4=ManualDispatch, if front of meter: 0=AutomatedLookAhead,1=AutomatedLookBehind,2=AutomatedInputForecast,3=InputBatteryPower,4=ManualDispatch')
+    batt_pv_clipping_forecast: Array = INPUT(label='Power clipping forecast', units='kW', type='ARRAY', group='BatteryDispatch', required='en_batt=1&batt_meter_position=1&batt_dispatch_choice=2')
+    batt_pv_dc_forecast: Array = INPUT(label='DC power forecast', units='kW', type='ARRAY', group='BatteryDispatch', required='en_batt=1&batt_meter_position=1&batt_dispatch_choice=2')
+    batt_dispatch_auto_can_fuelcellcharge: float = INPUT(label='Charging from fuel cell allowed for automated dispatch?', units='kW', type='NUMBER', group='BatteryDispatch')
+    batt_dispatch_auto_can_gridcharge: float = INPUT(label='Grid charging allowed for automated dispatch?', units='kW', type='NUMBER', group='BatteryDispatch')
+    batt_dispatch_auto_can_charge: float = INPUT(label='System charging allowed for automated dispatch?', units='kW', type='NUMBER', group='BatteryDispatch')
+    batt_dispatch_auto_can_clipcharge: float = INPUT(label='Battery can charge from clipped power for automated dispatch?', units='kW', type='NUMBER', group='BatteryDispatch')
+    batt_auto_gridcharge_max_daily: float = INPUT(label='Allowed grid charging percent per day for automated dispatch', units='kW', type='NUMBER', group='BatteryDispatch')
+    batt_look_ahead_hours: float = INPUT(label='Hours to look ahead in automated dispatch', units='hours', type='NUMBER', group='BatteryDispatch')
+    batt_dispatch_update_frequency_hours: float = INPUT(label='Frequency to update the look-ahead dispatch', units='hours', type='NUMBER', group='BatteryDispatch')
+    batt_cycle_cost_choice: float = INPUT(label='Use SAM model for cycle costs or input custom', units='0/1', type='NUMBER', group='BatterySystem', meta='0=UseCostModel,1=InputCost')
+    batt_cycle_cost: float = INPUT(label='Input battery cycle costs', units='$/cycle-kWh', type='NUMBER', group='BatterySystem')
+    en_electricity_rates: float = INOUT(label='Enable Electricity Rates', units='0/1', type='NUMBER', group='Electricity Rates', meta='0=EnableElectricityRates,1=NoRates')
+    ur_en_ts_sell_rate: float = INPUT(label='Enable time step sell rates', units='0/1', type='NUMBER', group='Electricity Rates', required='en_batt=1&batt_meter_position=1&batt_dispatch_choice=2', constraints='BOOLEAN')
+    ur_ts_buy_rate: Array = INPUT(label='Time step buy rates', units='0/1', type='ARRAY', group='Electricity Rates', required='en_batt=1&batt_meter_position=1&batt_dispatch_choice=2')
+    ur_ec_sched_weekday: Matrix = INPUT(label='Energy charge weekday schedule', type='MATRIX', group='Electricity Rates', required='en_batt=1&batt_meter_position=1&batt_dispatch_choice=2', meta='12 x 24 matrix')
+    ur_ec_sched_weekend: Matrix = INPUT(label='Energy charge weekend schedule', type='MATRIX', group='Electricity Rates', required='en_batt=1&batt_meter_position=1&batt_dispatch_choice=2', meta='12 x 24 matrix')
+    ur_ec_tou_mat: Matrix = INPUT(label='Energy rates table', type='MATRIX', group='Electricity Rates', required='en_batt=1&batt_meter_position=1&batt_dispatch_choice=2')
+    fuelcell_power: Array = INPUT(label='Electricity from fuel cell', units='kW', type='ARRAY', group='FuelCell')
+    forecast_price_signal_model: float = INPUT(label='Forecast price signal model selected', units='0/1', type='NUMBER', group='Price Signal', required='?=0', constraints='INTEGER,MIN=0,MAX=1', meta='0=PPA based,1=Merchant Plant')
+    ppa_price_input: Array = INPUT(label='PPA Price Input', type='ARRAY', group='Price Signal', required='forecast_price_signal_model=0&en_batt=1&batt_meter_position=1')
+    ppa_multiplier_model: float = INPUT(label='PPA multiplier model', units='0/1', type='NUMBER', group='Price Signal', required='forecast_price_signal_model=0&en_batt=1&batt_meter_position=1', constraints='INTEGER,MIN=0', meta='0=diurnal,1=timestep')
+    dispatch_factors_ts: Array = INPUT(label='Dispatch payment factor time step', type='ARRAY', group='Price Signal', required='forecast_price_signal_model=0&en_batt=1&batt_meter_position=1&ppa_multiplier_model=1')
+    dispatch_tod_factors: Array = INPUT(label='TOD factors for periods 1-9', type='ARRAY', group='Price Signal', required='en_batt=1&batt_meter_position=1&forecast_price_signal_model=0&ppa_multiplier_model=0')
+    dispatch_sched_weekday: Matrix = INPUT(label='Diurnal weekday TOD periods', units='1..9', type='MATRIX', group='Price Signal', required='en_batt=1&batt_meter_position=1&forecast_price_signal_model=0&ppa_multiplier_model=0', meta='12 x 24 matrix')
+    dispatch_sched_weekend: Matrix = INPUT(label='Diurnal weekend TOD periods', units='1..9', type='MATRIX', group='Price Signal', required='en_batt=1&batt_meter_position=1&forecast_price_signal_model=0&ppa_multiplier_model=0', meta='12 x 24 matrix')
+    mp_enable_energy_market_revenue: float = INPUT(label='Enable energy market revenue', units='0/1', type='NUMBER', group='Price Signal', required='en_batt=1&batt_meter_position=1&forecast_price_signal_model=1', constraints='INTEGER,MIN=0,MAX=1', meta='0=false,1=true')
+    mp_energy_market_revenue: Matrix = INPUT(label='Energy market revenue input', units=' [MW, $/MW]', type='MATRIX', group='Price Signal', required='en_batt=1&batt_meter_position=1&forecast_price_signal_model=1')
+    mp_enable_ancserv1: float = INPUT(label='Enable ancillary services 1 revenue', units='0/1', type='NUMBER', group='Price Signal', required='forecast_price_signal_model=1', constraints='INTEGER,MIN=0,MAX=1')
+    mp_ancserv1_revenue: Matrix = INPUT(label='Ancillary services 1 revenue input', units=' [MW, $/MW]', type='MATRIX', group='Price Signal', required='en_batt=1&batt_meter_position=1&forecast_price_signal_model=1')
+    mp_enable_ancserv2: float = INPUT(label='Enable ancillary services 2 revenue', units='0/1', type='NUMBER', group='Price Signal', required='forecast_price_signal_model=1', constraints='INTEGER,MIN=0,MAX=1')
+    mp_ancserv2_revenue: Matrix = INPUT(label='Ancillary services 2 revenue input', units=' [MW, $/MW]', type='MATRIX', group='Price Signal', required='en_batt=1&batt_meter_position=1&forecast_price_signal_model=1')
+    mp_enable_ancserv3: float = INPUT(label='Enable ancillary services 3 revenue', units='0/1', type='NUMBER', group='Price Signal', required='forecast_price_signal_model=1', constraints='INTEGER,MIN=0,MAX=1')
+    mp_ancserv3_revenue: Matrix = INPUT(label='Ancillary services 3 revenue input', units=' [MW, $/MW]', type='MATRIX', group='Price Signal', required='en_batt=1&batt_meter_position=1&forecast_price_signal_model=1')
+    mp_enable_ancserv4: float = INPUT(label='Enable ancillary services 4 revenue', units='0/1', type='NUMBER', group='Price Signal', required='forecast_price_signal_model=1', constraints='INTEGER,MIN=0,MAX=1')
+    mp_ancserv4_revenue: Matrix = INPUT(label='Ancillary services 4 revenue input', units=' [MW, $/MW]', type='MATRIX', group='Price Signal', required='en_batt=1&batt_meter_position=1&forecast_price_signal_model=1')
     batt_q0: Final[Array] = OUTPUT(label='Battery total charge', units='Ah', type='ARRAY', group='Battery')
     batt_q1: Final[Array] = OUTPUT(label='Battery available charge', units='Ah', type='ARRAY', group='Battery')
     batt_q2: Final[Array] = OUTPUT(label='Battery bound charge', units='Ah', type='ARRAY', group='Battery')
@@ -1634,17 +1700,20 @@ class Data(ssc.DataDict):
     batt_DOD_cycle_average: Final[Array] = OUTPUT(label='Battery average cycle DOD', type='ARRAY', group='Battery')
     batt_cycles: Final[Array] = OUTPUT(label='Battery number of cycles', type='ARRAY', group='Battery')
     batt_temperature: Final[Array] = OUTPUT(label='Battery temperature', units='C', type='ARRAY', group='Battery')
-    batt_capacity_percent: Final[Array] = OUTPUT(label='Battery capacity percent for lifetime', units='%', type='ARRAY', group='Battery')
+    batt_capacity_percent: Final[Array] = OUTPUT(label='Battery relative capacity to nameplate', units='%', type='ARRAY', group='Battery')
+    batt_capacity_percent_cycle: Final[Array] = OUTPUT(label='Battery relative capacity to nameplate (cycling)', units='%', type='ARRAY', group='Battery')
+    batt_capacity_percent_calendar: Final[Array] = OUTPUT(label='Battery relative capacity to nameplate (calendar)', units='%', type='ARRAY', group='Battery')
     batt_capacity_thermal_percent: Final[Array] = OUTPUT(label='Battery capacity percent for temperature', units='%', type='ARRAY', group='Battery')
     batt_bank_replacement: Final[Array] = OUTPUT(label='Battery bank replacements per year', units='number/year', type='ARRAY', group='Battery')
     batt_power: Final[Array] = OUTPUT(label='Electricity to/from battery', units='kW', type='ARRAY', group='Battery')
     grid_power: Final[Array] = OUTPUT(label='Electricity to/from grid', units='kW', type='ARRAY', group='Battery')
-    pv_to_load: Final[Array] = OUTPUT(label='Electricity to load from PV', units='kW', type='ARRAY', group='Battery')
+    pv_to_load: Final[Array] = OUTPUT(label='Electricity to load from system', units='kW', type='ARRAY', group='Battery')
     batt_to_load: Final[Array] = OUTPUT(label='Electricity to load from battery', units='kW', type='ARRAY', group='Battery')
     grid_to_load: Final[Array] = OUTPUT(label='Electricity to load from grid', units='kW', type='ARRAY', group='Battery')
-    pv_to_batt: Final[Array] = OUTPUT(label='Electricity to battery from PV', units='kW', type='ARRAY', group='Battery')
+    pv_to_batt: Final[Array] = OUTPUT(label='Electricity to battery from system', units='kW', type='ARRAY', group='Battery')
+    fuelcell_to_batt: Final[Array] = OUTPUT(label='Electricity to battery from fuel cell', units='kW', type='ARRAY', group='Battery')
     grid_to_batt: Final[Array] = OUTPUT(label='Electricity to battery from grid', units='kW', type='ARRAY', group='Battery')
-    pv_to_grid: Final[Array] = OUTPUT(label='Electricity to grid from PV', units='kW', type='ARRAY', group='Battery')
+    pv_to_grid: Final[Array] = OUTPUT(label='Electricity to grid from system', units='kW', type='ARRAY', group='Battery')
     batt_to_grid: Final[Array] = OUTPUT(label='Electricity to grid from battery', units='kW', type='ARRAY', group='Battery')
     batt_conversion_loss: Final[Array] = OUTPUT(label='Electricity loss in battery power electronics', units='kW', type='ARRAY', group='Battery')
     batt_system_loss: Final[Array] = OUTPUT(label='Electricity loss from battery ancillary equipment', units='kW', type='ARRAY', group='Battery')
@@ -1652,14 +1721,18 @@ class Data(ssc.DataDict):
     batt_power_target: Final[Array] = OUTPUT(label='Electricity battery power target for automated dispatch', units='kW', type='ARRAY', group='Battery')
     batt_cost_to_cycle: Final[Array] = OUTPUT(label='Battery computed cost to cycle', units='$/cycle', type='ARRAY', group='Battery')
     market_sell_rate_series_yr1: Final[Array] = OUTPUT(label='Market sell rate (Year 1)', units='$/MWh', type='ARRAY', group='Battery')
-    monthly_pv_to_load: Final[Array] = OUTPUT(label='Energy to load from PV', units='kWh', type='ARRAY', group='Battery', constraints='LENGTH=12')
+    batt_revenue_gridcharge: Final[Array] = OUTPUT(label='Revenue to charge from grid', units='$/kWh', type='ARRAY', group='Battery')
+    batt_revenue_charge: Final[Array] = OUTPUT(label='Revenue to charge from system', units='$/kWh', type='ARRAY', group='Battery')
+    batt_revenue_clipcharge: Final[Array] = OUTPUT(label='Revenue to charge from clipped', units='$/kWh', type='ARRAY', group='Battery')
+    batt_revenue_discharge: Final[Array] = OUTPUT(label='Revenue to discharge', units='$/kWh', type='ARRAY', group='Battery')
+    monthly_pv_to_load: Final[Array] = OUTPUT(label='Energy to load from system', units='kWh', type='ARRAY', group='Battery', constraints='LENGTH=12')
     monthly_batt_to_load: Final[Array] = OUTPUT(label='Energy to load from battery', units='kWh', type='ARRAY', group='Battery', constraints='LENGTH=12')
     monthly_grid_to_load: Final[Array] = OUTPUT(label='Energy to load from grid', units='kWh', type='ARRAY', group='Battery', constraints='LENGTH=12')
-    monthly_pv_to_grid: Final[Array] = OUTPUT(label='Energy to grid from PV', units='kWh', type='ARRAY', group='Battery', constraints='LENGTH=12')
+    monthly_pv_to_grid: Final[Array] = OUTPUT(label='Energy to grid from system', units='kWh', type='ARRAY', group='Battery', constraints='LENGTH=12')
     monthly_batt_to_grid: Final[Array] = OUTPUT(label='Energy to grid from battery', units='kWh', type='ARRAY', group='Battery', constraints='LENGTH=12')
-    monthly_pv_to_batt: Final[Array] = OUTPUT(label='Energy to battery from PV', units='kWh', type='ARRAY', group='Battery', constraints='LENGTH=12')
+    monthly_pv_to_batt: Final[Array] = OUTPUT(label='Energy to battery from system', units='kWh', type='ARRAY', group='Battery', constraints='LENGTH=12')
     monthly_grid_to_batt: Final[Array] = OUTPUT(label='Energy to battery from grid', units='kWh', type='ARRAY', group='Battery', constraints='LENGTH=12')
-    batt_annual_charge_from_pv: Final[Array] = OUTPUT(label='Battery annual energy charged from PV', units='kWh', type='ARRAY', group='Battery')
+    batt_annual_charge_from_pv: Final[Array] = OUTPUT(label='Battery annual energy charged from system', units='kWh', type='ARRAY', group='Battery')
     batt_annual_charge_from_grid: Final[Array] = OUTPUT(label='Battery annual energy charged from grid', units='kWh', type='ARRAY', group='Battery')
     batt_annual_charge_energy: Final[Array] = OUTPUT(label='Battery annual energy charged', units='kWh', type='ARRAY', group='Battery')
     batt_annual_discharge_energy: Final[Array] = OUTPUT(label='Battery annual energy discharged', units='kWh', type='ARRAY', group='Battery')
@@ -1669,9 +1742,18 @@ class Data(ssc.DataDict):
     annual_import_to_grid_energy: Final[Array] = OUTPUT(label='Annual energy imported from grid', units='kWh', type='ARRAY', group='Battery')
     average_battery_conversion_efficiency: Final[float] = OUTPUT(label='Battery average cycle conversion efficiency', units='%', type='NUMBER', group='Annual')
     average_battery_roundtrip_efficiency: Final[float] = OUTPUT(label='Battery average roundtrip efficiency', units='%', type='NUMBER', group='Annual')
-    batt_pv_charge_percent: Final[float] = OUTPUT(label='Battery percent energy charged from PV', units='%', type='NUMBER', group='Annual')
+    batt_pv_charge_percent: Final[float] = OUTPUT(label='Battery charge energy charged from system', units='%', type='NUMBER', group='Annual')
     batt_bank_installed_capacity: Final[float] = OUTPUT(label='Battery bank installed capacity', units='kWh', type='NUMBER', group='Annual')
     batt_dispatch_sched: Final[Matrix] = OUTPUT(label='Battery dispatch schedule', type='MATRIX', group='Battery')
+    resilience_hrs: Final[Array] = OUTPUT(label='Hours of autonomy during outage at each timestep for resilience', units='hr', type='ARRAY', group='Resilience')
+    resilience_hrs_min: Final[float] = OUTPUT(label='Min hours of autonomy for resilience ', units='hr', type='NUMBER', group='Resilience', constraints='MIN=0')
+    resilience_hrs_max: Final[float] = OUTPUT(label='Max hours of autonomy for resilience', units='hr', type='NUMBER', group='Resilience', constraints='MIN=0')
+    resilience_hrs_avg: Final[float] = OUTPUT(label='Avg hours of autonomy for resilience', units='hr', type='NUMBER', group='Resilience', constraints='MIN=0')
+    outage_durations: Final[Array] = OUTPUT(label='List of autonomous hours for resilience from min to max', units='hr', type='ARRAY', group='Resilience', meta='Hours from resilience_hrs_min to resilience_hrs_max')
+    pdf_of_surviving: Final[Array] = OUTPUT(label='Probabilities of autonomous hours for resilience ', type='ARRAY', group='Resilience', constraints='MIN=0,MAX=1', meta='Hours from resilience_hrs_min to resilience_hrs_max')
+    cdf_of_surviving: Final[Array] = OUTPUT(label='Cumulative probabilities of autonomous hours for resilience', type='ARRAY', group='Resilience', constraints='MIN=0,MAX=1', meta='Prob surviving at least x hrs; hrs from min to max')
+    survival_function: Final[Array] = OUTPUT(label='Survival function of autonomous hours for resilience', type='ARRAY', group='Resilience', constraints='MIN=0,MAX=1', meta='Prob surviving greater than x hours; hrs from min to max')
+    avg_critical_load: Final[float] = OUTPUT(label='Average critical load met for resilience', units='kWh', type='NUMBER', group='Resilience', constraints='MIN=0')
 
     def __init__(self, *args: Mapping[str, Any],
                  solar_resource_file: str = ...,
@@ -1685,6 +1767,7 @@ class Data(ssc.DataDict):
                  dc_lifetime_losses: Array = ...,
                  en_ac_lifetime_losses: float = ...,
                  ac_lifetime_losses: Array = ...,
+                 save_full_lifetime_variables: float = ...,
                  en_snow_model: float = ...,
                  system_capacity: float = ...,
                  use_wf_albedo: float = ...,
@@ -2080,6 +2163,7 @@ class Data(ssc.DataDict):
                  inv_tdc_plc: Matrix = ...,
                  en_batt: float = ...,
                  load: Array = ...,
+                 crit_load: Array = ...,
                  adjust_constant: float = ...,
                  adjust_hourly: Array = ...,
                  adjust_periods: Matrix = ...,
@@ -2095,6 +2179,7 @@ class Data(ssc.DataDict):
                  batt_dc_ac_efficiency: float = ...,
                  batt_ac_dc_efficiency: float = ...,
                  batt_meter_position: float = ...,
+                 batt_inverter_efficiency_cutoff: float = ...,
                  batt_losses: Array = ...,
                  batt_losses_charging: Array = ...,
                  batt_losses_discharging: Array = ...,
@@ -2106,8 +2191,10 @@ class Data(ssc.DataDict):
                  batt_computed_bank_capacity: float = ...,
                  batt_current_charge_max: float = ...,
                  batt_current_discharge_max: float = ...,
-                 batt_power_charge_max: float = ...,
-                 batt_power_discharge_max: float = ...,
+                 batt_power_charge_max_kwdc: float = ...,
+                 batt_power_discharge_max_kwdc: float = ...,
+                 batt_power_charge_max_kwac: float = ...,
+                 batt_power_discharge_max_kwac: float = ...,
                  batt_voltage_choice: float = ...,
                  batt_Vfull: float = ...,
                  batt_Vexp: float = ...,
@@ -2138,16 +2225,16 @@ class Data(ssc.DataDict):
                  batt_replacement_capacity: float = ...,
                  batt_replacement_option: float = ...,
                  batt_replacement_schedule: Array = ...,
-                 batt_replacement_cost: float = ...,
+                 batt_replacement_schedule_percent: Array = ...,
+                 om_replacement_cost1: Array = ...,
                  batt_mass: float = ...,
-                 batt_length: float = ...,
-                 batt_width: float = ...,
-                 batt_height: float = ...,
+                 batt_surface_area: float = ...,
                  batt_Cp: float = ...,
                  batt_h_to_ambient: float = ...,
-                 T_room: float = ...,
+                 batt_room_temperature_celsius: Array = ...,
                  cap_vs_temp: Matrix = ...,
                  dispatch_manual_charge: Array = ...,
+                 dispatch_manual_fuelcellcharge: Array = ...,
                  dispatch_manual_discharge: Array = ...,
                  dispatch_manual_gridcharge: Array = ...,
                  dispatch_manual_percent_discharge: Array = ...,
@@ -2161,6 +2248,7 @@ class Data(ssc.DataDict):
                  batt_dispatch_choice: float = ...,
                  batt_pv_clipping_forecast: Array = ...,
                  batt_pv_dc_forecast: Array = ...,
+                 batt_dispatch_auto_can_fuelcellcharge: float = ...,
                  batt_dispatch_auto_can_gridcharge: float = ...,
                  batt_dispatch_auto_can_charge: float = ...,
                  batt_dispatch_auto_can_clipcharge: float = ...,
@@ -2170,15 +2258,29 @@ class Data(ssc.DataDict):
                  batt_cycle_cost_choice: float = ...,
                  batt_cycle_cost: float = ...,
                  en_electricity_rates: float = ...,
+                 ur_en_ts_sell_rate: float = ...,
+                 ur_ts_buy_rate: Array = ...,
                  ur_ec_sched_weekday: Matrix = ...,
                  ur_ec_sched_weekend: Matrix = ...,
                  ur_ec_tou_mat: Matrix = ...,
-                 ppa_price_input: float = ...,
+                 fuelcell_power: Array = ...,
+                 forecast_price_signal_model: float = ...,
+                 ppa_price_input: Array = ...,
                  ppa_multiplier_model: float = ...,
                  dispatch_factors_ts: Array = ...,
                  dispatch_tod_factors: Array = ...,
                  dispatch_sched_weekday: Matrix = ...,
-                 dispatch_sched_weekend: Matrix = ...) -> None: ...
+                 dispatch_sched_weekend: Matrix = ...,
+                 mp_enable_energy_market_revenue: float = ...,
+                 mp_energy_market_revenue: Matrix = ...,
+                 mp_enable_ancserv1: float = ...,
+                 mp_ancserv1_revenue: Matrix = ...,
+                 mp_enable_ancserv2: float = ...,
+                 mp_ancserv2_revenue: Matrix = ...,
+                 mp_enable_ancserv3: float = ...,
+                 mp_ancserv3_revenue: Matrix = ...,
+                 mp_enable_ancserv4: float = ...,
+                 mp_ancserv4_revenue: Matrix = ...) -> None: ...
     def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):

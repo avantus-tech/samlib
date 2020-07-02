@@ -14,6 +14,7 @@ from ._util import *
 
 DataDict = TypedDict('DataDict', {
     'ui_calculations_only': float,
+        'system_use_lifetime_output': float,
         'file_name': str,
         'resource_potential': float,
         'resource_type': float,
@@ -93,12 +94,12 @@ DataDict = TypedDict('DataDict', {
         'reservoir_avg_temp': float,
         'bottom_hole_pressure': float,
         'pump_work': float,
+        'gen': Array,
         'system_lifetime_recapitalize': Array,
         'monthly_resource_temperature': Array,
         'monthly_power': Array,
         'monthly_energy': Array,
         'timestep_resource_temperature': Array,
-        'timestep_power': Array,
         'timestep_test_values': Array,
         'timestep_pressure': Array,
         'timestep_dry_bulb': Array,
@@ -140,7 +141,8 @@ DataDict = TypedDict('DataDict', {
 
 class Data(ssc.DataDict):
     ui_calculations_only: float = INPUT(label='If = 1, only run UI calculations', type='NUMBER', group='GeoHourly', required='*')
-    file_name: str = INPUT(label='local weather file path', type='STRING', group='Weather', required='ui_calculations_only=0', constraints='LOCAL_FILE')
+    system_use_lifetime_output: float = INPUT(label='Geothermal lifetime simulation', units='0/1', type='NUMBER', group='GeoHourly', required='?=0', constraints='BOOLEAN', meta='0=SingleYearRepeated,1=RunEveryYear')
+    file_name: str = INPUT(label='local weather file path', type='STRING', group='GeoHourly', required='ui_calculations_only=0', constraints='LOCAL_FILE')
     resource_potential: float = INPUT(label='Resource Potential', units='MW', type='NUMBER', group='GeoHourly', required='ui_calculations_only=0')
     resource_type: float = INPUT(label='Type of Resource', type='NUMBER', group='GeoHourly', required='*', constraints='INTEGER')
     resource_temp: float = INPUT(label='Resource Temperature', units='C', type='NUMBER', group='GeoHourly', required='*')
@@ -219,12 +221,12 @@ class Data(ssc.DataDict):
     reservoir_avg_temp: Final[float] = OUTPUT(label='Avg reservoir temp calculated by GETEM', units='C', type='NUMBER', group='GeoHourly', required='ui_calculations_only=1')
     bottom_hole_pressure: Final[float] = OUTPUT(label='Bottom hole pres calculated by GETEM', type='NUMBER', group='GeoHourly', required='ui_calculations_only=1')
     pump_work: Final[float] = OUTPUT(label='Pump work calculated by GETEM', units='MW', type='NUMBER', group='GeoHourly', required='*')
+    gen: Final[Array] = OUTPUT(label='System power generated', units='kW', type='ARRAY', meta='GeoHourly')
     system_lifetime_recapitalize: Final[Array] = OUTPUT(label='Resource replacement? (1=yes)', type='ARRAY', group='GeoHourly', required='ui_calculations_only=0')
     monthly_resource_temperature: Final[Array] = OUTPUT(label='Monthly avg resource temperature', units='C', type='ARRAY', group='GeoHourly', required='ui_calculations_only=0')
     monthly_power: Final[Array] = OUTPUT(label='Monthly power', units='kW', type='ARRAY', group='GeoHourly', required='ui_calculations_only=0')
     monthly_energy: Final[Array] = OUTPUT(label='Monthly energy before performance adjustments', units='kWh', type='ARRAY', group='GeoHourly', required='ui_calculations_only=0')
     timestep_resource_temperature: Final[Array] = OUTPUT(label='Resource temperature in each time step', units='C', type='ARRAY', group='GeoHourly', required='ui_calculations_only=0')
-    timestep_power: Final[Array] = OUTPUT(label='Power in each time step', units='kW', type='ARRAY', group='GeoHourly', required='ui_calculations_only=0')
     timestep_test_values: Final[Array] = OUTPUT(label='Test output values in each time step', type='ARRAY', group='GeoHourly', required='ui_calculations_only=0')
     timestep_pressure: Final[Array] = OUTPUT(label='Atmospheric pressure in each time step', units='atm', type='ARRAY', group='GeoHourly', required='ui_calculations_only=0')
     timestep_dry_bulb: Final[Array] = OUTPUT(label='Dry bulb temperature in each time step', units='C', type='ARRAY', group='GeoHourly', required='ui_calculations_only=0')
@@ -259,12 +261,13 @@ class Data(ssc.DataDict):
     x_hp: Final[float] = OUTPUT(label='HP Mass Fraction', units='%', type='NUMBER', group='GeoHourly')
     x_lp: Final[float] = OUTPUT(label='LP Mass Fraction', units='%', type='NUMBER', group='GeoHourly')
     flash_count: Final[float] = OUTPUT(label='Flash Count', units='(1 -2)', type='NUMBER', group='GeoHourly')
-    adjust_constant: float = INPUT(name='adjust:constant', label='Constant loss adjustment', units='%', type='NUMBER', group='Loss Adjustments', required='*', constraints='MAX=100')
-    adjust_hourly: Array = INPUT(name='adjust:hourly', label='Hourly loss adjustments', units='%', type='ARRAY', group='Loss Adjustments', required='?', constraints='LENGTH=8760')
-    adjust_periods: Matrix = INPUT(name='adjust:periods', label='Period-based loss adjustments', units='%', type='MATRIX', group='Loss Adjustments', required='?', constraints='COLS=3', meta='n x 3 matrix [ start, end, loss ]')
+    adjust_constant: float = INPUT(name='adjust:constant', label='Constant loss adjustment', units='%', type='NUMBER', group='Adjustment Factors', required='*', constraints='MAX=100')
+    adjust_hourly: Array = INPUT(name='adjust:hourly', label='Hourly Adjustment Factors', units='%', type='ARRAY', group='Adjustment Factors', required='?', constraints='LENGTH=8760')
+    adjust_periods: Matrix = INPUT(name='adjust:periods', label='Period-based Adjustment Factors', units='%', type='MATRIX', group='Adjustment Factors', required='?', constraints='COLS=3', meta='n x 3 matrix [ start, end, loss ]')
 
     def __init__(self, *args: Mapping[str, Any],
                  ui_calculations_only: float = ...,
+                 system_use_lifetime_output: float = ...,
                  file_name: str = ...,
                  resource_potential: float = ...,
                  resource_type: float = ...,

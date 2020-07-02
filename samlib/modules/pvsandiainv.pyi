@@ -27,7 +27,10 @@ DataDict = TypedDict('DataDict', {
         'ac': Array,
         'acpar': Array,
         'plr': Array,
-        'eff_inv': Array
+        'eff_inv': Array,
+        'cliploss': Array,
+        'soloss': Array,
+        'ntloss': Array
 }, total=False)
 
 class Data(ssc.DataDict):
@@ -46,6 +49,9 @@ class Data(ssc.DataDict):
     acpar: Final[Array] = OUTPUT(label='AC parasitic power', units='Wac', type='ARRAY', group='Sandia Inverter Model', required='*', constraints='LENGTH_EQUAL=dc')
     plr: Final[Array] = OUTPUT(label='Part load ratio', units='0..1', type='ARRAY', group='Sandia Inverter Model', required='*', constraints='LENGTH_EQUAL=dc')
     eff_inv: Final[Array] = OUTPUT(label='Conversion efficiency', units='0..1', type='ARRAY', group='Sandia Inverter Model', required='*', constraints='LENGTH_EQUAL=dc')
+    cliploss: Final[Array] = OUTPUT(label='Power loss due to clipping (Wac)', units='Wac', type='ARRAY', group='Sandia Inverter Model', required='*', constraints='LENGTH_EQUAL=dc')
+    soloss: Final[Array] = OUTPUT(label='Power loss due to operating power consumption (Wac)', units='Wac', type='ARRAY', group='Sandia Inverter Model', required='*', constraints='LENGTH_EQUAL=dc')
+    ntloss: Final[Array] = OUTPUT(label='Power loss due to night time tare loss (Wac)', units='Wac', type='ARRAY', group='Sandia Inverter Model', required='*', constraints='LENGTH_EQUAL=dc')
 
     def __init__(self, *args: Mapping[str, Any],
                  dc: Array = ...,

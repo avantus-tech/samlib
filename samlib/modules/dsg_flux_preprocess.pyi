@@ -51,7 +51,7 @@ class Data(ssc.DataDict):
     T_approach: float = INPUT(label='dT cold cooling water - T_wb', units='C', type='NUMBER', required='*')
     T_amb_des: float = INPUT(label='Ambient (wb) temp at design', units='C', type='NUMBER', required='*')
     T_ITD_des: float = INPUT(label='T_cond - T_db', units='C', type='NUMBER', required='*')
-    Q_rec_des: float = INPUT(label='Receiver thermal power at des.MW', type='NUMBER', group='*')
+    Q_rec_des: float = INPUT(label='Receiver thermal power at des.', units='MW', type='NUMBER', required='*')
     max_flux_b: float = INPUT(label='Max allow. boiler flux', units='kW/m2', type='NUMBER', required='*')
     max_flux_sh: float = INPUT(label='Max allow. superheater flux', units='kW/m2', type='NUMBER', required='*')
     max_flux_rh: float = INPUT(label='Max allow. reheater flux', units='kW/m2', type='NUMBER', required='*')

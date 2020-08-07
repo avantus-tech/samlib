@@ -14,6 +14,7 @@ from ._util import *
 
 DataDict = TypedDict('DataDict', {
     'solar_resource_file': str,
+        'solar_resource_data': Table,
         'scaled_draw': Array,
         'system_capacity': float,
         'load': Array,
@@ -93,7 +94,8 @@ DataDict = TypedDict('DataDict', {
 }, total=False)
 
 class Data(ssc.DataDict):
-    solar_resource_file: str = INPUT(label='local weather file path', type='STRING', group='Weather', required='*', constraints='LOCAL_FILE')
+    solar_resource_file: str = INPUT(label='local weather file path', type='STRING', group='Solar Resource', required='?', constraints='LOCAL_FILE')
+    solar_resource_data: Table = INPUT(label='Weather data', type='TABLE', group='Solar Resource', required='?', meta='dn,df,tdry,wspd,lat,lon,tz')
     scaled_draw: Array = INPUT(label='Hot water draw', units='kg/hr', type='ARRAY', group='SWH', required='*', constraints='LENGTH=8760')
     system_capacity: float = INPUT(label='Nameplate capacity', units='kW', type='NUMBER', group='SWH', required='*')
     load: Array = INPUT(label='Electricity load (year 1)', units='kW', type='ARRAY', group='SWH')
@@ -117,7 +119,7 @@ class Data(ssc.DataDict):
     test_flow: float = INPUT(label='Flow rate used in collector test', units='kg/s', type='NUMBER', group='SWH', required='*', constraints='POSITIVE')
     pipe_length: float = INPUT(label='Length of piping in system', units='m', type='NUMBER', group='SWH', required='*', constraints='POSITIVE')
     pipe_diam: float = INPUT(label='Pipe diameter', units='m', type='NUMBER', group='SWH', required='*', constraints='POSITIVE')
-    pipe_k: float = INPUT(label='Pipe insulation conductivity', units='W/m2.C', type='NUMBER', group='SWH', required='*', constraints='POSITIVE')
+    pipe_k: float = INPUT(label='Pipe insulation conductivity', units='W/m-C', type='NUMBER', group='SWH', required='*', constraints='POSITIVE')
     pipe_insul: float = INPUT(label='Pipe insulation thickness', units='m', type='NUMBER', group='SWH', required='*', constraints='POSITIVE')
     tank_h2d_ratio: float = INPUT(label='Solar tank height to diameter ratio', type='NUMBER', group='SWH', required='*', constraints='POSITIVE')
     U_tank: float = INPUT(label='Solar tank heat loss coefficient', units='W/m2K', type='NUMBER', group='SWH', required='*', constraints='POSITIVE')
@@ -166,13 +168,14 @@ class Data(ssc.DataDict):
     capacity_factor: Final[float] = OUTPUT(label='Capacity factor', units='%', type='NUMBER', group='Annual', required='*')
     kwh_per_kw: Final[float] = OUTPUT(label='First year kWh/kW', units='kWh/kW', type='NUMBER', group='Annual', required='*')
     ts_shift_hours: Final[float] = OUTPUT(label='Time offset for interpreting time series outputs', units='hours', type='NUMBER', group='Miscellaneous', required='*')
-    adjust_constant: float = INPUT(name='adjust:constant', label='Constant loss adjustment', units='%', type='NUMBER', group='Loss Adjustments', required='*', constraints='MAX=100')
-    adjust_hourly: Array = INPUT(name='adjust:hourly', label='Hourly loss adjustments', units='%', type='ARRAY', group='Loss Adjustments', required='?', constraints='LENGTH=8760')
-    adjust_periods: Matrix = INPUT(name='adjust:periods', label='Period-based loss adjustments', units='%', type='MATRIX', group='Loss Adjustments', required='?', constraints='COLS=3', meta='n x 3 matrix [ start, end, loss ]')
+    adjust_constant: float = INPUT(name='adjust:constant', label='Constant loss adjustment', units='%', type='NUMBER', group='Adjustment Factors', required='*', constraints='MAX=100')
+    adjust_hourly: Array = INPUT(name='adjust:hourly', label='Hourly Adjustment Factors', units='%', type='ARRAY', group='Adjustment Factors', required='?', constraints='LENGTH=8760')
+    adjust_periods: Matrix = INPUT(name='adjust:periods', label='Period-based Adjustment Factors', units='%', type='MATRIX', group='Adjustment Factors', required='?', constraints='COLS=3', meta='n x 3 matrix [ start, end, loss ]')
     gen: Final[Array] = OUTPUT(label='System power generated', units='kW', type='ARRAY', group='Time Series', required='*')
 
     def __init__(self, *args: Mapping[str, Any],
                  solar_resource_file: str = ...,
+                 solar_resource_data: Table = ...,
                  scaled_draw: Array = ...,
                  system_capacity: float = ...,
                  load: Array = ...,

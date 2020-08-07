@@ -183,18 +183,8 @@ DataDict = TypedDict('DataDict', {
         'n_pl_inc': float,
         'F_wc': Array,
         'tech_type': float,
-        'ud_T_amb_des': float,
         'ud_f_W_dot_cool_des': float,
         'ud_m_dot_water_cool_des': float,
-        'ud_T_htf_low': float,
-        'ud_T_htf_high': float,
-        'ud_T_amb_low': float,
-        'ud_T_amb_high': float,
-        'ud_m_dot_htf_low': float,
-        'ud_m_dot_htf_high': float,
-        'ud_T_htf_ind_od': Matrix,
-        'ud_T_amb_ind_od': Matrix,
-        'ud_m_dot_htf_ind_od': Matrix,
         'ud_ind_od': Matrix,
         'eta_lhv': float,
         'eta_tes_htr': float,
@@ -456,18 +446,8 @@ class Data(ssc.DataDict):
     n_pl_inc: float = INPUT(label='Number of part-load increments for the heat rejection system', units='none', type='NUMBER', group='powerblock', required='pc_config=0')
     F_wc: Array = INPUT(label='Fraction indicating wet cooling use for hybrid system', units='none', type='ARRAY', group='powerblock', required='pc_config=0', meta='constant=[0,0,0,0,0,0,0,0,0]')
     tech_type: float = INPUT(label='Turbine inlet pressure control flag (sliding=user, fixed=trough)', units='1/2/3', type='NUMBER', group='powerblock', required='pc_config=0', meta='tower/trough/user')
-    ud_T_amb_des: float = INPUT(label='Ambient temperature at user-defined power cycle design point', units='C', type='NUMBER', group='user_defined_PC', required='pc_config=1')
     ud_f_W_dot_cool_des: float = INPUT(label='Percent of user-defined power cycle design gross output consumed by cooling', units='%', type='NUMBER', group='user_defined_PC', required='pc_config=1')
     ud_m_dot_water_cool_des: float = INPUT(label='Mass flow rate of water required at user-defined power cycle design point', units='kg/s', type='NUMBER', group='user_defined_PC', required='pc_config=1')
-    ud_T_htf_low: float = INPUT(label='Low level HTF inlet temperature for T_amb parametric', units='C', type='NUMBER', group='user_defined_PC', required='pc_config=1')
-    ud_T_htf_high: float = INPUT(label='High level HTF inlet temperature for T_amb parametric', units='C', type='NUMBER', group='user_defined_PC', required='pc_config=1')
-    ud_T_amb_low: float = INPUT(label='Low level ambient temperature for HTF mass flow rate parametric', units='C', type='NUMBER', group='user_defined_PC', required='pc_config=1')
-    ud_T_amb_high: float = INPUT(label='High level ambient temperature for HTF mass flow rate parametric', units='C', type='NUMBER', group='user_defined_PC', required='pc_config=1')
-    ud_m_dot_htf_low: float = INPUT(label='Low level normalized HTF mass flow rate for T_HTF parametric', units='-', type='NUMBER', group='user_defined_PC', required='pc_config=1')
-    ud_m_dot_htf_high: float = INPUT(label='High level normalized HTF mass flow rate for T_HTF parametric', units='-', type='NUMBER', group='user_defined_PC', required='pc_config=1')
-    ud_T_htf_ind_od: Matrix = INPUT(label='Off design table of user-defined power cycle performance formed from parametric on T_htf_hot [C]', type='MATRIX', group='user_defined_PC', required='pc_config=1')
-    ud_T_amb_ind_od: Matrix = INPUT(label='Off design table of user-defined power cycle performance formed from parametric on T_amb [C]', type='MATRIX', group='user_defined_PC', required='pc_config=1')
-    ud_m_dot_htf_ind_od: Matrix = INPUT(label='Off design table of user-defined power cycle performance formed from parametric on m_dot_htf [ND]', type='MATRIX', group='user_defined_PC', required='pc_config=1')
     ud_ind_od: Matrix = INPUT(label='Off design user-defined power cycle performance as function of T_htf, m_dot_htf [ND], and T_amb', type='MATRIX', group='user_defined_PC', required='pc_config=1')
     eta_lhv: float = INPUT(label='Label', units='-', type='NUMBER', group='enet', required='*')
     eta_tes_htr: float = INPUT(label='Label', units='-', type='NUMBER', group='enet', required='*')
@@ -552,9 +532,9 @@ class Data(ssc.DataDict):
     system_heat_rate: Final[float] = OUTPUT(label='System heat rate', units='MMBtu/MWh', type='NUMBER', required='*')
     annual_fuel_usage: Final[float] = OUTPUT(label='Annual fuel usage', units='kWh', type='NUMBER', required='*')
     annual_total_water_use: Final[float] = OUTPUT(label='Total Annual Water Usage: cycle + mirror washing', units='m3', type='NUMBER', group='PostProcess', required='*')
-    adjust_constant: float = INPUT(name='adjust:constant', label='Constant loss adjustment', units='%', type='NUMBER', group='Loss Adjustments', required='*', constraints='MAX=100')
-    adjust_hourly: Array = INPUT(name='adjust:hourly', label='Hourly loss adjustments', units='%', type='ARRAY', group='Loss Adjustments', required='?', constraints='LENGTH=8760')
-    adjust_periods: Matrix = INPUT(name='adjust:periods', label='Period-based loss adjustments', units='%', type='MATRIX', group='Loss Adjustments', required='?', constraints='COLS=3', meta='n x 3 matrix [ start, end, loss ]')
+    adjust_constant: float = INPUT(name='adjust:constant', label='Constant loss adjustment', units='%', type='NUMBER', group='Adjustment Factors', required='*', constraints='MAX=100')
+    adjust_hourly: Array = INPUT(name='adjust:hourly', label='Hourly Adjustment Factors', units='%', type='ARRAY', group='Adjustment Factors', required='?', constraints='LENGTH=8760')
+    adjust_periods: Matrix = INPUT(name='adjust:periods', label='Period-based Adjustment Factors', units='%', type='MATRIX', group='Adjustment Factors', required='?', constraints='COLS=3', meta='n x 3 matrix [ start, end, loss ]')
     gen: Final[Array] = OUTPUT(label='System power generated', units='kW', type='ARRAY', group='Time Series', required='*')
 
     def __init__(self, *args: Mapping[str, Any],
@@ -728,18 +708,8 @@ class Data(ssc.DataDict):
                  n_pl_inc: float = ...,
                  F_wc: Array = ...,
                  tech_type: float = ...,
-                 ud_T_amb_des: float = ...,
                  ud_f_W_dot_cool_des: float = ...,
                  ud_m_dot_water_cool_des: float = ...,
-                 ud_T_htf_low: float = ...,
-                 ud_T_htf_high: float = ...,
-                 ud_T_amb_low: float = ...,
-                 ud_T_amb_high: float = ...,
-                 ud_m_dot_htf_low: float = ...,
-                 ud_m_dot_htf_high: float = ...,
-                 ud_T_htf_ind_od: Matrix = ...,
-                 ud_T_amb_ind_od: Matrix = ...,
-                 ud_m_dot_htf_ind_od: Matrix = ...,
                  ud_ind_od: Matrix = ...,
                  eta_lhv: float = ...,
                  eta_tes_htr: float = ...,

@@ -113,6 +113,3 @@ venv.bak/
 
 # vim swap files
 .*.sw?
-
-# samlib-specific files
-sam-sdk/*.zip

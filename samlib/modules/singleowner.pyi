@@ -1,7 +1,7 @@
 
 # This is a generated file
 
-"""singleowner - DHF Single Owner Financial Model_"""
+"""singleowner - Single Owner Financial Model_"""
 
 # VERSION: 1
 
@@ -13,7 +13,18 @@ from .. import ssc
 from ._util import *
 
 DataDict = TypedDict('DataDict', {
-    'analysis_period': float,
+    'ppa_soln_mode': float,
+        'ppa_soln_tolerance': float,
+        'ppa_soln_min': float,
+        'ppa_soln_max': float,
+        'ppa_soln_max_iterations': float,
+        'ppa_price_input': Array,
+        'ppa_escalation': float,
+        'lppa_real': float,
+        'lppa_nom': float,
+        'ppa': float,
+        'npv_ppa_revenue': float,
+        'analysis_period': float,
         'federal_tax_rate': Array,
         'state_tax_rate': Array,
         'cf_federal_tax_frac': Array,
@@ -36,12 +47,36 @@ DataDict = TypedDict('DataDict', {
         'om_fuel_cost': Array,
         'om_fuel_cost_escal': float,
         'annual_fuel_usage': float,
+        'annual_fuel_usage_lifetime': Array,
+        'om_replacement_cost1': Array,
+        'om_replacement_cost2': Array,
+        'om_replacement_cost_escal': float,
         'om_opt_fuel_1_usage': float,
         'om_opt_fuel_1_cost': Array,
         'om_opt_fuel_1_cost_escal': float,
         'om_opt_fuel_2_usage': float,
         'om_opt_fuel_2_cost': Array,
         'om_opt_fuel_2_cost_escal': float,
+        'add_om_num_types': float,
+        'om_capacity1_nameplate': float,
+        'om_production1_values': Array,
+        'om_fixed1': Array,
+        'om_production1': Array,
+        'om_capacity1': Array,
+        'om_capacity2_nameplate': float,
+        'om_production2_values': Array,
+        'om_fixed2': Array,
+        'om_production2': Array,
+        'om_capacity2': Array,
+        'reserves_interest': float,
+        'equip1_reserve_cost': float,
+        'equip1_reserve_freq': float,
+        'equip2_reserve_cost': float,
+        'equip2_reserve_freq': float,
+        'equip3_reserve_cost': float,
+        'equip3_reserve_freq': float,
+        'equip_reserve_depr_sta': float,
+        'equip_reserve_depr_fed': float,
         'itc_fed_amount': float,
         'itc_fed_amount_deprbas_fed': float,
         'itc_fed_amount_deprbas_sta': float,
@@ -62,6 +97,74 @@ DataDict = TypedDict('DataDict', {
         'ptc_sta_amount': Array,
         'ptc_sta_term': float,
         'ptc_sta_escal': float,
+        'depr_alloc_macrs_5_percent': float,
+        'depr_alloc_macrs_15_percent': float,
+        'depr_alloc_sl_5_percent': float,
+        'depr_alloc_sl_15_percent': float,
+        'depr_alloc_sl_20_percent': float,
+        'depr_alloc_sl_39_percent': float,
+        'depr_alloc_custom_percent': float,
+        'depr_custom_schedule': Array,
+        'depr_bonus_sta': float,
+        'depr_bonus_sta_macrs_5': float,
+        'depr_bonus_sta_macrs_15': float,
+        'depr_bonus_sta_sl_5': float,
+        'depr_bonus_sta_sl_15': float,
+        'depr_bonus_sta_sl_20': float,
+        'depr_bonus_sta_sl_39': float,
+        'depr_bonus_sta_custom': float,
+        'depr_bonus_fed': float,
+        'depr_bonus_fed_macrs_5': float,
+        'depr_bonus_fed_macrs_15': float,
+        'depr_bonus_fed_sl_5': float,
+        'depr_bonus_fed_sl_15': float,
+        'depr_bonus_fed_sl_20': float,
+        'depr_bonus_fed_sl_39': float,
+        'depr_bonus_fed_custom': float,
+        'depr_itc_sta_macrs_5': float,
+        'depr_itc_sta_macrs_15': float,
+        'depr_itc_sta_sl_5': float,
+        'depr_itc_sta_sl_15': float,
+        'depr_itc_sta_sl_20': float,
+        'depr_itc_sta_sl_39': float,
+        'depr_itc_sta_custom': float,
+        'depr_itc_fed_macrs_5': float,
+        'depr_itc_fed_macrs_15': float,
+        'depr_itc_fed_sl_5': float,
+        'depr_itc_fed_sl_15': float,
+        'depr_itc_fed_sl_20': float,
+        'depr_itc_fed_sl_39': float,
+        'depr_itc_fed_custom': float,
+        'cf_stadepr_macrs_5': Array,
+        'cf_stadepr_macrs_15': Array,
+        'cf_stadepr_sl_5': Array,
+        'cf_stadepr_sl_15': Array,
+        'cf_stadepr_sl_20': Array,
+        'cf_stadepr_sl_39': Array,
+        'cf_stadepr_custom': Array,
+        'cf_stadepr_me1': Array,
+        'cf_stadepr_me2': Array,
+        'cf_stadepr_me3': Array,
+        'cf_stadepr_total': Array,
+        'cf_statax_income_prior_incentives': Array,
+        'cf_statax_taxable_incentives': Array,
+        'cf_statax_income_with_incentives': Array,
+        'cf_statax': Array,
+        'cf_feddepr_macrs_5': Array,
+        'cf_feddepr_macrs_15': Array,
+        'cf_feddepr_sl_5': Array,
+        'cf_feddepr_sl_15': Array,
+        'cf_feddepr_sl_20': Array,
+        'cf_feddepr_sl_39': Array,
+        'cf_feddepr_custom': Array,
+        'cf_feddepr_me1': Array,
+        'cf_feddepr_me2': Array,
+        'cf_feddepr_me3': Array,
+        'cf_feddepr_total': Array,
+        'cf_fedtax_income_prior_incentives': Array,
+        'cf_fedtax_taxable_incentives': Array,
+        'cf_fedtax_income_with_incentives': Array,
+        'cf_fedtax': Array,
         'ibi_fed_amount': float,
         'ibi_fed_amount_tax_fed': float,
         'ibi_fed_amount_tax_sta': float,
@@ -150,7 +253,72 @@ DataDict = TypedDict('DataDict', {
         'pbi_oth_escal': float,
         'pbi_oth_tax_fed': float,
         'pbi_oth_tax_sta': float,
+        'cbi_total_fed': float,
+        'cbi_total_sta': float,
+        'cbi_total_oth': float,
+        'cbi_total_uti': float,
+        'cbi_total': float,
+        'cbi_statax_total': float,
+        'cbi_fedtax_total': float,
+        'ibi_total_fed': float,
+        'ibi_total_sta': float,
+        'ibi_total_oth': float,
+        'ibi_total_uti': float,
+        'ibi_total': float,
+        'ibi_statax_total': float,
+        'ibi_fedtax_total': float,
+        'cf_pbi_total_fed': Array,
+        'cf_pbi_total_sta': Array,
+        'cf_pbi_total_oth': Array,
+        'cf_pbi_total_uti': Array,
+        'cf_pbi_total': Array,
+        'cf_pbi_statax_total': Array,
+        'cf_pbi_fedtax_total': Array,
+        'itc_total_fed': float,
+        'itc_total_sta': float,
+        'itc_total': float,
+        'cf_ptc_fed': Array,
+        'cf_ptc_sta': Array,
+        'cf_ptc_total': Array,
+        'term_tenor': float,
+        'term_int_rate': float,
+        'dscr': float,
+        'dscr_reserve_months': float,
+        'debt_percent': float,
+        'debt_option': float,
+        'payment_option': float,
+        'cost_debt_closing': float,
+        'cost_debt_fee': float,
+        'months_working_reserve': float,
+        'months_receivables_reserve': float,
+        'cost_other_financing': float,
+        'flip_target_percent': float,
+        'flip_target_year': float,
+        'pbi_fed_for_ds': float,
+        'pbi_sta_for_ds': float,
+        'pbi_uti_for_ds': float,
+        'pbi_oth_for_ds': float,
+        'debt_fraction': float,
+        'flip_target_irr': float,
+        'flip_actual_year': float,
+        'flip_actual_irr': float,
+        'lcoe_real': float,
+        'lcoe_nom': float,
+        'npv_energy_nom': float,
+        'npv_energy_real': float,
+        'present_value_oandm': float,
+        'present_value_oandm_nonfuel': float,
+        'present_value_fuel': float,
+        'present_value_insandproptax': float,
+        'lcoptc_fed_real': float,
+        'lcoptc_fed_nom': float,
+        'lcoptc_sta_real': float,
+        'lcoptc_sta_nom': float,
+        'wacc': float,
+        'effective_tax_rate': float,
+        'analysis_period_irr': float,
         'en_batt': float,
+        'en_electricity_rates': float,
         'batt_meter_position': float,
         'grid_to_batt': Array,
         'ppa_gen': Array,
@@ -278,80 +446,8 @@ DataDict = TypedDict('DataDict', {
         'cf_revenue_monthly_firstyear_TOD9': Array,
         'cf_energy_net_monthly_firstyear_TOD9': Array,
         'total_installed_cost': float,
-        'reserves_interest': float,
-        'equip1_reserve_cost': float,
-        'equip1_reserve_freq': float,
-        'equip2_reserve_cost': float,
-        'equip2_reserve_freq': float,
-        'equip3_reserve_cost': float,
-        'equip3_reserve_freq': float,
-        'equip_reserve_depr_sta': float,
-        'equip_reserve_depr_fed': float,
         'salvage_percentage': float,
-        'ppa_soln_mode': float,
-        'ppa_soln_tolerance': float,
-        'ppa_soln_min': float,
-        'ppa_soln_max': float,
-        'ppa_soln_max_iterations': float,
-        'ppa_price_input': float,
-        'ppa_escalation': float,
         'construction_financing_cost': float,
-        'term_tenor': float,
-        'term_int_rate': float,
-        'dscr': float,
-        'dscr_reserve_months': float,
-        'debt_percent': float,
-        'debt_option': float,
-        'payment_option': float,
-        'cost_debt_closing': float,
-        'cost_debt_fee': float,
-        'months_working_reserve': float,
-        'months_receivables_reserve': float,
-        'cost_other_financing': float,
-        'flip_target_percent': float,
-        'flip_target_year': float,
-        'depr_alloc_macrs_5_percent': float,
-        'depr_alloc_macrs_15_percent': float,
-        'depr_alloc_sl_5_percent': float,
-        'depr_alloc_sl_15_percent': float,
-        'depr_alloc_sl_20_percent': float,
-        'depr_alloc_sl_39_percent': float,
-        'depr_alloc_custom_percent': float,
-        'depr_custom_schedule': Array,
-        'depr_bonus_sta': float,
-        'depr_bonus_sta_macrs_5': float,
-        'depr_bonus_sta_macrs_15': float,
-        'depr_bonus_sta_sl_5': float,
-        'depr_bonus_sta_sl_15': float,
-        'depr_bonus_sta_sl_20': float,
-        'depr_bonus_sta_sl_39': float,
-        'depr_bonus_sta_custom': float,
-        'depr_bonus_fed': float,
-        'depr_bonus_fed_macrs_5': float,
-        'depr_bonus_fed_macrs_15': float,
-        'depr_bonus_fed_sl_5': float,
-        'depr_bonus_fed_sl_15': float,
-        'depr_bonus_fed_sl_20': float,
-        'depr_bonus_fed_sl_39': float,
-        'depr_bonus_fed_custom': float,
-        'depr_itc_sta_macrs_5': float,
-        'depr_itc_sta_macrs_15': float,
-        'depr_itc_sta_sl_5': float,
-        'depr_itc_sta_sl_15': float,
-        'depr_itc_sta_sl_20': float,
-        'depr_itc_sta_sl_39': float,
-        'depr_itc_sta_custom': float,
-        'depr_itc_fed_macrs_5': float,
-        'depr_itc_fed_macrs_15': float,
-        'depr_itc_fed_sl_5': float,
-        'depr_itc_fed_sl_15': float,
-        'depr_itc_fed_sl_20': float,
-        'depr_itc_fed_sl_39': float,
-        'depr_itc_fed_custom': float,
-        'pbi_fed_for_ds': float,
-        'pbi_sta_for_ds': float,
-        'pbi_uti_for_ds': float,
-        'pbi_oth_for_ds': float,
         'cost_debt_upfront': float,
         'cost_financing': float,
         'cost_prefinancing': float,
@@ -625,10 +721,17 @@ DataDict = TypedDict('DataDict', {
         'cf_energy_net': Array,
         'cf_ppa_price': Array,
         'cf_energy_value': Array,
+        'cf_thermal_value': Array,
         'cf_om_fixed_expense': Array,
         'cf_om_production_expense': Array,
         'cf_om_capacity_expense': Array,
         'cf_om_fuel_expense': Array,
+        'cf_om_fixed1_expense': Array,
+        'cf_om_production1_expense': Array,
+        'cf_om_capacity1_expense': Array,
+        'cf_om_fixed2_expense': Array,
+        'cf_om_production2_expense': Array,
+        'cf_om_capacity2_expense': Array,
         'cf_om_opt_fuel_1_expense': Array,
         'cf_om_opt_fuel_2_expense': Array,
         'cf_property_tax_assessed_value': Array,
@@ -691,132 +794,116 @@ DataDict = TypedDict('DataDict', {
         'cf_project_return_aftertax_irr': Array,
         'cf_project_return_aftertax_max_irr': Array,
         'cf_project_return_aftertax_npv': Array,
-        'cbi_total_fed': float,
-        'cbi_total_sta': float,
-        'cbi_total_oth': float,
-        'cbi_total_uti': float,
-        'cbi_total': float,
-        'cbi_statax_total': float,
-        'cbi_fedtax_total': float,
-        'ibi_total_fed': float,
-        'ibi_total_sta': float,
-        'ibi_total_oth': float,
-        'ibi_total_uti': float,
-        'ibi_total': float,
-        'ibi_statax_total': float,
-        'ibi_fedtax_total': float,
-        'cf_pbi_total_fed': Array,
-        'cf_pbi_total_sta': Array,
-        'cf_pbi_total_oth': Array,
-        'cf_pbi_total_uti': Array,
-        'cf_pbi_total': Array,
-        'cf_pbi_statax_total': Array,
-        'cf_pbi_fedtax_total': Array,
-        'itc_total_fed': float,
-        'itc_total_sta': float,
-        'itc_total': float,
-        'cf_ptc_fed': Array,
-        'cf_ptc_sta': Array,
-        'cf_stadepr_macrs_5': Array,
-        'cf_stadepr_macrs_15': Array,
-        'cf_stadepr_sl_5': Array,
-        'cf_stadepr_sl_15': Array,
-        'cf_stadepr_sl_20': Array,
-        'cf_stadepr_sl_39': Array,
-        'cf_stadepr_custom': Array,
-        'cf_stadepr_me1': Array,
-        'cf_stadepr_me2': Array,
-        'cf_stadepr_me3': Array,
-        'cf_stadepr_total': Array,
-        'cf_statax_income_prior_incentives': Array,
-        'cf_statax_taxable_incentives': Array,
-        'cf_statax_income_with_incentives': Array,
-        'cf_statax': Array,
-        'cf_feddepr_macrs_5': Array,
-        'cf_feddepr_macrs_15': Array,
-        'cf_feddepr_sl_5': Array,
-        'cf_feddepr_sl_15': Array,
-        'cf_feddepr_sl_20': Array,
-        'cf_feddepr_sl_39': Array,
-        'cf_feddepr_custom': Array,
-        'cf_feddepr_me1': Array,
-        'cf_feddepr_me2': Array,
-        'cf_feddepr_me3': Array,
-        'cf_feddepr_total': Array,
-        'cf_fedtax_income_prior_incentives': Array,
-        'cf_fedtax_taxable_incentives': Array,
-        'cf_fedtax_income_with_incentives': Array,
-        'cf_fedtax': Array,
-        'debt_fraction': float,
-        'flip_target_irr': float,
-        'flip_actual_year': float,
-        'flip_actual_irr': float,
-        'lcoe_real': float,
-        'lcoe_nom': float,
-        'lppa_real': float,
-        'lppa_nom': float,
-        'ppa': float,
         'project_return_aftertax_irr': float,
         'project_return_aftertax_npv': float,
-        'npv_ppa_revenue': float,
-        'npv_energy_nom': float,
-        'npv_energy_real': float,
-        'present_value_oandm': float,
-        'present_value_oandm_nonfuel': float,
-        'present_value_fuel': float,
-        'present_value_insandproptax': float,
-        'lcoptc_fed_real': float,
-        'lcoptc_fed_nom': float,
-        'lcoptc_sta_real': float,
-        'lcoptc_sta_nom': float,
-        'wacc': float,
-        'analysis_period_irr': float,
         'cf_annual_costs': Array,
         'npv_annual_costs': float,
         'adjusted_installed_cost': float,
         'min_dscr': float,
         'cf_pretax_dscr': Array,
+        'system_pre_curtailment_kwac': Array,
+        'cf_energy_curtailed': Array,
+        'cf_curtailment_value': Array,
+        'cf_capacity_payment': Array,
+        'npv_curtailment_revenue': float,
+        'npv_capacity_revenue': float,
+        'npv_fed_pbi_income': float,
+        'npv_sta_pbi_income': float,
+        'npv_uti_pbi_income': float,
+        'npv_oth_pbi_income': float,
+        'npv_salvage_value': float,
+        'npv_thermal_value': float,
         'batt_bank_replacement': Array,
         'batt_replacement_schedule': Array,
         'batt_replacement_option': float,
         'battery_per_kWh': float,
         'batt_computed_bank_capacity': float,
-        'batt_replacement_cost': float,
-        'batt_replacement_cost_escal': float,
         'cf_battery_replacement_cost': Array,
-        'cf_battery_replacement_cost_schedule': Array
+        'cf_battery_replacement_cost_schedule': Array,
+        'fuelcell_replacement': Array,
+        'fuelcell_replacement_schedule': Array,
+        'en_fuelcell': float,
+        'fuelcell_replacement_option': float,
+        'fuelcell_per_kWh': float,
+        'fuelcell_computed_bank_capacity': float,
+        'cf_fuelcell_replacement_cost': Array,
+        'cf_fuelcell_replacement_cost_schedule': Array,
+        'cp_capacity_payment_esc': float,
+        'cp_capacity_payment_type': float,
+        'cp_capacity_payment_amount': Array,
+        'cp_capacity_credit_percent': Array,
+        'cp_system_nameplate': float,
+        'cp_battery_nameplate': float,
+        'grid_curtailment_price': Array,
+        'grid_curtailment_price_esc': float,
+        'annual_energy_pre_curtailment_ac': float
 }, total=False)
 
 class Data(ssc.DataDict):
-    analysis_period: float = INPUT(label='Analyis period', units='years', type='NUMBER', group='Financials', required='?=30', constraints='INTEGER,MIN=0,MAX=50')
-    federal_tax_rate: Array = INPUT(label='Federal income tax rate', units='%', type='ARRAY', group='Financials', required='*')
-    state_tax_rate: Array = INPUT(label='State income tax rate', units='%', type='ARRAY', group='Financials', required='*')
-    cf_federal_tax_frac: Final[Array] = OUTPUT(label='Federal income tax rate', units='frac', type='ARRAY', group='Financials', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_state_tax_frac: Final[Array] = OUTPUT(label='State income tax rate', units='frac', type='ARRAY', group='Financials', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_effective_tax_frac: Final[Array] = OUTPUT(label='Effective income tax rate', units='frac', type='ARRAY', group='Financials', required='*', constraints='LENGTH_EQUAL=cf_length')
-    property_tax_rate: float = INPUT(label='Property tax rate', units='%', type='NUMBER', group='Financials', required='?=0.0', constraints='MIN=0,MAX=100')
-    prop_tax_cost_assessed_percent: float = INPUT(label='Percent of pre-financing costs assessed', units='%', type='NUMBER', group='Financials', required='?=95', constraints='MIN=0,MAX=100')
-    prop_tax_assessed_decline: float = INPUT(label='Assessed value annual decline', units='%', type='NUMBER', group='Financials', required='?=5', constraints='MIN=0,MAX=100')
-    real_discount_rate: float = INPUT(label='Real discount rate', units='%', type='NUMBER', group='Financials', required='*', constraints='MIN=-99')
-    inflation_rate: float = INPUT(label='Inflation rate', units='%', type='NUMBER', group='Financials', required='*', constraints='MIN=-99')
-    insurance_rate: float = INPUT(label='Insurance rate', units='%', type='NUMBER', group='Financials', required='?=0.0', constraints='MIN=0,MAX=100')
-    system_capacity: float = INPUT(label='System nameplate capacity', units='kW', type='NUMBER', group='System', required='*', constraints='POSITIVE')
-    system_heat_rate: float = INPUT(label='System heat rate', units='MMBTus/MWh', type='NUMBER', group='System', required='?=0.0', constraints='MIN=0')
-    om_fixed: Array = INPUT(label='Fixed O&M annual amount', units='$/year', type='ARRAY', group='O&M', required='?=0.0')
-    om_fixed_escal: float = INPUT(label='Fixed O&M escalation', units='%/year', type='NUMBER', group='O&M', required='?=0.0')
-    om_production: Array = INPUT(label='Production-based O&M amount', units='$/MWh', type='ARRAY', group='O&M', required='?=0.0')
-    om_production_escal: float = INPUT(label='Production-based O&M escalation', units='%/year', type='NUMBER', group='O&M', required='?=0.0')
-    om_capacity: Array = INPUT(label='Capacity-based O&M amount', units='$/kWcap', type='ARRAY', group='O&M', required='?=0.0')
-    om_capacity_escal: float = INPUT(label='Capacity-based O&M escalation', units='%/year', type='NUMBER', group='O&M', required='?=0.0')
-    om_fuel_cost: Array = INPUT(label='Fuel cost', units='$/MMBtu', type='ARRAY', group='O&M', required='?=0.0')
-    om_fuel_cost_escal: float = INPUT(label='Fuel cost escalation', units='%/year', type='NUMBER', group='O&M', required='?=0.0')
-    annual_fuel_usage: float = INPUT(label='Fuel usage', units='kWht', type='NUMBER', group='O&M', required='?=0', constraints='MIN=0')
-    om_opt_fuel_1_usage: float = INPUT(label='Biomass feedstock usage', units='unit', type='NUMBER', group='O&M', required='?=0.0')
-    om_opt_fuel_1_cost: Array = INPUT(label='Biomass feedstock cost', units='$/unit', type='ARRAY', group='O&M', required='?=0.0')
-    om_opt_fuel_1_cost_escal: float = INPUT(label='Biomass feedstock cost escalation', units='%/year', type='NUMBER', group='O&M', required='?=0.0')
-    om_opt_fuel_2_usage: float = INPUT(label='Coal feedstock usage', units='unit', type='NUMBER', group='O&M', required='?=0.0')
-    om_opt_fuel_2_cost: Array = INPUT(label='Coal feedstock cost', units='$/unit', type='ARRAY', group='O&M', required='?=0.0')
-    om_opt_fuel_2_cost_escal: float = INPUT(label='Coal feedstock cost escalation', units='%/year', type='NUMBER', group='O&M', required='?=0.0')
+    ppa_soln_mode: float = INPUT(label='PPA solution mode', units='0/1', type='NUMBER', group='Revenue', required='?=0', constraints='INTEGER,MIN=0,MAX=1', meta='0=solve ppa,1=specify ppa')
+    ppa_soln_tolerance: float = INPUT(label='PPA solution tolerance', type='NUMBER', group='Revenue', required='?=1e-5')
+    ppa_soln_min: float = INPUT(label='PPA solution minimum ppa', units='cents/kWh', type='NUMBER', group='Revenue', required='?=0')
+    ppa_soln_max: float = INPUT(label='PPA solution maximum ppa', units='cents/kWh', type='NUMBER', group='Revenue', required='?=100')
+    ppa_soln_max_iterations: float = INPUT(label='PPA solution maximum number of iterations', type='NUMBER', group='Revenue', required='?=100', constraints='INTEGER,MIN=1')
+    ppa_price_input: Array = INPUT(label='PPA price in first year', units='$/kWh', type='ARRAY', group='Revenue', required='*')
+    ppa_escalation: float = INPUT(label='PPA escalation rate', units='%/year', type='NUMBER', group='Revenue', required='?=0')
+    lppa_real: Final[float] = OUTPUT(label='Levelized PPA price (real)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
+    lppa_nom: Final[float] = OUTPUT(label='Levelized PPA price (nominal)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
+    ppa: Final[float] = OUTPUT(label='PPA price (Year 1)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
+    npv_ppa_revenue: Final[float] = OUTPUT(label='Present value of PPA revenue', units='$', type='NUMBER', group='Metrics', required='*')
+    analysis_period: float = INPUT(label='Analyis period', units='years', type='NUMBER', group='Financial Parameters', required='?=30', constraints='INTEGER,MIN=0,MAX=50')
+    federal_tax_rate: Array = INPUT(label='Federal income tax rate', units='%', type='ARRAY', group='Financial Parameters', required='*')
+    state_tax_rate: Array = INPUT(label='State income tax rate', units='%', type='ARRAY', group='Financial Parameters', required='*')
+    cf_federal_tax_frac: Final[Array] = OUTPUT(label='Federal income tax rate', units='frac', type='ARRAY', group='Financial Parameters', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_state_tax_frac: Final[Array] = OUTPUT(label='State income tax rate', units='frac', type='ARRAY', group='Financial Parameters', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_effective_tax_frac: Final[Array] = OUTPUT(label='Effective income tax rate', units='frac', type='ARRAY', group='Financial Parameters', required='*', constraints='LENGTH_EQUAL=cf_length')
+    property_tax_rate: float = INPUT(label='Property tax rate', units='%', type='NUMBER', group='Financial Parameters', required='?=0.0', constraints='MIN=0,MAX=100')
+    prop_tax_cost_assessed_percent: float = INPUT(label='Percent of pre-financing costs assessed', units='%', type='NUMBER', group='Financial Parameters', required='?=95', constraints='MIN=0,MAX=100')
+    prop_tax_assessed_decline: float = INPUT(label='Assessed value annual decline', units='%', type='NUMBER', group='Financial Parameters', required='?=5', constraints='MIN=0,MAX=100')
+    real_discount_rate: float = INPUT(label='Real discount rate', units='%', type='NUMBER', group='Financial Parameters', required='*', constraints='MIN=-99')
+    inflation_rate: float = INPUT(label='Inflation rate', units='%', type='NUMBER', group='Financial Parameters', required='*', constraints='MIN=-99')
+    insurance_rate: float = INPUT(label='Insurance rate', units='%', type='NUMBER', group='Financial Parameters', required='?=0.0', constraints='MIN=0,MAX=100')
+    system_capacity: float = INPUT(label='System nameplate capacity', units='kW', type='NUMBER', group='Financial Parameters', required='*', constraints='POSITIVE')
+    system_heat_rate: float = INPUT(label='System heat rate', units='MMBTus/MWh', type='NUMBER', group='Financial Parameters', required='?=0.0', constraints='MIN=0')
+    om_fixed: Array = INPUT(label='Fixed O&M annual amount', units='$/year', type='ARRAY', group='System Costs', required='?=0.0')
+    om_fixed_escal: float = INPUT(label='Fixed O&M escalation', units='%/year', type='NUMBER', group='System Costs', required='?=0.0')
+    om_production: Array = INPUT(label='Production-based O&M amount', units='$/MWh', type='ARRAY', group='System Costs', required='?=0.0')
+    om_production_escal: float = INPUT(label='Production-based O&M escalation', units='%/year', type='NUMBER', group='System Costs', required='?=0.0')
+    om_capacity: Array = INPUT(label='Capacity-based O&M amount', units='$/kWcap', type='ARRAY', group='System Costs', required='?=0.0')
+    om_capacity_escal: float = INPUT(label='Capacity-based O&M escalation', units='%/year', type='NUMBER', group='System Costs', required='?=0.0')
+    om_fuel_cost: Array = INPUT(label='Fuel cost', units='$/MMBtu', type='ARRAY', group='System Costs', required='?=0.0')
+    om_fuel_cost_escal: float = INPUT(label='Fuel cost escalation', units='%/year', type='NUMBER', group='System Costs', required='?=0.0')
+    annual_fuel_usage: float = INPUT(label='Fuel usage (yr 1)', units='kWht', type='NUMBER', group='System Costs', required='?=0', constraints='MIN=0')
+    annual_fuel_usage_lifetime: Array = INPUT(label='Fuel usage (lifetime)', units='kWht', type='ARRAY', group='System Costs')
+    om_replacement_cost1: Array = INPUT(label='Replacement cost 1', units='$/kWh', type='ARRAY', group='System Costs', required='?=0.0')
+    om_replacement_cost2: Array = INPUT(label='Replacement cost 2', units='$/kW', type='ARRAY', group='System Costs', required='?=0.0')
+    om_replacement_cost_escal: float = INPUT(label='Replacement cost escalation', units='%/year', type='NUMBER', group='System Costs', required='?=0.0')
+    om_opt_fuel_1_usage: float = INPUT(label='Biomass feedstock usage', units='unit', type='NUMBER', group='System Costs', required='?=0.0')
+    om_opt_fuel_1_cost: Array = INPUT(label='Biomass feedstock cost', units='$/unit', type='ARRAY', group='System Costs', required='?=0.0')
+    om_opt_fuel_1_cost_escal: float = INPUT(label='Biomass feedstock cost escalation', units='%/year', type='NUMBER', group='System Costs', required='?=0.0')
+    om_opt_fuel_2_usage: float = INPUT(label='Coal feedstock usage', units='unit', type='NUMBER', group='System Costs', required='?=0.0')
+    om_opt_fuel_2_cost: Array = INPUT(label='Coal feedstock cost', units='$/unit', type='ARRAY', group='System Costs', required='?=0.0')
+    om_opt_fuel_2_cost_escal: float = INPUT(label='Coal feedstock cost escalation', units='%/year', type='NUMBER', group='System Costs', required='?=0.0')
+    add_om_num_types: float = INPUT(label='Number of O and M types', type='NUMBER', group='System Costs', required='?=0', constraints='INTEGER,MIN=0,MAX=2')
+    om_capacity1_nameplate: float = INPUT(label='Battery capacity for System Costs values', units='kW', type='NUMBER', group='System Costs', required='?=0')
+    om_production1_values: Array = INPUT(label='Battery production for System Costs values', units='kWh', type='ARRAY', group='System Costs', required='?=0')
+    om_fixed1: Array = INPUT(label='Battery fixed System Costs annual amount', units='$/year', type='ARRAY', group='System Costs', required='?=0.0')
+    om_production1: Array = INPUT(label='Battery production-based System Costs amount', units='$/MWh', type='ARRAY', group='System Costs', required='?=0.0')
+    om_capacity1: Array = INPUT(label='Battery capacity-based System Costs amount', units='$/kWcap', type='ARRAY', group='System Costs', required='?=0.0')
+    om_capacity2_nameplate: float = INPUT(label='Fuel cell capacity for System Costs values', units='kW', type='NUMBER', group='System Costs', required='?=0')
+    om_production2_values: Array = INPUT(label='Fuel cell production for System Costs values', units='kWh', type='ARRAY', group='System Costs', required='?=0')
+    om_fixed2: Array = INPUT(label='Fuel cell fixed System Costs annual amount', units='$/year', type='ARRAY', group='System Costs', required='?=0.0')
+    om_production2: Array = INPUT(label='Fuel cell production-based System Costs amount', units='$/MWh', type='ARRAY', group='System Costs', required='?=0.0')
+    om_capacity2: Array = INPUT(label='Fuel cell capacity-based System Costs amount', units='$/kWcap', type='ARRAY', group='System Costs', required='?=0.0')
+    reserves_interest: float = INPUT(label='Interest on reserves', units='%', type='NUMBER', group='Financial Parameters', required='?=1.75', constraints='MIN=0,MAX=100')
+    equip1_reserve_cost: float = INPUT(label='Major equipment reserve 1 cost', units='$/W', type='NUMBER', group='Financial Parameters', required='?=0.25', constraints='MIN=0')
+    equip1_reserve_freq: float = INPUT(label='Major equipment reserve 1 frequency', units='years', type='NUMBER', group='Financial Parameters', required='?=12', constraints='INTEGER,MIN=0')
+    equip2_reserve_cost: float = INPUT(label='Major equipment reserve 2 cost', units='$/W', type='NUMBER', group='Financial Parameters', required='?=0', constraints='MIN=0')
+    equip2_reserve_freq: float = INPUT(label='Major equipment reserve 2 frequency', units='years', type='NUMBER', group='Financial Parameters', required='?=15', constraints='INTEGER,MIN=0')
+    equip3_reserve_cost: float = INPUT(label='Major equipment reserve 3 cost', units='$/W', type='NUMBER', group='Financial Parameters', required='?=0', constraints='MIN=0')
+    equip3_reserve_freq: float = INPUT(label='Major equipment reserve 3 frequency', units='years', type='NUMBER', group='Financial Parameters', required='?=20', constraints='INTEGER,MIN=0')
+    equip_reserve_depr_sta: float = INPUT(label='Major equipment reserve state depreciation', type='NUMBER', group='Financial Parameters', required='?=0', constraints='INTEGER,MIN=0,MAX=6', meta='0=5yr MACRS,1=15yr MACRS,2=5yr SL,3=15yr SL, 4=20yr SL,5=39yr SL,6=Custom')
+    equip_reserve_depr_fed: float = INPUT(label='Major equipment reserve federal depreciation', type='NUMBER', group='Financial Parameters', required='?=0', constraints='INTEGER,MIN=0,MAX=6', meta='0=5yr MACRS,1=15yr MACRS,2=5yr SL,3=15yr SL, 4=20yr SL,5=39yr SL,6=Custom')
     itc_fed_amount: float = INPUT(label='Federal amount-based ITC amount', units='$', type='NUMBER', group='Tax Credit Incentives', required='?=0')
     itc_fed_amount_deprbas_fed: float = INPUT(label='Federal amount-based ITC reduces federal depreciation basis', units='0/1', type='NUMBER', group='Tax Credit Incentives', required='?=1', constraints='BOOLEAN')
     itc_fed_amount_deprbas_sta: float = INPUT(label='Federal amount-based ITC reduces state depreciation basis', units='0/1', type='NUMBER', group='Tax Credit Incentives', required='?=1', constraints='BOOLEAN')
@@ -837,6 +924,74 @@ class Data(ssc.DataDict):
     ptc_sta_amount: Array = INPUT(label='State PTC amount', units='$/kWh', type='ARRAY', group='Tax Credit Incentives', required='?=0')
     ptc_sta_term: float = INPUT(label='State PTC term', units='years', type='NUMBER', group='Tax Credit Incentives', required='?=10')
     ptc_sta_escal: float = INPUT(label='State PTC escalation', units='%/year', type='NUMBER', group='Tax Credit Incentives', required='?=0')
+    depr_alloc_macrs_5_percent: float = INPUT(label='5-yr MACRS depreciation federal and state allocation', units='%', type='NUMBER', group='Depreciation', required='?=89', constraints='MIN=0,MAX=100')
+    depr_alloc_macrs_15_percent: float = INPUT(label='15-yr MACRS depreciation federal and state allocation', units='%', type='NUMBER', group='Depreciation', required='?=1.5', constraints='MIN=0,MAX=100')
+    depr_alloc_sl_5_percent: float = INPUT(label='5-yr straight line depreciation federal and state allocation', units='%', type='NUMBER', group='Depreciation', required='?=0', constraints='MIN=0,MAX=100')
+    depr_alloc_sl_15_percent: float = INPUT(label='15-yr straight line depreciation federal and state allocation', units='%', type='NUMBER', group='Depreciation', required='?=3', constraints='MIN=0,MAX=100')
+    depr_alloc_sl_20_percent: float = INPUT(label='20-yr straight line depreciation federal and state allocation', units='%', type='NUMBER', group='Depreciation', required='?=3', constraints='MIN=0,MAX=100')
+    depr_alloc_sl_39_percent: float = INPUT(label='39-yr straight line depreciation federal and state allocation', units='%', type='NUMBER', group='Depreciation', required='?=0.5', constraints='MIN=0,MAX=100')
+    depr_alloc_custom_percent: float = INPUT(label='Custom depreciation federal and state allocation', units='%', type='NUMBER', group='Depreciation', required='?=0', constraints='MIN=0,MAX=100')
+    depr_custom_schedule: Array = INPUT(label='Custom depreciation schedule', units='%', type='ARRAY', group='Depreciation', required='*')
+    depr_bonus_sta: float = INPUT(label='State bonus depreciation', units='%', type='NUMBER', group='Depreciation', required='?=0', constraints='MIN=0,MAX=100')
+    depr_bonus_sta_macrs_5: float = INPUT(label='State bonus depreciation 5-yr MACRS', units='0/1', type='NUMBER', group='Depreciation', required='?=1', constraints='BOOLEAN')
+    depr_bonus_sta_macrs_15: float = INPUT(label='State bonus depreciation 15-yr MACRS', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_bonus_sta_sl_5: float = INPUT(label='State bonus depreciation 5-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_bonus_sta_sl_15: float = INPUT(label='State bonus depreciation 15-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_bonus_sta_sl_20: float = INPUT(label='State bonus depreciation 20-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_bonus_sta_sl_39: float = INPUT(label='State bonus depreciation 39-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_bonus_sta_custom: float = INPUT(label='State bonus depreciation custom', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_bonus_fed: float = INPUT(label='Federal bonus depreciation', units='%', type='NUMBER', group='Depreciation', required='?=0', constraints='MIN=0,MAX=100')
+    depr_bonus_fed_macrs_5: float = INPUT(label='Federal bonus depreciation 5-yr MACRS', units='0/1', type='NUMBER', group='Depreciation', required='?=1', constraints='BOOLEAN')
+    depr_bonus_fed_macrs_15: float = INPUT(label='Federal bonus depreciation 15-yr MACRS', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_bonus_fed_sl_5: float = INPUT(label='Federal bonus depreciation 5-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_bonus_fed_sl_15: float = INPUT(label='Federal bonus depreciation 15-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_bonus_fed_sl_20: float = INPUT(label='Federal bonus depreciation 20-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_bonus_fed_sl_39: float = INPUT(label='Federal bonus depreciation 39-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_bonus_fed_custom: float = INPUT(label='Federal bonus depreciation custom', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_itc_sta_macrs_5: float = INPUT(label='State ITC depreciation 5-yr MACRS', units='0/1', type='NUMBER', group='Depreciation', required='?=1', constraints='BOOLEAN')
+    depr_itc_sta_macrs_15: float = INPUT(label='State ITC depreciation 15-yr MACRS', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_itc_sta_sl_5: float = INPUT(label='State ITC depreciation 5-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_itc_sta_sl_15: float = INPUT(label='State ITC depreciation 15-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_itc_sta_sl_20: float = INPUT(label='State ITC depreciation 20-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_itc_sta_sl_39: float = INPUT(label='State ITC depreciation 39-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_itc_sta_custom: float = INPUT(label='State ITC depreciation custom', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_itc_fed_macrs_5: float = INPUT(label='Federal ITC depreciation 5-yr MACRS', units='0/1', type='NUMBER', group='Depreciation', required='?=1', constraints='BOOLEAN')
+    depr_itc_fed_macrs_15: float = INPUT(label='Federal ITC depreciation 15-yr MACRS', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_itc_fed_sl_5: float = INPUT(label='Federal ITC depreciation 5-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_itc_fed_sl_15: float = INPUT(label='Federal ITC depreciation 15-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_itc_fed_sl_20: float = INPUT(label='Federal ITC depreciation 20-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_itc_fed_sl_39: float = INPUT(label='Federal ITC depreciation 39-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    depr_itc_fed_custom: float = INPUT(label='Federal ITC depreciation custom', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
+    cf_stadepr_macrs_5: Final[Array] = OUTPUT(label='State depreciation from 5-yr MACRS', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_stadepr_macrs_15: Final[Array] = OUTPUT(label='State depreciation from 15-yr MACRS', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_stadepr_sl_5: Final[Array] = OUTPUT(label='State depreciation from 5-yr straight line', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_stadepr_sl_15: Final[Array] = OUTPUT(label='State depreciation from 15-yr straight line', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_stadepr_sl_20: Final[Array] = OUTPUT(label='State depreciation from 20-yr straight line', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_stadepr_sl_39: Final[Array] = OUTPUT(label='State depreciation from 39-yr straight line', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_stadepr_custom: Final[Array] = OUTPUT(label='State depreciation from custom', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_stadepr_me1: Final[Array] = OUTPUT(label='State depreciation from major equipment 1', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_stadepr_me2: Final[Array] = OUTPUT(label='State depreciation from major equipment 2', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_stadepr_me3: Final[Array] = OUTPUT(label='State depreciation from major equipment 3', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_stadepr_total: Final[Array] = OUTPUT(label='Total state tax depreciation', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_statax_income_prior_incentives: Final[Array] = OUTPUT(label='State taxable income without incentives', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_statax_taxable_incentives: Final[Array] = OUTPUT(label='State taxable incentives', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_statax_income_with_incentives: Final[Array] = OUTPUT(label='State taxable income', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_statax: Final[Array] = OUTPUT(label='State tax benefit (liability)', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_feddepr_macrs_5: Final[Array] = OUTPUT(label='Federal depreciation from 5-yr MACRS', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_feddepr_macrs_15: Final[Array] = OUTPUT(label='Federal depreciation from 15-yr MACRS', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_feddepr_sl_5: Final[Array] = OUTPUT(label='Federal depreciation from 5-yr straight line', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_feddepr_sl_15: Final[Array] = OUTPUT(label='Federal depreciation from 15-yr straight line', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_feddepr_sl_20: Final[Array] = OUTPUT(label='Federal depreciation from 20-yr straight line', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_feddepr_sl_39: Final[Array] = OUTPUT(label='Federal depreciation from 39-yr straight line', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_feddepr_custom: Final[Array] = OUTPUT(label='Federal depreciation from custom', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_feddepr_me1: Final[Array] = OUTPUT(label='Federal depreciation from major equipment 1', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_feddepr_me2: Final[Array] = OUTPUT(label='Federal depreciation from major equipment 2', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_feddepr_me3: Final[Array] = OUTPUT(label='Federal depreciation from major equipment 3', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_feddepr_total: Final[Array] = OUTPUT(label='Total federal tax depreciation', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_fedtax_income_prior_incentives: Final[Array] = OUTPUT(label='Federal taxable income without incentives', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_fedtax_taxable_incentives: Final[Array] = OUTPUT(label='Federal taxable incentives', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_fedtax_income_with_incentives: Final[Array] = OUTPUT(label='Federal taxable income', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_fedtax: Final[Array] = OUTPUT(label='Federal tax benefit (liability)', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
     ibi_fed_amount: float = INPUT(label='Federal amount-based IBI amount', units='$', type='NUMBER', group='Payment Incentives', required='?=0')
     ibi_fed_amount_tax_fed: float = INPUT(label='Federal amount-based IBI federal taxable', units='0/1', type='NUMBER', group='Payment Incentives', required='?=1', constraints='BOOLEAN')
     ibi_fed_amount_tax_sta: float = INPUT(label='Federal amount-based IBI state taxable', units='0/1', type='NUMBER', group='Payment Incentives', required='?=1', constraints='BOOLEAN')
@@ -925,15 +1080,80 @@ class Data(ssc.DataDict):
     pbi_oth_escal: float = INPUT(label='Other PBI escalation', units='%', type='NUMBER', group='Payment Incentives', required='?=0')
     pbi_oth_tax_fed: float = INPUT(label='Other PBI federal taxable', units='0/1', type='NUMBER', group='Payment Incentives', required='?=1', constraints='BOOLEAN')
     pbi_oth_tax_sta: float = INPUT(label='Other PBI state taxable', units='0/1', type='NUMBER', group='Payment Incentives', required='?=1', constraints='BOOLEAN')
-    en_batt: float = INPUT(label='Enable battery storage model', units='0/1', type='NUMBER', group='Battery', required='?=0')
-    batt_meter_position: float = INPUT(label='Position of battery relative to electric meter', type='NUMBER', group='Battery')
-    grid_to_batt: Array = INPUT(label='Electricity to battery from grid', units='kW', type='ARRAY', group='Battery')
-    ppa_gen: Final[Array] = OUTPUT(label='Electricity used to calculate PPA revenue', units='kW', type='ARRAY', group='Battery')
-    gen: Array = INPUT(label='Power generated by renewable resource', units='kW', type='ARRAY', required='*')
+    cbi_total_fed: Final[float] = OUTPUT(label='Federal CBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
+    cbi_total_sta: Final[float] = OUTPUT(label='State CBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
+    cbi_total_oth: Final[float] = OUTPUT(label='Other CBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
+    cbi_total_uti: Final[float] = OUTPUT(label='Utility CBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
+    cbi_total: Final[float] = OUTPUT(label='Total CBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
+    cbi_statax_total: Final[float] = OUTPUT(label='State taxable CBI income', units='$', type='NUMBER', group='Cash Flow Incentives')
+    cbi_fedtax_total: Final[float] = OUTPUT(label='Federal taxable CBI income', units='$', type='NUMBER', group='Cash Flow Incentives')
+    ibi_total_fed: Final[float] = OUTPUT(label='Federal IBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
+    ibi_total_sta: Final[float] = OUTPUT(label='State IBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
+    ibi_total_oth: Final[float] = OUTPUT(label='Other IBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
+    ibi_total_uti: Final[float] = OUTPUT(label='Utility IBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
+    ibi_total: Final[float] = OUTPUT(label='Total IBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
+    ibi_statax_total: Final[float] = OUTPUT(label='State taxable IBI income', units='$', type='NUMBER', group='Cash Flow Incentives')
+    ibi_fedtax_total: Final[float] = OUTPUT(label='Federal taxable IBI income', units='$', type='NUMBER', group='Cash Flow Incentives')
+    cf_pbi_total_fed: Final[Array] = OUTPUT(label='Federal PBI income', units='$', type='ARRAY', group='Cash Flow Incentives', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_pbi_total_sta: Final[Array] = OUTPUT(label='State PBI income', units='$', type='ARRAY', group='Cash Flow Incentives', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_pbi_total_oth: Final[Array] = OUTPUT(label='Other PBI income', units='$', type='ARRAY', group='Cash Flow Incentives', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_pbi_total_uti: Final[Array] = OUTPUT(label='Utility PBI income', units='$', type='ARRAY', group='Cash Flow Incentives', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_pbi_total: Final[Array] = OUTPUT(label='Total PBI income', units='$', type='ARRAY', group='Cash Flow Incentives', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_pbi_statax_total: Final[Array] = OUTPUT(label='State taxable PBI income', units='$', type='ARRAY', group='Cash Flow Incentives', constraints='LENGTH_EQUAL=cf_length')
+    cf_pbi_fedtax_total: Final[Array] = OUTPUT(label='Federal taxable PBI income', units='$', type='ARRAY', group='Cash Flow Incentives', constraints='LENGTH_EQUAL=cf_length')
+    itc_total_fed: Final[float] = OUTPUT(label='Federal ITC income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
+    itc_total_sta: Final[float] = OUTPUT(label='State ITC income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
+    itc_total: Final[float] = OUTPUT(label='Total ITC income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
+    cf_ptc_fed: Final[Array] = OUTPUT(label='Federal PTC income', units='$', type='ARRAY', group='Cash Flow Incentives', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_ptc_sta: Final[Array] = OUTPUT(label='State PTC income', units='$', type='ARRAY', group='Cash Flow Incentives', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_ptc_total: Final[Array] = OUTPUT(label='Total PTC', units='$', type='ARRAY', group='Cash Flow Incentives', constraints='LENGTH_EQUAL=cf_length')
+    term_tenor: float = INPUT(label='Term financing period', units='years', type='NUMBER', group='Financial Parameters', required='?=10', constraints='INTEGER,MIN=0')
+    term_int_rate: float = INPUT(label='Term financing interest rate', units='%', type='NUMBER', group='Financial Parameters', required='?=8.5', constraints='MIN=0,MAX=100')
+    dscr: float = INPUT(label='Debt service coverage ratio', type='NUMBER', group='Financial Parameters', required='?=1.5', constraints='MIN=0')
+    dscr_reserve_months: float = INPUT(label='Debt service reserve account', units='months P&I', type='NUMBER', group='Financial Parameters', required='?=6', constraints='MIN=0')
+    debt_percent: float = INPUT(label='Debt percent', units='%', type='NUMBER', group='Financial Parameters', required='?=50', constraints='MIN=0,MAX=100')
+    debt_option: float = INPUT(label='Debt option', units='0/1', type='NUMBER', group='Financial Parameters', required='?=1', constraints='INTEGER,MIN=0,MAX=1', meta='0=debt percent,1=dscr')
+    payment_option: float = INPUT(label='Debt repayment option', units='0/1', type='NUMBER', group='Financial Parameters', required='?=0', constraints='INTEGER,MIN=0,MAX=1', meta='0=Equal payments (standard amortization),1=Fixed principal declining interest')
+    cost_debt_closing: float = INPUT(label='Debt closing cost', units='$', type='NUMBER', group='Financial Parameters', required='?=250000', constraints='MIN=0')
+    cost_debt_fee: float = INPUT(label='Debt closing fee (% of total debt amount)', units='%', type='NUMBER', group='Financial Parameters', required='?=1.5', constraints='MIN=0')
+    months_working_reserve: float = INPUT(label='Working capital reserve months of operating costs', units='months', type='NUMBER', group='Financial Parameters', required='?=6', constraints='MIN=0')
+    months_receivables_reserve: float = INPUT(label='Receivables reserve months of PPA revenue', units='months', type='NUMBER', group='Financial Parameters', required='?=0', constraints='MIN=0')
+    cost_other_financing: float = INPUT(label='Other financing cost', units='$', type='NUMBER', group='Financial Parameters', required='?=150000', constraints='MIN=0')
+    flip_target_percent: float = INPUT(label='After-tax IRR target', units='%', type='NUMBER', group='Revenue', required='?=11', constraints='MIN=0,MAX=100')
+    flip_target_year: float = INPUT(label='IRR target year', units='Year', type='NUMBER', group='Revenue', required='?=11', constraints='MIN=1')
+    pbi_fed_for_ds: float = INPUT(label='Federal PBI available for debt service', units='0/1', type='NUMBER', group='Payment Incentives', required='?=0', constraints='BOOLEAN')
+    pbi_sta_for_ds: float = INPUT(label='State PBI available for debt service', units='0/1', type='NUMBER', group='Payment Incentives', required='?=0', constraints='BOOLEAN')
+    pbi_uti_for_ds: float = INPUT(label='Utility PBI available for debt service', units='0/1', type='NUMBER', group='Payment Incentives', required='?=0', constraints='BOOLEAN')
+    pbi_oth_for_ds: float = INPUT(label='Other PBI available for debt service', units='0/1', type='NUMBER', group='Payment Incentives', required='?=0', constraints='BOOLEAN')
+    debt_fraction: Final[float] = OUTPUT(label='Debt percent', units='%', type='NUMBER', group='Metrics', required='*')
+    flip_target_irr: Final[float] = OUTPUT(label='IRR target', units='%', type='NUMBER', group='Metrics', required='*')
+    flip_actual_year: Final[float] = OUTPUT(label='Year target IRR was achieved', units='year', type='NUMBER', group='Metrics', required='*')
+    flip_actual_irr: Final[float] = OUTPUT(label='IRR in target year', units='%', type='NUMBER', group='Metrics', required='*')
+    lcoe_real: Final[float] = OUTPUT(label='Levelized cost (real)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
+    lcoe_nom: Final[float] = OUTPUT(label='Levelized cost (nominal)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
+    npv_energy_nom: Final[float] = OUTPUT(label='Present value of annual energy (nominal)', units='kWh', type='NUMBER', group='Metrics', required='*')
+    npv_energy_real: Final[float] = OUTPUT(label='Present value of annual energy (real)', units='kWh', type='NUMBER', group='Metrics', required='*')
+    present_value_oandm: Final[float] = OUTPUT(label='Present value of O&M', units='$', type='NUMBER', group='Metrics', required='*')
+    present_value_oandm_nonfuel: Final[float] = OUTPUT(label='Present value of non-fuel O&M', units='$', type='NUMBER', group='Metrics', required='*')
+    present_value_fuel: Final[float] = OUTPUT(label='Present value of fuel O&M', units='$', type='NUMBER', group='Metrics', required='*')
+    present_value_insandproptax: Final[float] = OUTPUT(label='Present value of insurance and prop tax', units='$', type='NUMBER', group='Metrics', required='*')
+    lcoptc_fed_real: Final[float] = OUTPUT(label='Levelized federal PTC (real)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
+    lcoptc_fed_nom: Final[float] = OUTPUT(label='Levelized federal PTC (nominal)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
+    lcoptc_sta_real: Final[float] = OUTPUT(label='Levelized state PTC (real)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
+    lcoptc_sta_nom: Final[float] = OUTPUT(label='Levelized state PTC (nominal)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
+    wacc: Final[float] = OUTPUT(label='Weighted average cost of capital (WACC)', units='$', type='NUMBER', group='Metrics', required='*')
+    effective_tax_rate: Final[float] = OUTPUT(label='Effective tax rate', units='%', type='NUMBER', group='Metrics', required='*')
+    analysis_period_irr: Final[float] = OUTPUT(label='IRR at end of analysis period', units='%', type='NUMBER', group='Metrics', required='*')
+    en_batt: float = INPUT(label='Enable battery storage model', units='0/1', type='NUMBER', group='BatterySystem', required='?=0')
+    en_electricity_rates: float = INPUT(label='Enable electricity rates for grid purchase', units='0/1', type='NUMBER', group='Electricity Rates', required='?=0')
+    batt_meter_position: float = INPUT(label='Position of battery relative to electric meter', type='NUMBER', group='BatterySystem')
+    grid_to_batt: Array = INPUT(label='Electricity to battery from grid', units='kW', type='ARRAY', group='BatterySystem')
+    ppa_gen: Final[Array] = OUTPUT(label='Electricity used to calculate PPA revenue', units='kW', type='ARRAY', group='System Output')
+    gen: Array = INPUT(label='Power generated by renewable resource', units='kW', type='ARRAY', group='System Output', required='*')
     degradation: Array = INPUT(label='Annual energy degradation', type='ARRAY', group='System Output', required='*')
-    utility_bill_w_sys: Array = INPUT(label='Electricity bill with system', units='$', type='ARRAY')
+    utility_bill_w_sys: Array = INPUT(label='Electricity bill with system', units='$', type='ARRAY', group='Utility Bill')
     cf_utility_bill: Final[Array] = OUTPUT(label='Electricity purchase', units='$', type='ARRAY', constraints='LENGTH_EQUAL=cf_length')
-    roe_input: Array = INPUT(label='Return on equity', type='ARRAY', group='Return on Equity', required='?=20')
+    roe_input: Array = INPUT(label='Return on equity', type='ARRAY', group='Financial Parameters', required='?=20')
     cf_return_on_equity: Final[Array] = OUTPUT(label='Return on equity', units='$/kWh', type='ARRAY', group='Return on Equity', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_return_on_equity_input: Final[Array] = OUTPUT(label='Return on equity input', units='%', type='ARRAY', group='Return on Equity', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_return_on_equity_dollars: Final[Array] = OUTPUT(label='Return on equity dollars', units='$', type='ARRAY', group='Return on Equity', required='*', constraints='LENGTH_EQUAL=cf_length')
@@ -944,189 +1164,117 @@ class Data(ssc.DataDict):
     lcog_wc_int: Final[float] = OUTPUT(label='LCOG working capital interest', units='cents/kWh', type='NUMBER', group='Return on Equity', required='*')
     lcog_roe: Final[float] = OUTPUT(label='LCOG return on equity', units='cents/kWh', type='NUMBER', group='Return on Equity', required='*')
     lcog: Final[float] = OUTPUT(label='LCOG Levelized cost of generation', units='cents/kWh', type='NUMBER', group='Return on Equity', required='*')
-    loan_moratorium: float = INPUT(label='Loan moratorium period', units='years', type='NUMBER', group='Moratorium', required='?=0', constraints='INTEGER,MIN=0')
-    system_use_recapitalization: float = INOUT(label='Recapitalization expenses', units='0/1', type='NUMBER', group='Recapitalization', required='?=0', constraints='INTEGER,MIN=0', meta='0=None,1=Recapitalize')
-    system_recapitalization_cost: float = INPUT(label='Recapitalization cost', units='$', type='NUMBER', group='Recapitalization', required='?=0')
-    system_recapitalization_escalation: float = INPUT(label='Recapitalization escalation (above inflation)', units='%', type='NUMBER', group='Recapitalization', required='?=0', constraints='MIN=0,MAX=100')
-    system_lifetime_recapitalize: Array = INPUT(label='Recapitalization boolean', type='ARRAY', group='Recapitalization', required='?=0')
+    loan_moratorium: float = INPUT(label='Loan moratorium period', units='years', type='NUMBER', group='Financial Parameters', required='?=0', constraints='INTEGER,MIN=0')
+    system_use_recapitalization: float = INOUT(label='Recapitalization expenses', units='0/1', type='NUMBER', group='System Costs', required='?=0', constraints='INTEGER,MIN=0', meta='0=None,1=Recapitalize')
+    system_recapitalization_cost: float = INPUT(label='Recapitalization cost', units='$', type='NUMBER', group='System Costs', required='?=0')
+    system_recapitalization_escalation: float = INPUT(label='Recapitalization escalation (above inflation)', units='%', type='NUMBER', group='System Costs', required='?=0', constraints='MIN=0,MAX=100')
+    system_lifetime_recapitalize: Array = INPUT(label='Recapitalization boolean', type='ARRAY', group='System Costs', required='?=0')
     cf_recapitalization: Final[Array] = OUTPUT(label='Recapitalization operating expense', units='$', type='ARRAY', group='Recapitalization', required='*', constraints='LENGTH_EQUAL=cf_length')
-    system_use_lifetime_output: float = INPUT(label='Lifetime hourly system outputs', units='0/1', type='NUMBER', group='Time of Delivery', required='*', constraints='INTEGER,MIN=0', meta='0=hourly first year,1=hourly lifetime')
-    ppa_multiplier_model: float = INPUT(label='PPA multiplier model', units='0/1', type='NUMBER', group='Time of Delivery', required='?=0', constraints='INTEGER,MIN=0', meta='0=diurnal,1=timestep')
-    dispatch_factors_ts: Array = INPUT(label='Dispatch payment factor array', type='ARRAY', group='Time of Delivery', required='ppa_multiplier_model=1')
-    ppa_multipliers: Final[Array] = OUTPUT(label='TOD factors', type='ARRAY', group='Time of Delivery', required='*')
-    dispatch_factor1: float = INPUT(label='TOD factor for period 1', type='NUMBER', group='Time of Delivery', required='ppa_multiplier_model=0')
-    dispatch_factor2: float = INPUT(label='TOD factor for period 2', type='NUMBER', group='Time of Delivery', required='ppa_multiplier_model=0')
-    dispatch_factor3: float = INPUT(label='TOD factor for period 3', type='NUMBER', group='Time of Delivery', required='ppa_multiplier_model=0')
-    dispatch_factor4: float = INPUT(label='TOD factor for period 4', type='NUMBER', group='Time of Delivery', required='ppa_multiplier_model=0')
-    dispatch_factor5: float = INPUT(label='TOD factor for period 5', type='NUMBER', group='Time of Delivery', required='ppa_multiplier_model=0')
-    dispatch_factor6: float = INPUT(label='TOD factor for period 6', type='NUMBER', group='Time of Delivery', required='ppa_multiplier_model=0')
-    dispatch_factor7: float = INPUT(label='TOD factor for period 7', type='NUMBER', group='Time of Delivery', required='ppa_multiplier_model=0')
-    dispatch_factor8: float = INPUT(label='TOD factor for period 8', type='NUMBER', group='Time of Delivery', required='ppa_multiplier_model=0')
-    dispatch_factor9: float = INPUT(label='TOD factor for period 9', type='NUMBER', group='Time of Delivery', required='ppa_multiplier_model=0')
-    dispatch_sched_weekday: Matrix = INPUT(label='Diurnal weekday TOD periods', units='1..9', type='MATRIX', group='Time of Delivery', required='ppa_multiplier_model=0', meta='12 x 24 matrix')
-    dispatch_sched_weekend: Matrix = INPUT(label='Diurnal weekend TOD periods', units='1..9', type='MATRIX', group='Time of Delivery', required='ppa_multiplier_model=0', meta='12 x 24 matrix')
-    cf_energy_net_jan: Final[Array] = OUTPUT(label='Energy produced by the system in January', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_jan: Final[Array] = OUTPUT(label='Revenue from the system in January', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_feb: Final[Array] = OUTPUT(label='Energy produced by the system in February', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_feb: Final[Array] = OUTPUT(label='Revenue from the system in February', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_mar: Final[Array] = OUTPUT(label='Energy produced by the system in March', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_mar: Final[Array] = OUTPUT(label='Revenue from the system in March', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_apr: Final[Array] = OUTPUT(label='Energy produced by the system in April', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_apr: Final[Array] = OUTPUT(label='Revenue from the system in April', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_may: Final[Array] = OUTPUT(label='Energy produced by the system in May', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_may: Final[Array] = OUTPUT(label='Revenue from the system in May', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_jun: Final[Array] = OUTPUT(label='Energy produced by the system in June', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_jun: Final[Array] = OUTPUT(label='Revenue from the system in June', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_jul: Final[Array] = OUTPUT(label='Energy produced by the system in July', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_jul: Final[Array] = OUTPUT(label='Revenue from the system in July', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_aug: Final[Array] = OUTPUT(label='Energy produced by the system in August', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_aug: Final[Array] = OUTPUT(label='Revenue from the system in August', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_sep: Final[Array] = OUTPUT(label='Energy produced by the system in September', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_sep: Final[Array] = OUTPUT(label='Revenue from the system in September', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_oct: Final[Array] = OUTPUT(label='Energy produced by the system in October', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_oct: Final[Array] = OUTPUT(label='Revenue from the system in October', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_nov: Final[Array] = OUTPUT(label='Energy produced by the system in November', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_nov: Final[Array] = OUTPUT(label='Revenue from the system in November', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dec: Final[Array] = OUTPUT(label='Energy produced by the system in December', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dec: Final[Array] = OUTPUT(label='Revenue from the system in December', units='$', type='ARRAY', group='Cash Flow Revenue', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dispatch1: Final[Array] = OUTPUT(label='Energy produced by the system in TOD period 1', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dispatch1: Final[Array] = OUTPUT(label='Revenue from the system in TOD period 1', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dispatch2: Final[Array] = OUTPUT(label='Energy produced by the system in TOD period 2', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dispatch2: Final[Array] = OUTPUT(label='Revenue from the system in TOD period 2', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dispatch3: Final[Array] = OUTPUT(label='Energy produced by the system in TOD period 3', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dispatch3: Final[Array] = OUTPUT(label='Revenue from the system in TOD period 3', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dispatch4: Final[Array] = OUTPUT(label='Energy produced by the system in TOD period 4', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dispatch4: Final[Array] = OUTPUT(label='Revenue from the system in TOD period 4', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dispatch5: Final[Array] = OUTPUT(label='Energy produced by the system in TOD period 5', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dispatch5: Final[Array] = OUTPUT(label='Revenue from the system in TOD period 5', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dispatch6: Final[Array] = OUTPUT(label='Energy produced by the system in TOD period 6', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dispatch6: Final[Array] = OUTPUT(label='Revenue from the system in TOD period 6', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dispatch7: Final[Array] = OUTPUT(label='Energy produced by the system in TOD period 7', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dispatch7: Final[Array] = OUTPUT(label='Revenue from the system in TOD period 7', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dispatch8: Final[Array] = OUTPUT(label='Energy produced by the system in TOD period 8', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dispatch8: Final[Array] = OUTPUT(label='Revenue from the system in TOD period 8', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_energy_net_dispatch9: Final[Array] = OUTPUT(label='Energy produced by the system in TOD period 9', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    cf_revenue_dispatch9: Final[Array] = OUTPUT(label='Revenue from the system in TOD period 9', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
-    firstyear_revenue_dispatch1: Final[float] = OUTPUT(label='First year revenue from the system in TOD period 1', units='$', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_revenue_dispatch2: Final[float] = OUTPUT(label='First year revenue from the system in TOD period 2', units='$', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_revenue_dispatch3: Final[float] = OUTPUT(label='First year revenue from the system in TOD period 3', units='$', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_revenue_dispatch4: Final[float] = OUTPUT(label='First year revenue from the system in TOD period 4', units='$', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_revenue_dispatch5: Final[float] = OUTPUT(label='First year revenue from the system in TOD period 5', units='$', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_revenue_dispatch6: Final[float] = OUTPUT(label='First year revenue from the system in TOD period 6', units='$', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_revenue_dispatch7: Final[float] = OUTPUT(label='First year revenue from the system in TOD period 7', units='$', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_revenue_dispatch8: Final[float] = OUTPUT(label='First year revenue from the system in TOD period 8', units='$', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_revenue_dispatch9: Final[float] = OUTPUT(label='First year revenue from the system in TOD period 9', units='$', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_dispatch1: Final[float] = OUTPUT(label='First year energy from the system in TOD period 1', units='kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_dispatch2: Final[float] = OUTPUT(label='First year energy from the system in TOD period 2', units='kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_dispatch3: Final[float] = OUTPUT(label='First year energy from the system in TOD period 3', units='kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_dispatch4: Final[float] = OUTPUT(label='First year energy from the system in TOD period 4', units='kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_dispatch5: Final[float] = OUTPUT(label='First year energy from the system in TOD period 5', units='kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_dispatch6: Final[float] = OUTPUT(label='First year energy from the system in TOD period 6', units='kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_dispatch7: Final[float] = OUTPUT(label='First year energy from the system in TOD period 7', units='kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_dispatch8: Final[float] = OUTPUT(label='First year energy from the system in TOD period 8', units='kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_dispatch9: Final[float] = OUTPUT(label='First year energy from the system in TOD period 9', units='kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_price1: Final[float] = OUTPUT(label='First year energy price for TOD period 1', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_price2: Final[float] = OUTPUT(label='First year energy price for TOD period 2', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_price3: Final[float] = OUTPUT(label='First year energy price for TOD period 3', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_price4: Final[float] = OUTPUT(label='First year energy price for TOD period 4', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_price5: Final[float] = OUTPUT(label='First year energy price for TOD period 5', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_price6: Final[float] = OUTPUT(label='First year energy price for TOD period 6', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_price7: Final[float] = OUTPUT(label='First year energy price for TOD period 7', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_price8: Final[float] = OUTPUT(label='First year energy price for TOD period 8', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    firstyear_energy_price9: Final[float] = OUTPUT(label='First year energy price for TOD period 9', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_revenue_monthly_firstyear_TOD1: Final[Array] = OUTPUT(label='First year revenue from the system by month for TOD period 1', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_energy_net_monthly_firstyear_TOD1: Final[Array] = OUTPUT(label='First year energy from the system by month for TOD period 1', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_revenue_monthly_firstyear_TOD2: Final[Array] = OUTPUT(label='First year revenue from the system by month for TOD period 2', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_energy_net_monthly_firstyear_TOD2: Final[Array] = OUTPUT(label='First year energy from the system by month for TOD period 2', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_revenue_monthly_firstyear_TOD3: Final[Array] = OUTPUT(label='First year revenue from the system by month for TOD period 3', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_energy_net_monthly_firstyear_TOD3: Final[Array] = OUTPUT(label='First year energy from the system by month for TOD period 3', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_revenue_monthly_firstyear_TOD4: Final[Array] = OUTPUT(label='First year revenue from the system by month for TOD period 4', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_energy_net_monthly_firstyear_TOD4: Final[Array] = OUTPUT(label='First year energy from the system by month for TOD period 4', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_revenue_monthly_firstyear_TOD5: Final[Array] = OUTPUT(label='First year revenue from the system by month for TOD period 5', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_energy_net_monthly_firstyear_TOD5: Final[Array] = OUTPUT(label='First year energy from the system by month for TOD period 5', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_revenue_monthly_firstyear_TOD6: Final[Array] = OUTPUT(label='First year revenue from the system by month for TOD period 6', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_energy_net_monthly_firstyear_TOD6: Final[Array] = OUTPUT(label='First year energy from the system by month for TOD period 6', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_revenue_monthly_firstyear_TOD7: Final[Array] = OUTPUT(label='First year revenue from the system by month for TOD period 7', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_energy_net_monthly_firstyear_TOD7: Final[Array] = OUTPUT(label='First year energy from the system by month for TOD period 7', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_revenue_monthly_firstyear_TOD8: Final[Array] = OUTPUT(label='First year revenue from the system by month for TOD period 8', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_energy_net_monthly_firstyear_TOD8: Final[Array] = OUTPUT(label='First year energy from the system by month for TOD period 8', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_revenue_monthly_firstyear_TOD9: Final[Array] = OUTPUT(label='First year revenue from the system by month for TOD period 9', units='$', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
-    cf_energy_net_monthly_firstyear_TOD9: Final[Array] = OUTPUT(label='First year energy from the system by month for TOD period 9', units='kWh', type='ARRAY', group='Cash Flow Revenue', required='ppa_multiplier_model=0')
+    system_use_lifetime_output: float = INPUT(label='Lifetime hourly system outputs', units='0/1', type='NUMBER', group='Lifetime', required='*', constraints='INTEGER,MIN=0', meta='0=hourly first year,1=hourly lifetime')
+    ppa_multiplier_model: float = INPUT(label='PPA multiplier model', units='0/1', type='NUMBER', group='Revenue', required='?=0', constraints='INTEGER,MIN=0', meta='0=diurnal,1=timestep')
+    dispatch_factors_ts: Array = INPUT(label='Dispatch payment factor array', type='ARRAY', group='Revenue', required='ppa_multiplier_model=1')
+    ppa_multipliers: Final[Array] = OUTPUT(label='TOD factors', type='ARRAY', group='Revenue', required='*')
+    dispatch_factor1: float = INPUT(label='TOD factor for period 1', type='NUMBER', group='Revenue', required='ppa_multiplier_model=0')
+    dispatch_factor2: float = INPUT(label='TOD factor for period 2', type='NUMBER', group='Revenue', required='ppa_multiplier_model=0')
+    dispatch_factor3: float = INPUT(label='TOD factor for period 3', type='NUMBER', group='Revenue', required='ppa_multiplier_model=0')
+    dispatch_factor4: float = INPUT(label='TOD factor for period 4', type='NUMBER', group='Revenue', required='ppa_multiplier_model=0')
+    dispatch_factor5: float = INPUT(label='TOD factor for period 5', type='NUMBER', group='Revenue', required='ppa_multiplier_model=0')
+    dispatch_factor6: float = INPUT(label='TOD factor for period 6', type='NUMBER', group='Revenue', required='ppa_multiplier_model=0')
+    dispatch_factor7: float = INPUT(label='TOD factor for period 7', type='NUMBER', group='Revenue', required='ppa_multiplier_model=0')
+    dispatch_factor8: float = INPUT(label='TOD factor for period 8', type='NUMBER', group='Revenue', required='ppa_multiplier_model=0')
+    dispatch_factor9: float = INPUT(label='TOD factor for period 9', type='NUMBER', group='Revenue', required='ppa_multiplier_model=0')
+    dispatch_sched_weekday: Matrix = INPUT(label='Diurnal weekday TOD periods', units='1..9', type='MATRIX', group='Revenue', required='ppa_multiplier_model=0', meta='12 x 24 matrix')
+    dispatch_sched_weekend: Matrix = INPUT(label='Diurnal weekend TOD periods', units='1..9', type='MATRIX', group='Revenue', required='ppa_multiplier_model=0', meta='12 x 24 matrix')
+    cf_energy_net_jan: Final[Array] = OUTPUT(label='Energy produced by year in January', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_jan: Final[Array] = OUTPUT(label='PPA revenue by year for January', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_feb: Final[Array] = OUTPUT(label='Energy produced by year in February', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_feb: Final[Array] = OUTPUT(label='PPA revenue by year for February', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_mar: Final[Array] = OUTPUT(label='Energy produced by year in March', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_mar: Final[Array] = OUTPUT(label='PPA revenue by year for March', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_apr: Final[Array] = OUTPUT(label='Energy produced by year in April', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_apr: Final[Array] = OUTPUT(label='PPA revenue by year for April', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_may: Final[Array] = OUTPUT(label='Energy produced by year in May', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_may: Final[Array] = OUTPUT(label='PPA revenue by year for May', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_jun: Final[Array] = OUTPUT(label='Energy produced by year in June', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_jun: Final[Array] = OUTPUT(label='PPA revenue by year for June', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_jul: Final[Array] = OUTPUT(label='Energy produced by year in July', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_jul: Final[Array] = OUTPUT(label='PPA revenue by year for July', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_aug: Final[Array] = OUTPUT(label='Energy produced by year in August', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_aug: Final[Array] = OUTPUT(label='PPA revenue by year for August', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_sep: Final[Array] = OUTPUT(label='Energy produced by year in September', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_sep: Final[Array] = OUTPUT(label='PPA revenue by year for September', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_oct: Final[Array] = OUTPUT(label='Energy produced by year in October', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_oct: Final[Array] = OUTPUT(label='PPA revenue by year for October', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_nov: Final[Array] = OUTPUT(label='Energy produced by year in November', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_nov: Final[Array] = OUTPUT(label='PPA revenue by year for November', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_dec: Final[Array] = OUTPUT(label='Energy produced by year in December', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_dec: Final[Array] = OUTPUT(label='PPA revenue by year for December', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_dispatch1: Final[Array] = OUTPUT(label='Energy produced by year in TOD period 1', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_dispatch1: Final[Array] = OUTPUT(label='PPA revenue by year for TOD period 1', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_dispatch2: Final[Array] = OUTPUT(label='Energy produced by year in TOD period 2', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_dispatch2: Final[Array] = OUTPUT(label='PPA revenue by year for TOD period 2', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_dispatch3: Final[Array] = OUTPUT(label='Energy produced by year in TOD period 3', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_dispatch3: Final[Array] = OUTPUT(label='PPA revenue by year for TOD period 3', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_dispatch4: Final[Array] = OUTPUT(label='Energy produced by year in TOD period 4', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_dispatch4: Final[Array] = OUTPUT(label='PPA revenue by year for TOD period 4', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_dispatch5: Final[Array] = OUTPUT(label='Energy produced by year in TOD period 5', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_dispatch5: Final[Array] = OUTPUT(label='PPA revenue by year for TOD period 5', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_dispatch6: Final[Array] = OUTPUT(label='Energy produced by year in TOD period 6', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_dispatch6: Final[Array] = OUTPUT(label='PPA revenue by year for TOD period 6', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_dispatch7: Final[Array] = OUTPUT(label='Energy produced by year in TOD period 7', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_dispatch7: Final[Array] = OUTPUT(label='PPA revenue by year for TOD period 7', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_dispatch8: Final[Array] = OUTPUT(label='Energy produced by year in TOD period 8', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_dispatch8: Final[Array] = OUTPUT(label='PPA revenue by year for TOD period 8', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
+    cf_energy_net_dispatch9: Final[Array] = OUTPUT(label='Energy produced by year in TOD period 9', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
+    cf_revenue_dispatch9: Final[Array] = OUTPUT(label='PPA revenue by year for TOD period 9', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0', constraints='LENGTH_EQUAL=cf_length')
+    firstyear_revenue_dispatch1: Final[float] = OUTPUT(label='PPA revenue in Year 1 TOD period 1', units='$', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_revenue_dispatch2: Final[float] = OUTPUT(label='PPA revenue from in Year 1 TOD period 2', units='$', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_revenue_dispatch3: Final[float] = OUTPUT(label='PPA revenue from in Year 1 TOD period 3', units='$', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_revenue_dispatch4: Final[float] = OUTPUT(label='PPA revenue in Year 1 TOD period 4', units='$', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_revenue_dispatch5: Final[float] = OUTPUT(label='PPA revenue in Year 1 TOD period 5', units='$', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_revenue_dispatch6: Final[float] = OUTPUT(label='PPA revenue in Year 1 TOD period 6', units='$', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_revenue_dispatch7: Final[float] = OUTPUT(label='PPA revenue in Year 1 TOD period 7', units='$', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_revenue_dispatch8: Final[float] = OUTPUT(label='PPA revenue in Year 1 TOD period 8', units='$', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_revenue_dispatch9: Final[float] = OUTPUT(label='PPA revenue in Year 1 TOD period 9', units='$', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_energy_dispatch1: Final[float] = OUTPUT(label='Energy produced in Year 1 TOD period 1', units='kWh', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_energy_dispatch2: Final[float] = OUTPUT(label='Energy produced in Year 1 TOD period 2', units='kWh', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_energy_dispatch3: Final[float] = OUTPUT(label='Energy produced in Year 1 TOD period 3', units='kWh', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_energy_dispatch4: Final[float] = OUTPUT(label='Energy produced in Year 1 TOD period 4', units='kWh', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_energy_dispatch5: Final[float] = OUTPUT(label='Energy produced in Year 1 TOD period 5', units='kWh', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_energy_dispatch6: Final[float] = OUTPUT(label='Energy produced in Year 1 TOD period 6', units='kWh', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_energy_dispatch7: Final[float] = OUTPUT(label='Energy produced in Year 1 TOD period 7', units='kWh', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_energy_dispatch8: Final[float] = OUTPUT(label='Energy produced in Year 1 TOD period 8', units='kWh', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_energy_dispatch9: Final[float] = OUTPUT(label='Energy produced in Year 1 TOD period 9', units='kWh', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_energy_price1: Final[float] = OUTPUT(label='Power price in Year 1 TOD period 1', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_energy_price2: Final[float] = OUTPUT(label='Power price in Year 1 TOD period 2', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_energy_price3: Final[float] = OUTPUT(label='Power price in Year 1 TOD period 3', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_energy_price4: Final[float] = OUTPUT(label='Power price in Year 1 TOD period 4', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_energy_price5: Final[float] = OUTPUT(label='Power price in Year 1 TOD period 5', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_energy_price6: Final[float] = OUTPUT(label='Power price in Year 1 TOD period 6', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_energy_price7: Final[float] = OUTPUT(label='Power price in Year 1 TOD period 7', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_energy_price8: Final[float] = OUTPUT(label='Power price in Year 1 TOD period 8', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    firstyear_energy_price9: Final[float] = OUTPUT(label='Power price in Year 1 TOD period 9', units='cents/kWh', type='NUMBER', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    cf_revenue_monthly_firstyear_TOD1: Final[Array] = OUTPUT(label='PPA revenue in Year 1 by month for TOD period 1', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    cf_energy_net_monthly_firstyear_TOD1: Final[Array] = OUTPUT(label='Energy produced in Year 1 by month for TOD period 1', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    cf_revenue_monthly_firstyear_TOD2: Final[Array] = OUTPUT(label='PPA revenue in Year 1 by month for TOD period 2', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    cf_energy_net_monthly_firstyear_TOD2: Final[Array] = OUTPUT(label='Energy produced in Year 1 by month for TOD period 2', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    cf_revenue_monthly_firstyear_TOD3: Final[Array] = OUTPUT(label='PPA revenue in Year 1 by month for TOD period 3', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    cf_energy_net_monthly_firstyear_TOD3: Final[Array] = OUTPUT(label='Energy produced in Year 1 by month for TOD period 3', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    cf_revenue_monthly_firstyear_TOD4: Final[Array] = OUTPUT(label='PPA revenue in Year 1 by month for TOD period 4', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    cf_energy_net_monthly_firstyear_TOD4: Final[Array] = OUTPUT(label='Energy produced in Year 1 by month for TOD period 4', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    cf_revenue_monthly_firstyear_TOD5: Final[Array] = OUTPUT(label='PPA revenue in Year 1 by month for TOD period 5', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    cf_energy_net_monthly_firstyear_TOD5: Final[Array] = OUTPUT(label='Energy produced in Year 1 by month for TOD period 5', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    cf_revenue_monthly_firstyear_TOD6: Final[Array] = OUTPUT(label='PPA revenue in Year 1 by month for TOD period 6', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    cf_energy_net_monthly_firstyear_TOD6: Final[Array] = OUTPUT(label='Energy produced in Year 1 by month for TOD period 6', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    cf_revenue_monthly_firstyear_TOD7: Final[Array] = OUTPUT(label='PPA revenue in Year 1 by month for TOD period 7', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    cf_energy_net_monthly_firstyear_TOD7: Final[Array] = OUTPUT(label='Energy produced in Year 1 by month for TOD period 7', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    cf_revenue_monthly_firstyear_TOD8: Final[Array] = OUTPUT(label='PPA revenue in Year 1 by month for TOD period 8', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    cf_energy_net_monthly_firstyear_TOD8: Final[Array] = OUTPUT(label='Energy produced in Year 1 by month for TOD period 8', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    cf_revenue_monthly_firstyear_TOD9: Final[Array] = OUTPUT(label='PPA revenue in Year 1 by month for TOD period 9', units='$', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
+    cf_energy_net_monthly_firstyear_TOD9: Final[Array] = OUTPUT(label='Energy produced in Year 1 by month for TOD period 9', units='kWh', type='ARRAY', group='Cash Flow Revenue by Month and TOD Period', required='ppa_multiplier_model=0')
     total_installed_cost: float = INPUT(label='Installed cost', units='$', type='NUMBER', group='System Costs', required='*')
-    reserves_interest: float = INPUT(label='Interest on reserves', units='%', type='NUMBER', group='Reserve Accounts', required='?=1.75', constraints='MIN=0,MAX=100')
-    equip1_reserve_cost: float = INPUT(label='Major equipment reserve 1 cost', units='$/W', type='NUMBER', group='Reserve Accounts', required='?=0.25', constraints='MIN=0')
-    equip1_reserve_freq: float = INPUT(label='Major equipment reserve 1 frequency', units='years', type='NUMBER', group='Reserve Accounts', required='?=12', constraints='INTEGER,MIN=0')
-    equip2_reserve_cost: float = INPUT(label='Major equipment reserve 2 cost', units='$/W', type='NUMBER', group='Reserve Accounts', required='?=0', constraints='MIN=0')
-    equip2_reserve_freq: float = INPUT(label='Major equipment reserve 2 frequency', units='years', type='NUMBER', group='Reserve Accounts', required='?=15', constraints='INTEGER,MIN=0')
-    equip3_reserve_cost: float = INPUT(label='Major equipment reserve 3 cost', units='$/W', type='NUMBER', group='Reserve Accounts', required='?=0', constraints='MIN=0')
-    equip3_reserve_freq: float = INPUT(label='Major equipment reserve 3 frequency', units='years', type='NUMBER', group='Reserve Accounts', required='?=20', constraints='INTEGER,MIN=0')
-    equip_reserve_depr_sta: float = INPUT(label='Major equipment reserve state depreciation', type='NUMBER', group='Depreciation', required='?=0', constraints='INTEGER,MIN=0,MAX=6', meta='0=5yr MACRS,1=15yr MACRS,2=5yr SL,3=15yr SL, 4=20yr SL,5=39yr SL,6=Custom')
-    equip_reserve_depr_fed: float = INPUT(label='Major equipment reserve federal depreciation', type='NUMBER', group='Depreciation', required='?=0', constraints='INTEGER,MIN=0,MAX=6', meta='0=5yr MACRS,1=15yr MACRS,2=5yr SL,3=15yr SL, 4=20yr SL,5=39yr SL,6=Custom')
-    salvage_percentage: float = INPUT(label='Net pre-tax cash salvage value', units='%', type='NUMBER', group='Salvage Value', required='?=10', constraints='MIN=0,MAX=100')
-    ppa_soln_mode: float = INPUT(label='PPA solution mode', units='0/1', type='NUMBER', group='Solution Mode', required='?=0', constraints='INTEGER,MIN=0,MAX=1', meta='0=solve ppa,1=specify ppa')
-    ppa_soln_tolerance: float = INPUT(label='PPA solution tolerance', type='NUMBER', group='Solution Mode', required='?=1e-5')
-    ppa_soln_min: float = INPUT(label='PPA solution minimum ppa', units='cents/kWh', type='NUMBER', group='Solution Mode', required='?=0')
-    ppa_soln_max: float = INPUT(label='PPA solution maximum ppa', units='cents/kWh', type='NUMBER', group='Solution Mode', required='?=100')
-    ppa_soln_max_iterations: float = INPUT(label='PPA solution maximum number of iterations', type='NUMBER', group='Solution Mode', required='?=100', constraints='INTEGER,MIN=1')
-    ppa_price_input: float = INPUT(label='PPA price in first year', units='$/kWh', type='NUMBER', group='PPA Price', required='?=10')
-    ppa_escalation: float = INPUT(label='PPA escalation rate', units='%/year', type='NUMBER', group='PPA Price', required='?=0')
-    construction_financing_cost: float = INPUT(label='Construction financing total', units='$', type='NUMBER', group='Construction Financing', required='*')
-    term_tenor: float = INPUT(label='Term financing period', units='years', type='NUMBER', group='Project Term Debt', required='?=10', constraints='INTEGER,MIN=0')
-    term_int_rate: float = INPUT(label='Term financing interest rate', units='%', type='NUMBER', group='Project Term Debt', required='?=8.5', constraints='MIN=0,MAX=100')
-    dscr: float = INPUT(label='Debt service coverage ratio', type='NUMBER', group='Project Term Debt', required='?=1.5', constraints='MIN=0')
-    dscr_reserve_months: float = INPUT(label='Debt service reserve account', units='months P&I', type='NUMBER', group='Project Term Debt', required='?=6', constraints='MIN=0')
-    debt_percent: float = INPUT(label='Debt percent', units='%', type='NUMBER', group='Project Term Debt', required='?=50', constraints='MIN=0,MAX=100')
-    debt_option: float = INPUT(label='Debt option', units='0/1', type='NUMBER', group='Project Term Debt', required='?=1', constraints='INTEGER,MIN=0,MAX=1', meta='0=debt percent,1=dscr')
-    payment_option: float = INPUT(label='Debt repayment option', units='0/1', type='NUMBER', group='Project Term Debt', required='?=0', constraints='INTEGER,MIN=0,MAX=1', meta='0=Equal payments (standard amortization),1=Fixed principal declining interest')
-    cost_debt_closing: float = INPUT(label='Debt closing cost', units='$', type='NUMBER', group='Other Capital Costs', required='?=250000', constraints='MIN=0')
-    cost_debt_fee: float = INPUT(label='Debt closing fee (% of total debt amount)', units='%', type='NUMBER', group='Other Capital Costs', required='?=1.5', constraints='MIN=0')
-    months_working_reserve: float = INPUT(label='Working capital reserve months of operating costs', units='months', type='NUMBER', group='Other Capital Costs', required='?=6', constraints='MIN=0')
-    months_receivables_reserve: float = INPUT(label='Receivables reserve months of PPA revenue', units='months', type='NUMBER', group='Other Capital Costs', required='?=0', constraints='MIN=0')
-    cost_other_financing: float = INPUT(label='Other financing cost', units='$', type='NUMBER', group='Other Capital Costs', required='?=150000', constraints='MIN=0')
-    flip_target_percent: float = INPUT(label='After-tax IRR target', units='%', type='NUMBER', group='IRR Targets', required='?=11', constraints='MIN=0,MAX=100')
-    flip_target_year: float = INPUT(label='IRR target year', type='NUMBER', group='IRR Targets', required='?=11', constraints='MIN=1')
-    depr_alloc_macrs_5_percent: float = INPUT(label='5-yr MACRS depreciation federal and state allocation', units='%', type='NUMBER', group='Depreciation', required='?=89', constraints='MIN=0,MAX=100')
-    depr_alloc_macrs_15_percent: float = INPUT(label='15-yr MACRS depreciation federal and state allocation', units='%', type='NUMBER', group='Depreciation', required='?=1.5', constraints='MIN=0,MAX=100')
-    depr_alloc_sl_5_percent: float = INPUT(label='5-yr straight line depreciation federal and state allocation', units='%', type='NUMBER', group='Depreciation', required='?=0', constraints='MIN=0,MAX=100')
-    depr_alloc_sl_15_percent: float = INPUT(label='15-yr straight line depreciation federal and state allocation', units='%', type='NUMBER', group='Depreciation', required='?=3', constraints='MIN=0,MAX=100')
-    depr_alloc_sl_20_percent: float = INPUT(label='20-yr straight line depreciation federal and state allocation', units='%', type='NUMBER', group='Depreciation', required='?=3', constraints='MIN=0,MAX=100')
-    depr_alloc_sl_39_percent: float = INPUT(label='39-yr straight line depreciation federal and state allocation', units='%', type='NUMBER', group='Depreciation', required='?=0.5', constraints='MIN=0,MAX=100')
-    depr_alloc_custom_percent: float = INPUT(label='Custom depreciation federal and state allocation', units='%', type='NUMBER', group='Depreciation', required='?=0', constraints='MIN=0,MAX=100')
-    depr_custom_schedule: Array = INPUT(label='Custom depreciation schedule', units='%', type='ARRAY', group='Depreciation', required='*')
-    depr_bonus_sta: float = INPUT(label='State bonus depreciation', units='%', type='NUMBER', group='Depreciation', required='?=0', constraints='MIN=0,MAX=100')
-    depr_bonus_sta_macrs_5: float = INPUT(label='State bonus depreciation 5-yr MACRS', units='0/1', type='NUMBER', group='Depreciation', required='?=1', constraints='BOOLEAN')
-    depr_bonus_sta_macrs_15: float = INPUT(label='State bonus depreciation 15-yr MACRS', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_bonus_sta_sl_5: float = INPUT(label='State bonus depreciation 5-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_bonus_sta_sl_15: float = INPUT(label='State bonus depreciation 15-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_bonus_sta_sl_20: float = INPUT(label='State bonus depreciation 20-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_bonus_sta_sl_39: float = INPUT(label='State bonus depreciation 39-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_bonus_sta_custom: float = INPUT(label='State bonus depreciation custom', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_bonus_fed: float = INPUT(label='Federal bonus depreciation', units='%', type='NUMBER', group='Depreciation', required='?=0', constraints='MIN=0,MAX=100')
-    depr_bonus_fed_macrs_5: float = INPUT(label='Federal bonus depreciation 5-yr MACRS', units='0/1', type='NUMBER', group='Depreciation', required='?=1', constraints='BOOLEAN')
-    depr_bonus_fed_macrs_15: float = INPUT(label='Federal bonus depreciation 15-yr MACRS', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_bonus_fed_sl_5: float = INPUT(label='Federal bonus depreciation 5-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_bonus_fed_sl_15: float = INPUT(label='Federal bonus depreciation 15-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_bonus_fed_sl_20: float = INPUT(label='Federal bonus depreciation 20-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_bonus_fed_sl_39: float = INPUT(label='Federal bonus depreciation 39-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_bonus_fed_custom: float = INPUT(label='Federal bonus depreciation custom', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_itc_sta_macrs_5: float = INPUT(label='State ITC depreciation 5-yr MACRS', units='0/1', type='NUMBER', group='Depreciation', required='?=1', constraints='BOOLEAN')
-    depr_itc_sta_macrs_15: float = INPUT(label='State ITC depreciation 15-yr MACRS', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_itc_sta_sl_5: float = INPUT(label='State ITC depreciation 5-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_itc_sta_sl_15: float = INPUT(label='State ITC depreciation 15-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_itc_sta_sl_20: float = INPUT(label='State ITC depreciation 20-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_itc_sta_sl_39: float = INPUT(label='State ITC depreciation 39-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_itc_sta_custom: float = INPUT(label='State ITC depreciation custom', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_itc_fed_macrs_5: float = INPUT(label='Federal ITC depreciation 5-yr MACRS', units='0/1', type='NUMBER', group='Depreciation', required='?=1', constraints='BOOLEAN')
-    depr_itc_fed_macrs_15: float = INPUT(label='Federal ITC depreciation 15-yr MACRS', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_itc_fed_sl_5: float = INPUT(label='Federal ITC depreciation 5-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_itc_fed_sl_15: float = INPUT(label='Federal ITC depreciation 15-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_itc_fed_sl_20: float = INPUT(label='Federal ITC depreciation 20-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_itc_fed_sl_39: float = INPUT(label='Federal ITC depreciation 39-yr straight line', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    depr_itc_fed_custom: float = INPUT(label='Federal ITC depreciation custom', units='0/1', type='NUMBER', group='Depreciation', required='?=0', constraints='BOOLEAN')
-    pbi_fed_for_ds: float = INPUT(label='Federal PBI available for debt service', units='0/1', type='NUMBER', group='Cash Incentives', required='?=0', constraints='BOOLEAN')
-    pbi_sta_for_ds: float = INPUT(label='State PBI available for debt service', units='0/1', type='NUMBER', group='Cash Incentives', required='?=0', constraints='BOOLEAN')
-    pbi_uti_for_ds: float = INPUT(label='Utility PBI available for debt service', units='0/1', type='NUMBER', group='Cash Incentives', required='?=0', constraints='BOOLEAN')
-    pbi_oth_for_ds: float = INPUT(label='Other PBI available for debt service', units='0/1', type='NUMBER', group='Cash Incentives', required='?=0', constraints='BOOLEAN')
+    salvage_percentage: float = INPUT(label='Net pre-tax cash salvage value', units='%', type='NUMBER', group='Financial Parameters', required='?=10', constraints='MIN=0,MAX=100')
+    construction_financing_cost: float = INPUT(label='Construction financing total', units='$', type='NUMBER', group='Financial Parameters', required='*')
     cost_debt_upfront: Final[float] = OUTPUT(label='Debt up-front fee', units='$', type='NUMBER', group='Intermediate Costs', required='?=0')
     cost_financing: Final[float] = OUTPUT(label='Financing cost', units='$', type='NUMBER', group='Intermediate Costs', required='*')
     cost_prefinancing: Final[float] = OUTPUT(label='Total installed cost', units='$', type='NUMBER', group='Intermediate Costs', required='*')
@@ -1395,15 +1543,22 @@ class Data(ssc.DataDict):
     pv_cafds: Final[float] = OUTPUT(label='Present value of CAFDS', units='$', type='NUMBER', group='Debt Sizing', required='*')
     size_of_debt: Final[float] = OUTPUT(label='Size of debt', units='$', type='NUMBER', group='Debt Sizing', required='*')
     size_of_equity: Final[float] = OUTPUT(label='Equity', units='$', type='NUMBER', group='Debt Sizing', required='*')
-    cf_length: Final[float] = OUTPUT(label='Number of periods in cashflow', type='NUMBER', group='Cash Flow', required='*', constraints='INTEGER')
-    ppa_price: Final[float] = OUTPUT(label='PPA price in first year', units='cents/kWh', type='NUMBER', group='PPA Price', required='*')
-    cf_energy_net: Final[Array] = OUTPUT(label='Energy', units='kWh', type='ARRAY', group='Cash Flow Revenues', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_length: Final[float] = OUTPUT(label='Number of periods in cashflow', type='NUMBER', group='Metrics', required='*', constraints='INTEGER')
+    ppa_price: Final[float] = OUTPUT(label='PPA price in first year', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
+    cf_energy_net: Final[Array] = OUTPUT(label='Energy produced', units='kWh', type='ARRAY', group='Cash Flow Revenues', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_ppa_price: Final[Array] = OUTPUT(label='PPA price', units='cents/kWh', type='ARRAY', group='Cash Flow Revenues', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_energy_value: Final[Array] = OUTPUT(label='PPA revenue', units='$', type='ARRAY', group='Cash Flow Revenues', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_thermal_value: Final[Array] = OUTPUT(label='Thermal revenue', units='$', type='ARRAY', group='Cash Flow Revenues', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_om_fixed_expense: Final[Array] = OUTPUT(label='O&M fixed expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_om_production_expense: Final[Array] = OUTPUT(label='O&M production-based expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_om_capacity_expense: Final[Array] = OUTPUT(label='O&M capacity-based expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_om_fuel_expense: Final[Array] = OUTPUT(label='O&M fuel expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_om_fixed1_expense: Final[Array] = OUTPUT(label='Battery fixed expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_om_production1_expense: Final[Array] = OUTPUT(label='Battery production-based expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_om_capacity1_expense: Final[Array] = OUTPUT(label='Battery capacity-based expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_om_fixed2_expense: Final[Array] = OUTPUT(label='Fuel cell fixed expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_om_production2_expense: Final[Array] = OUTPUT(label='Fuel cell production-based expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_om_capacity2_expense: Final[Array] = OUTPUT(label='Fuel cell capacity-based expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_om_opt_fuel_1_expense: Final[Array] = OUTPUT(label='O&M biomass feedstock expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_om_opt_fuel_2_expense: Final[Array] = OUTPUT(label='O&M coal feedstock expense', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_property_tax_assessed_value: Final[Array] = OUTPUT(label='Property tax net assessed value', units='$', type='ARRAY', group='Cash Flow Expenses', required='*', constraints='LENGTH_EQUAL=cf_length')
@@ -1441,127 +1596,83 @@ class Data(ssc.DataDict):
     cf_debt_payment_interest: Final[Array] = OUTPUT(label='Debt interest payment', units='$', type='ARRAY', group='Cash Flow Debt Repayment', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_debt_payment_principal: Final[Array] = OUTPUT(label='Debt principal payment', units='$', type='ARRAY', group='Cash Flow Debt Repayment', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_debt_payment_total: Final[Array] = OUTPUT(label='Debt total payment', units='$', type='ARRAY', group='Cash Flow Debt Repayment', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_operating_activities: Final[Array] = OUTPUT(label='Cash flow from operating activities', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    purchase_of_property: Final[float] = OUTPUT(label='Purchase of property', units='$', type='NUMBER', group='Cash Flow Pre Tax', required='*')
-    cf_project_dsra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease debt service ', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_wcra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease working capital', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_receivablesra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease receivables', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_me1ra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease major equipment 1', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_me2ra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease major equipment 2', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_me3ra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease major equipment 3', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_ra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease total reserve account', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_me1cs: Final[Array] = OUTPUT(label='Reserve capital spending major equipment 1', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_me2cs: Final[Array] = OUTPUT(label='Reserve capital spending major equipment 2', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_me3cs: Final[Array] = OUTPUT(label='Reserve capital spending major equipment 3', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_mecs: Final[Array] = OUTPUT(label='Reserve capital spending major equipment total', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_investing_activities: Final[Array] = OUTPUT(label='Cash flow from investing activities', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    issuance_of_equity: Final[float] = OUTPUT(label='Issuance of equity', units='$', type='NUMBER', group='Cash Flow Pre Tax', required='*')
-    cf_project_financing_activities: Final[Array] = OUTPUT(label='Cash flow from financing activities', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_pretax_cashflow: Final[Array] = OUTPUT(label='Pre-tax cash flow', units='$', type='ARRAY', group='Cash Flow Pre Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_return_pretax: Final[Array] = OUTPUT(label='Pre-tax project returns', units='$', type='ARRAY', group='Cash Flow Pre Tax Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_return_pretax_irr: Final[Array] = OUTPUT(label='Pre-tax project cumulative IRR', units='%', type='ARRAY', group='Cash Flow Pre Tax Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_return_pretax_npv: Final[Array] = OUTPUT(label='Pre-tax project cumulative NPV', units='$', type='ARRAY', group='Cash Flow Pre Tax Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_return_aftertax_cash: Final[Array] = OUTPUT(label='After-tax project returns cash total', units='$', type='ARRAY', group='Cash Flow After Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_return_aftertax: Final[Array] = OUTPUT(label='After-tax project returns', units='$', type='ARRAY', group='Cash Flow After Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_return_aftertax_irr: Final[Array] = OUTPUT(label='After-tax project cumulative IRR', units='%', type='ARRAY', group='Cash Flow After Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_operating_activities: Final[Array] = OUTPUT(label='Cash flow from operating activities', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    purchase_of_property: Final[float] = OUTPUT(label='Purchase of property', units='$', type='NUMBER', group='Cash Flow Total and Returns', required='*')
+    cf_project_dsra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease debt service ', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_wcra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease working capital', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_receivablesra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease receivables', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_me1ra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease major equipment 1', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_me2ra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease major equipment 2', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_me3ra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease major equipment 3', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_ra: Final[Array] = OUTPUT(label='Reserve (increase)/decrease total reserve account', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_me1cs: Final[Array] = OUTPUT(label='Reserve capital spending major equipment 1', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_me2cs: Final[Array] = OUTPUT(label='Reserve capital spending major equipment 2', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_me3cs: Final[Array] = OUTPUT(label='Reserve capital spending major equipment 3', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_mecs: Final[Array] = OUTPUT(label='Reserve capital spending major equipment total', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_investing_activities: Final[Array] = OUTPUT(label='Cash flow from investing activities', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    issuance_of_equity: Final[float] = OUTPUT(label='Issuance of equity', units='$', type='NUMBER', group='TCash Flow Total and Returnsotal Cash Flow and Returns', required='*')
+    cf_project_financing_activities: Final[Array] = OUTPUT(label='Cash flow from financing activities', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_pretax_cashflow: Final[Array] = OUTPUT(label='Total pre-tax cash flow', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_return_pretax: Final[Array] = OUTPUT(label='Total pre-tax returns', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_return_pretax_irr: Final[Array] = OUTPUT(label='Pre-tax cumulative IRR', units='%', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_return_pretax_npv: Final[Array] = OUTPUT(label='Pre-tax cumulative NPV', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_return_aftertax_cash: Final[Array] = OUTPUT(label='Total after-tax cash returns', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_return_aftertax: Final[Array] = OUTPUT(label='Total after-tax returns', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_project_return_aftertax_irr: Final[Array] = OUTPUT(label='After-tax cumulative IRR', units='%', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
     cf_project_return_aftertax_max_irr: Final[Array] = OUTPUT(label='After-tax project maximum IRR', units='%', type='ARRAY', group='Cash Flow After Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_project_return_aftertax_npv: Final[Array] = OUTPUT(label='After-tax project cumulative NPV', units='$', type='ARRAY', group='Cash Flow After Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cbi_total_fed: Final[float] = OUTPUT(label='Federal CBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
-    cbi_total_sta: Final[float] = OUTPUT(label='State CBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
-    cbi_total_oth: Final[float] = OUTPUT(label='Other CBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
-    cbi_total_uti: Final[float] = OUTPUT(label='Utility CBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
-    cbi_total: Final[float] = OUTPUT(label='Total CBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
-    cbi_statax_total: Final[float] = OUTPUT(label='State taxable CBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
-    cbi_fedtax_total: Final[float] = OUTPUT(label='Federal taxable CBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
-    ibi_total_fed: Final[float] = OUTPUT(label='Federal IBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
-    ibi_total_sta: Final[float] = OUTPUT(label='State IBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
-    ibi_total_oth: Final[float] = OUTPUT(label='Other IBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
-    ibi_total_uti: Final[float] = OUTPUT(label='Utility IBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
-    ibi_total: Final[float] = OUTPUT(label='Total IBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
-    ibi_statax_total: Final[float] = OUTPUT(label='State taxable IBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
-    ibi_fedtax_total: Final[float] = OUTPUT(label='Federal taxable IBI income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
-    cf_pbi_total_fed: Final[Array] = OUTPUT(label='Federal PBI income', units='$', type='ARRAY', group='Cash Flow Incentives', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_pbi_total_sta: Final[Array] = OUTPUT(label='State PBI income', units='$', type='ARRAY', group='Cash Flow Incentives', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_pbi_total_oth: Final[Array] = OUTPUT(label='Other PBI income', units='$', type='ARRAY', group='Cash Flow Incentives', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_pbi_total_uti: Final[Array] = OUTPUT(label='Utility PBI income', units='$', type='ARRAY', group='Cash Flow Incentives', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_pbi_total: Final[Array] = OUTPUT(label='Total PBI income', units='$', type='ARRAY', group='Cash Flow Incentives', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_pbi_statax_total: Final[Array] = OUTPUT(label='State taxable PBI income', units='$', type='ARRAY', group='Cash Flow Incentives', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_pbi_fedtax_total: Final[Array] = OUTPUT(label='Federal taxable PBI income', units='$', type='ARRAY', group='Cash Flow Incentives', required='*', constraints='LENGTH_EQUAL=cf_length')
-    itc_total_fed: Final[float] = OUTPUT(label='Federal ITC income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
-    itc_total_sta: Final[float] = OUTPUT(label='State ITC income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
-    itc_total: Final[float] = OUTPUT(label='Total ITC income', units='$', type='NUMBER', group='Cash Flow Incentives', required='*')
-    cf_ptc_fed: Final[Array] = OUTPUT(label='Federal PTC income', units='$', type='ARRAY', group='Cash Flow Incentives', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_ptc_sta: Final[Array] = OUTPUT(label='State PTC income', units='$', type='ARRAY', group='Cash Flow Incentives', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_stadepr_macrs_5: Final[Array] = OUTPUT(label='State depreciation from 5-yr MACRS', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_stadepr_macrs_15: Final[Array] = OUTPUT(label='State depreciation from 15-yr MACRS', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_stadepr_sl_5: Final[Array] = OUTPUT(label='State depreciation from 5-yr straight line', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_stadepr_sl_15: Final[Array] = OUTPUT(label='State depreciation from 15-yr straight line', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_stadepr_sl_20: Final[Array] = OUTPUT(label='State depreciation from 20-yr straight line', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_stadepr_sl_39: Final[Array] = OUTPUT(label='State depreciation from 39-yr straight line', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_stadepr_custom: Final[Array] = OUTPUT(label='State depreciation from custom', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_stadepr_me1: Final[Array] = OUTPUT(label='State depreciation from major equipment 1', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_stadepr_me2: Final[Array] = OUTPUT(label='State depreciation from major equipment 2', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_stadepr_me3: Final[Array] = OUTPUT(label='State depreciation from major equipment 3', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_stadepr_total: Final[Array] = OUTPUT(label='Total state tax depreciation', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_statax_income_prior_incentives: Final[Array] = OUTPUT(label='State taxable income without incentives', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_statax_taxable_incentives: Final[Array] = OUTPUT(label='State taxable incentives', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_statax_income_with_incentives: Final[Array] = OUTPUT(label='State taxable income', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_statax: Final[Array] = OUTPUT(label='State tax benefit/(liability)', units='$', type='ARRAY', group='Cash Flow State Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_feddepr_macrs_5: Final[Array] = OUTPUT(label='Federal depreciation from 5-yr MACRS', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_feddepr_macrs_15: Final[Array] = OUTPUT(label='Federal depreciation from 15-yr MACRS', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_feddepr_sl_5: Final[Array] = OUTPUT(label='Federal depreciation from 5-yr straight line', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_feddepr_sl_15: Final[Array] = OUTPUT(label='Federal depreciation from 15-yr straight line', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_feddepr_sl_20: Final[Array] = OUTPUT(label='Federal depreciation from 20-yr straight line', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_feddepr_sl_39: Final[Array] = OUTPUT(label='Federal depreciation from 39-yr straight line', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_feddepr_custom: Final[Array] = OUTPUT(label='Federal depreciation from custom', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_feddepr_me1: Final[Array] = OUTPUT(label='Federal depreciation from major equipment 1', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_feddepr_me2: Final[Array] = OUTPUT(label='Federal depreciation from major equipment 2', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_feddepr_me3: Final[Array] = OUTPUT(label='Federal depreciation from major equipment 3', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_feddepr_total: Final[Array] = OUTPUT(label='Total federal tax depreciation', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_fedtax_income_prior_incentives: Final[Array] = OUTPUT(label='Federal taxable income without incentives', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_fedtax_taxable_incentives: Final[Array] = OUTPUT(label='Federal taxable incentives', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_fedtax_income_with_incentives: Final[Array] = OUTPUT(label='Federal taxable income', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    cf_fedtax: Final[Array] = OUTPUT(label='Federal tax benefit/(liability)', units='$', type='ARRAY', group='Cash Flow Federal Income Tax', required='*', constraints='LENGTH_EQUAL=cf_length')
-    debt_fraction: Final[float] = OUTPUT(label='Debt percent', units='%', type='NUMBER', group='Metrics', required='*')
-    flip_target_irr: Final[float] = OUTPUT(label='IRR target', units='%', type='NUMBER', group='Metrics', required='*')
-    flip_actual_year: Final[float] = OUTPUT(label='Year target IRR was achieved', units='year', type='NUMBER', group='Metrics', required='*')
-    flip_actual_irr: Final[float] = OUTPUT(label='IRR in target year', units='%', type='NUMBER', group='Metrics', required='*')
-    lcoe_real: Final[float] = OUTPUT(label='Levelized cost (real)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
-    lcoe_nom: Final[float] = OUTPUT(label='Levelized cost (nominal)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
-    lppa_real: Final[float] = OUTPUT(label='Levelized PPA price (real)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
-    lppa_nom: Final[float] = OUTPUT(label='Levelized PPA price (nominal)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
-    ppa: Final[float] = OUTPUT(label='PPA price (Year 1)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
+    cf_project_return_aftertax_npv: Final[Array] = OUTPUT(label='After-tax cumulative NPV', units='$', type='ARRAY', group='Cash Flow Total and Returns', required='*', constraints='LENGTH_EQUAL=cf_length')
     project_return_aftertax_irr: Final[float] = OUTPUT(label='Internal rate of return (after-tax)', units='%', type='NUMBER', group='Metrics', required='*')
     project_return_aftertax_npv: Final[float] = OUTPUT(label='Net present value (after-tax)', units='$', type='NUMBER', group='Metrics', required='*')
-    npv_ppa_revenue: Final[float] = OUTPUT(label='Present value of PPA revenue', units='$', type='NUMBER', group='Metrics', required='*')
-    npv_energy_nom: Final[float] = OUTPUT(label='Present value of annual energy (nominal)', units='kWh', type='NUMBER', group='Metrics', required='*')
-    npv_energy_real: Final[float] = OUTPUT(label='Present value of annual energy (real)', units='kWh', type='NUMBER', group='Metrics', required='*')
-    present_value_oandm: Final[float] = OUTPUT(label='Present value of O&M', units='$', type='NUMBER', group='Metrics', required='*')
-    present_value_oandm_nonfuel: Final[float] = OUTPUT(label='Present value of non-fuel O&M', units='$', type='NUMBER', group='Metrics', required='*')
-    present_value_fuel: Final[float] = OUTPUT(label='Present value of fuel O&M', units='$', type='NUMBER', group='Metrics', required='*')
-    present_value_insandproptax: Final[float] = OUTPUT(label='Present value of insurance and prop tax', units='$', type='NUMBER', group='Metrics', required='*')
-    lcoptc_fed_real: Final[float] = OUTPUT(label='Levelized federal PTC (real)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
-    lcoptc_fed_nom: Final[float] = OUTPUT(label='Levelized federal PTC (nominal)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
-    lcoptc_sta_real: Final[float] = OUTPUT(label='Levelized state PTC (real)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
-    lcoptc_sta_nom: Final[float] = OUTPUT(label='Levelized state PTC (nominal)', units='cents/kWh', type='NUMBER', group='Metrics', required='*')
-    wacc: Final[float] = OUTPUT(label='Weighted average cost of capital (WACC)', units='$', type='NUMBER', group='Metrics', required='*')
-    analysis_period_irr: Final[float] = OUTPUT(label='IRR at end of analysis period', units='%', type='NUMBER', group='Metrics', required='*')
     cf_annual_costs: Final[Array] = OUTPUT(label='Annual costs', units='$', type='ARRAY', group='LCOE calculations', required='*', constraints='LENGTH_EQUAL=cf_length')
     npv_annual_costs: Final[float] = OUTPUT(label='Present value of annual costs', units='$', type='NUMBER', group='LCOE calculations', required='*')
     adjusted_installed_cost: Final[float] = OUTPUT(label='Initial cost less cash incentives', units='$', type='NUMBER', required='*')
     min_dscr: Final[float] = OUTPUT(label='Minimum DSCR', type='NUMBER', group='DSCR')
     cf_pretax_dscr: Final[Array] = OUTPUT(label='DSCR (pre-tax)', type='ARRAY', group='DSCR', required='*', constraints='LENGTH_EQUAL=cf_length')
-    batt_bank_replacement: Array = INPUT(label='Battery bank replacements per year', units='number/year', type='ARRAY', group='Battery')
-    batt_replacement_schedule: Array = INPUT(label='Battery bank replacements per year (user specified)', units='number/year', type='ARRAY', group='Battery')
-    batt_replacement_option: float = INPUT(label='Enable battery replacement?', units='0=none,1=capacity based,2=user schedule', type='NUMBER', group='Battery', required='?=0', constraints='INTEGER,MIN=0,MAX=2')
-    battery_per_kWh: float = INPUT(label='Battery cost', units='$/kWh', type='NUMBER', group='Battery', required='?=0.0')
-    batt_computed_bank_capacity: float = INPUT(label='Battery bank capacity', units='kWh', type='NUMBER', group='Battery', required='?=0.0')
-    batt_replacement_cost: float = INPUT(label='Battery bank replacement cost', units='$/kWh', type='NUMBER', group='Battery', required='?=0.0')
-    batt_replacement_cost_escal: float = INPUT(label='Battery bank replacement cost escalation', units='%/year', type='NUMBER', group='Battery', required='?=0.0')
+    system_pre_curtailment_kwac: Array = INPUT(label='System power before grid curtailment', units='kW', type='ARRAY', group='System Output', meta='System generation')
+    cf_energy_curtailed: Final[Array] = OUTPUT(label='Curtailed energy', units='kWh', type='ARRAY', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_curtailment_value: Final[Array] = OUTPUT(label='Curtailment payment revenue', units='$', type='ARRAY', required='*', constraints='LENGTH_EQUAL=cf_length')
+    cf_capacity_payment: Final[Array] = OUTPUT(label='Capacity payment revenue', units='$', type='ARRAY', required='*', constraints='LENGTH_EQUAL=cf_length')
+    npv_curtailment_revenue: Final[float] = OUTPUT(label='Present value of curtailment payment revenue', units='$', type='NUMBER', group='Metrics', required='*')
+    npv_capacity_revenue: Final[float] = OUTPUT(label='Present value of capacity payment revenue', units='$', type='NUMBER', group='Metrics', required='*')
+    npv_fed_pbi_income: Final[float] = OUTPUT(label='Present value of federal PBI income', units='$', type='NUMBER', group='Metrics', required='*')
+    npv_sta_pbi_income: Final[float] = OUTPUT(label='Present value of state PBI income', units='$', type='NUMBER', group='Metrics', required='*')
+    npv_uti_pbi_income: Final[float] = OUTPUT(label='Present value of utility PBI income', units='$', type='NUMBER', group='Metrics', required='*')
+    npv_oth_pbi_income: Final[float] = OUTPUT(label='Present value of other PBI income', units='$', type='NUMBER', group='Metrics', required='*')
+    npv_salvage_value: Final[float] = OUTPUT(label='Present value of salvage value', units='$', type='NUMBER', group='Metrics', required='*')
+    npv_thermal_value: Final[float] = OUTPUT(label='Present value of thermal value', units='$', type='NUMBER', group='Metrics', required='*')
+    batt_bank_replacement: Array = INPUT(label='Battery bank replacements per year', units='number/year', type='ARRAY', group='BatterySystem')
+    batt_replacement_schedule: Array = INPUT(label='Battery bank replacements per year (user specified)', units='number/year', type='ARRAY', group='BatterySystem')
+    batt_replacement_option: float = INPUT(label='Enable battery replacement?', units='0=none,1=capacity based,2=user schedule', type='NUMBER', group='BatterySystem', required='?=0', constraints='INTEGER,MIN=0,MAX=2')
+    battery_per_kWh: float = INPUT(label='Battery cost', units='$/kWh', type='NUMBER', group='BatterySystem', required='?=0.0')
+    batt_computed_bank_capacity: float = INPUT(label='Battery bank capacity', units='kWh', type='NUMBER', group='BatterySystem', required='?=0.0')
     cf_battery_replacement_cost: Final[Array] = OUTPUT(label='Battery replacement cost', units='$', type='ARRAY', group='Cash Flow', required='*')
     cf_battery_replacement_cost_schedule: Final[Array] = OUTPUT(label='Battery replacement cost schedule', units='$/kWh', type='ARRAY', group='Cash Flow', required='*')
+    fuelcell_replacement: Array = INPUT(label='Fuel cell replacements per year', units='number/year', type='ARRAY', group='Fuel Cell')
+    fuelcell_replacement_schedule: Array = INPUT(label='Fuel cell replacements per year (user specified)', units='number/year', type='ARRAY', group='Fuel Cell')
+    en_fuelcell: float = INPUT(label='Enable fuel cell storage model', units='0/1', type='NUMBER', group='Fuel Cell', required='?=0')
+    fuelcell_replacement_option: float = INPUT(label='Enable fuel cell replacement?', units='0=none,1=capacity based,2=user schedule', type='NUMBER', group='Fuel Cell', required='?=0', constraints='INTEGER,MIN=0,MAX=2')
+    fuelcell_per_kWh: float = INPUT(label='Fuel cell cost', units='$/kWh', type='NUMBER', group='Fuel Cell', required='?=0.0')
+    fuelcell_computed_bank_capacity: float = INPUT(label='Fuel cell capacity', units='kWh', type='NUMBER', group='Fuel Cell', required='?=0.0')
+    cf_fuelcell_replacement_cost: Final[Array] = OUTPUT(label='Fuel cell replacement cost', units='$', type='ARRAY', group='Cash Flow', required='*')
+    cf_fuelcell_replacement_cost_schedule: Final[Array] = OUTPUT(label='Fuel cell replacement cost schedule', units='$/kW', type='ARRAY', group='Cash Flow', required='*')
+    cp_capacity_payment_esc: float = INPUT(label='Capacity payment escalation', units='%/year', type='NUMBER', group='Capacity Payments', required='*')
+    cp_capacity_payment_type: float = INPUT(label='Capacity payment type', type='NUMBER', group='Capacity Payments', required='*', constraints='INTEGER,MIN=0,MAX=1', meta='0=Energy basis,1=Fixed amount')
+    cp_capacity_payment_amount: Array = INPUT(label='Capacity payment amount', units='$ or $/MW', type='ARRAY', group='Capacity Payments', required='*')
+    cp_capacity_credit_percent: Array = INPUT(label='Capacity credit (eligible portion of nameplate)', units='%', type='ARRAY', group='Capacity Payments', required='cp_capacity_payment_type=0')
+    cp_system_nameplate: float = INPUT(label='System nameplate', units='MW', type='NUMBER', group='Capacity Payments', required='cp_capacity_payment_type=0', constraints='MIN=0')
+    cp_battery_nameplate: float = INPUT(label='Battery nameplate', units='MW', type='NUMBER', group='Capacity Payments', required='cp_capacity_payment_type=0', constraints='MIN=0')
+    grid_curtailment_price: Array = INPUT(label='Curtailment price', units='$/kWh', type='ARRAY', group='GridLimits', required='?=0')
+    grid_curtailment_price_esc: float = INPUT(label='Curtailment price escalation', units='%', type='NUMBER', group='GridLimits', required='?=0')
+    annual_energy_pre_curtailment_ac: float = INPUT(label='Annual Energy AC pre-curtailment (year 1)', units='kWh', type='NUMBER', group='System Output', required='?=0')
 
     def __init__(self, *args: Mapping[str, Any],
+                 ppa_soln_mode: float = ...,
+                 ppa_soln_tolerance: float = ...,
+                 ppa_soln_min: float = ...,
+                 ppa_soln_max: float = ...,
+                 ppa_soln_max_iterations: float = ...,
+                 ppa_price_input: Array = ...,
+                 ppa_escalation: float = ...,
                  analysis_period: float = ...,
                  federal_tax_rate: Array = ...,
                  state_tax_rate: Array = ...,
@@ -1582,12 +1693,36 @@ class Data(ssc.DataDict):
                  om_fuel_cost: Array = ...,
                  om_fuel_cost_escal: float = ...,
                  annual_fuel_usage: float = ...,
+                 annual_fuel_usage_lifetime: Array = ...,
+                 om_replacement_cost1: Array = ...,
+                 om_replacement_cost2: Array = ...,
+                 om_replacement_cost_escal: float = ...,
                  om_opt_fuel_1_usage: float = ...,
                  om_opt_fuel_1_cost: Array = ...,
                  om_opt_fuel_1_cost_escal: float = ...,
                  om_opt_fuel_2_usage: float = ...,
                  om_opt_fuel_2_cost: Array = ...,
                  om_opt_fuel_2_cost_escal: float = ...,
+                 add_om_num_types: float = ...,
+                 om_capacity1_nameplate: float = ...,
+                 om_production1_values: Array = ...,
+                 om_fixed1: Array = ...,
+                 om_production1: Array = ...,
+                 om_capacity1: Array = ...,
+                 om_capacity2_nameplate: float = ...,
+                 om_production2_values: Array = ...,
+                 om_fixed2: Array = ...,
+                 om_production2: Array = ...,
+                 om_capacity2: Array = ...,
+                 reserves_interest: float = ...,
+                 equip1_reserve_cost: float = ...,
+                 equip1_reserve_freq: float = ...,
+                 equip2_reserve_cost: float = ...,
+                 equip2_reserve_freq: float = ...,
+                 equip3_reserve_cost: float = ...,
+                 equip3_reserve_freq: float = ...,
+                 equip_reserve_depr_sta: float = ...,
+                 equip_reserve_depr_fed: float = ...,
                  itc_fed_amount: float = ...,
                  itc_fed_amount_deprbas_fed: float = ...,
                  itc_fed_amount_deprbas_sta: float = ...,
@@ -1608,6 +1743,44 @@ class Data(ssc.DataDict):
                  ptc_sta_amount: Array = ...,
                  ptc_sta_term: float = ...,
                  ptc_sta_escal: float = ...,
+                 depr_alloc_macrs_5_percent: float = ...,
+                 depr_alloc_macrs_15_percent: float = ...,
+                 depr_alloc_sl_5_percent: float = ...,
+                 depr_alloc_sl_15_percent: float = ...,
+                 depr_alloc_sl_20_percent: float = ...,
+                 depr_alloc_sl_39_percent: float = ...,
+                 depr_alloc_custom_percent: float = ...,
+                 depr_custom_schedule: Array = ...,
+                 depr_bonus_sta: float = ...,
+                 depr_bonus_sta_macrs_5: float = ...,
+                 depr_bonus_sta_macrs_15: float = ...,
+                 depr_bonus_sta_sl_5: float = ...,
+                 depr_bonus_sta_sl_15: float = ...,
+                 depr_bonus_sta_sl_20: float = ...,
+                 depr_bonus_sta_sl_39: float = ...,
+                 depr_bonus_sta_custom: float = ...,
+                 depr_bonus_fed: float = ...,
+                 depr_bonus_fed_macrs_5: float = ...,
+                 depr_bonus_fed_macrs_15: float = ...,
+                 depr_bonus_fed_sl_5: float = ...,
+                 depr_bonus_fed_sl_15: float = ...,
+                 depr_bonus_fed_sl_20: float = ...,
+                 depr_bonus_fed_sl_39: float = ...,
+                 depr_bonus_fed_custom: float = ...,
+                 depr_itc_sta_macrs_5: float = ...,
+                 depr_itc_sta_macrs_15: float = ...,
+                 depr_itc_sta_sl_5: float = ...,
+                 depr_itc_sta_sl_15: float = ...,
+                 depr_itc_sta_sl_20: float = ...,
+                 depr_itc_sta_sl_39: float = ...,
+                 depr_itc_sta_custom: float = ...,
+                 depr_itc_fed_macrs_5: float = ...,
+                 depr_itc_fed_macrs_15: float = ...,
+                 depr_itc_fed_sl_5: float = ...,
+                 depr_itc_fed_sl_15: float = ...,
+                 depr_itc_fed_sl_20: float = ...,
+                 depr_itc_fed_sl_39: float = ...,
+                 depr_itc_fed_custom: float = ...,
                  ibi_fed_amount: float = ...,
                  ibi_fed_amount_tax_fed: float = ...,
                  ibi_fed_amount_tax_sta: float = ...,
@@ -1696,7 +1869,26 @@ class Data(ssc.DataDict):
                  pbi_oth_escal: float = ...,
                  pbi_oth_tax_fed: float = ...,
                  pbi_oth_tax_sta: float = ...,
+                 term_tenor: float = ...,
+                 term_int_rate: float = ...,
+                 dscr: float = ...,
+                 dscr_reserve_months: float = ...,
+                 debt_percent: float = ...,
+                 debt_option: float = ...,
+                 payment_option: float = ...,
+                 cost_debt_closing: float = ...,
+                 cost_debt_fee: float = ...,
+                 months_working_reserve: float = ...,
+                 months_receivables_reserve: float = ...,
+                 cost_other_financing: float = ...,
+                 flip_target_percent: float = ...,
+                 flip_target_year: float = ...,
+                 pbi_fed_for_ds: float = ...,
+                 pbi_sta_for_ds: float = ...,
+                 pbi_uti_for_ds: float = ...,
+                 pbi_oth_for_ds: float = ...,
                  en_batt: float = ...,
+                 en_electricity_rates: float = ...,
                  batt_meter_position: float = ...,
                  grid_to_batt: Array = ...,
                  gen: Array = ...,
@@ -1723,89 +1915,31 @@ class Data(ssc.DataDict):
                  dispatch_sched_weekday: Matrix = ...,
                  dispatch_sched_weekend: Matrix = ...,
                  total_installed_cost: float = ...,
-                 reserves_interest: float = ...,
-                 equip1_reserve_cost: float = ...,
-                 equip1_reserve_freq: float = ...,
-                 equip2_reserve_cost: float = ...,
-                 equip2_reserve_freq: float = ...,
-                 equip3_reserve_cost: float = ...,
-                 equip3_reserve_freq: float = ...,
-                 equip_reserve_depr_sta: float = ...,
-                 equip_reserve_depr_fed: float = ...,
                  salvage_percentage: float = ...,
-                 ppa_soln_mode: float = ...,
-                 ppa_soln_tolerance: float = ...,
-                 ppa_soln_min: float = ...,
-                 ppa_soln_max: float = ...,
-                 ppa_soln_max_iterations: float = ...,
-                 ppa_price_input: float = ...,
-                 ppa_escalation: float = ...,
                  construction_financing_cost: float = ...,
-                 term_tenor: float = ...,
-                 term_int_rate: float = ...,
-                 dscr: float = ...,
-                 dscr_reserve_months: float = ...,
-                 debt_percent: float = ...,
-                 debt_option: float = ...,
-                 payment_option: float = ...,
-                 cost_debt_closing: float = ...,
-                 cost_debt_fee: float = ...,
-                 months_working_reserve: float = ...,
-                 months_receivables_reserve: float = ...,
-                 cost_other_financing: float = ...,
-                 flip_target_percent: float = ...,
-                 flip_target_year: float = ...,
-                 depr_alloc_macrs_5_percent: float = ...,
-                 depr_alloc_macrs_15_percent: float = ...,
-                 depr_alloc_sl_5_percent: float = ...,
-                 depr_alloc_sl_15_percent: float = ...,
-                 depr_alloc_sl_20_percent: float = ...,
-                 depr_alloc_sl_39_percent: float = ...,
-                 depr_alloc_custom_percent: float = ...,
-                 depr_custom_schedule: Array = ...,
-                 depr_bonus_sta: float = ...,
-                 depr_bonus_sta_macrs_5: float = ...,
-                 depr_bonus_sta_macrs_15: float = ...,
-                 depr_bonus_sta_sl_5: float = ...,
-                 depr_bonus_sta_sl_15: float = ...,
-                 depr_bonus_sta_sl_20: float = ...,
-                 depr_bonus_sta_sl_39: float = ...,
-                 depr_bonus_sta_custom: float = ...,
-                 depr_bonus_fed: float = ...,
-                 depr_bonus_fed_macrs_5: float = ...,
-                 depr_bonus_fed_macrs_15: float = ...,
-                 depr_bonus_fed_sl_5: float = ...,
-                 depr_bonus_fed_sl_15: float = ...,
-                 depr_bonus_fed_sl_20: float = ...,
-                 depr_bonus_fed_sl_39: float = ...,
-                 depr_bonus_fed_custom: float = ...,
-                 depr_itc_sta_macrs_5: float = ...,
-                 depr_itc_sta_macrs_15: float = ...,
-                 depr_itc_sta_sl_5: float = ...,
-                 depr_itc_sta_sl_15: float = ...,
-                 depr_itc_sta_sl_20: float = ...,
-                 depr_itc_sta_sl_39: float = ...,
-                 depr_itc_sta_custom: float = ...,
-                 depr_itc_fed_macrs_5: float = ...,
-                 depr_itc_fed_macrs_15: float = ...,
-                 depr_itc_fed_sl_5: float = ...,
-                 depr_itc_fed_sl_15: float = ...,
-                 depr_itc_fed_sl_20: float = ...,
-                 depr_itc_fed_sl_39: float = ...,
-                 depr_itc_fed_custom: float = ...,
-                 pbi_fed_for_ds: float = ...,
-                 pbi_sta_for_ds: float = ...,
-                 pbi_uti_for_ds: float = ...,
-                 pbi_oth_for_ds: float = ...,
                  depr_stabas_method: float = ...,
                  depr_fedbas_method: float = ...,
+                 system_pre_curtailment_kwac: Array = ...,
                  batt_bank_replacement: Array = ...,
                  batt_replacement_schedule: Array = ...,
                  batt_replacement_option: float = ...,
                  battery_per_kWh: float = ...,
                  batt_computed_bank_capacity: float = ...,
-                 batt_replacement_cost: float = ...,
-                 batt_replacement_cost_escal: float = ...) -> None: ...
+                 fuelcell_replacement: Array = ...,
+                 fuelcell_replacement_schedule: Array = ...,
+                 en_fuelcell: float = ...,
+                 fuelcell_replacement_option: float = ...,
+                 fuelcell_per_kWh: float = ...,
+                 fuelcell_computed_bank_capacity: float = ...,
+                 cp_capacity_payment_esc: float = ...,
+                 cp_capacity_payment_type: float = ...,
+                 cp_capacity_payment_amount: Array = ...,
+                 cp_capacity_credit_percent: Array = ...,
+                 cp_system_nameplate: float = ...,
+                 cp_battery_nameplate: float = ...,
+                 grid_curtailment_price: Array = ...,
+                 grid_curtailment_price_esc: float = ...,
+                 annual_energy_pre_curtailment_ac: float = ...) -> None: ...
     def to_dict(self) -> DataDict: ...  # type: ignore[override]
 
 class Module(ssc.Module[Data]):

@@ -32,6 +32,7 @@ DataDict = TypedDict('DataDict', {
         'ur_annual_min_charge': float,
         'ur_en_ts_sell_rate': float,
         'ur_ts_sell_rate': Array,
+        'ur_ts_buy_rate': Array,
         'ur_ec_sched_weekday': Matrix,
         'ur_ec_sched_weekend': Matrix,
         'ur_ec_tou_mat': Matrix,
@@ -185,33 +186,34 @@ DataDict = TypedDict('DataDict', {
 }, total=False)
 
 class Data(ssc.DataDict):
-    en_electricity_rates: float = INPUT(label='Optionally enable/disable electricity_rate', units='years', type='NUMBER', constraints='INTEGER,MIN=0,MAX=1')
-    analysis_period: float = INPUT(label='Number of years in analysis', units='years', type='NUMBER', required='*', constraints='INTEGER,POSITIVE')
-    system_use_lifetime_output: float = INPUT(label='Lifetime hourly system outputs', units='0/1', type='NUMBER', required='*', constraints='INTEGER,MIN=0,MAX=1', meta='0=hourly first year,1=hourly lifetime')
-    TOU_demand_single_peak: float = INPUT(label='Use single monthly peak for TOU demand charge', units='0/1', type='NUMBER', required='?=0', constraints='INTEGER,MIN=0,MAX=1', meta='0=use TOU peak,1=use flat peak')
-    gen: Array = INPUT(label='System power generated', units='kW', type='ARRAY', group='Time Series', required='*')
-    load: Array = INOUT(label='Electricity load (year 1)', units='kW', type='ARRAY', group='Time Series')
-    bill_load: Final[Array] = OUTPUT(label='Bill load (year 1)', units='kWh', type='ARRAY', group='Time Series', required='*')
-    inflation_rate: float = INPUT(label='Inflation rate', units='%', type='NUMBER', group='Financials', required='*', constraints='MIN=-99')
-    degradation: Array = INPUT(label='Annual energy degradation', units='%', type='ARRAY', group='AnnualOutput', required='*')
-    load_escalation: Array = INPUT(label='Annual load escalation', units='%/year', type='ARRAY', required='?=0')
-    rate_escalation: Array = INPUT(label='Annual electricity rate escalation', units='%/year', type='ARRAY', required='?=0')
-    ur_metering_option: float = INPUT(label='Metering options', units='0=Single meter with monthly rollover credits in kWh,1=Single meter with monthly rollover credits in $,2=Single meter with no monthly rollover credits (Net Billing),3=Single meter with monthly rollover credits in $ (Net Billing $),4=Two meters with all generation sold and all load purchased', type='NUMBER', required='?=0', constraints='INTEGER,MIN=0,MAX=4', meta='Net metering monthly excess')
-    ur_nm_yearend_sell_rate: float = INPUT(label='Year end sell rate', units='$/kWh', type='NUMBER', required='?=0.0')
-    ur_monthly_fixed_charge: float = INPUT(label='Monthly fixed charge', units='$', type='NUMBER', required='?=0.0')
-    ur_sell_eq_buy: float = INPUT(label='Set sell rate equal to buy rate', units='0/1', type='NUMBER', required='?=0', constraints='BOOLEAN', meta='Optional override')
-    ur_monthly_min_charge: float = INPUT(label='Monthly minimum charge', units='$', type='NUMBER', required='?=0.0')
-    ur_annual_min_charge: float = INPUT(label='Annual minimum charge', units='$', type='NUMBER', required='?=0.0')
-    ur_en_ts_sell_rate: float = INPUT(label='Enable time step sell rates', units='0/1', type='NUMBER', required='?=0', constraints='BOOLEAN')
-    ur_ts_sell_rate: Array = INPUT(label='Time step sell rates', units='0/1', type='ARRAY')
-    ur_ec_sched_weekday: Matrix = INPUT(label='Energy charge weekday schedule', type='MATRIX', required='*', meta='12x24')
-    ur_ec_sched_weekend: Matrix = INPUT(label='Energy charge weekend schedule', type='MATRIX', required='*', meta='12x24')
-    ur_ec_tou_mat: Matrix = INPUT(label='Energy rates table', type='MATRIX', required='*')
-    ur_dc_enable: float = INPUT(label='Enable demand charge', units='0/1', type='NUMBER', required='?=0', constraints='BOOLEAN')
-    ur_dc_sched_weekday: Matrix = INPUT(label='Demand charge weekday schedule', type='MATRIX', meta='12x24')
-    ur_dc_sched_weekend: Matrix = INPUT(label='Demand charge weekend schedule', type='MATRIX', meta='12x24')
-    ur_dc_tou_mat: Matrix = INPUT(label='Demand rates (TOU) table', type='MATRIX', required='ur_dc_enable=1')
-    ur_dc_flat_mat: Matrix = INPUT(label='Demand rates (flat) table', type='MATRIX', required='ur_dc_enable=1')
+    en_electricity_rates: float = INPUT(label='Optionally enable/disable electricity_rate', units='years', type='NUMBER', group='Electricity Rates', constraints='INTEGER,MIN=0,MAX=1')
+    analysis_period: float = INPUT(label='Number of years in analysis', units='years', type='NUMBER', group='Lifetime', required='*', constraints='INTEGER,POSITIVE')
+    system_use_lifetime_output: float = INPUT(label='Lifetime hourly system outputs', units='0/1', type='NUMBER', group='Lifetime', required='*', constraints='INTEGER,MIN=0,MAX=1', meta='0=hourly first year,1=hourly lifetime')
+    TOU_demand_single_peak: float = INPUT(label='Use single monthly peak for TOU demand charge', units='0/1', type='NUMBER', group='Electricity Rates', required='?=0', constraints='INTEGER,MIN=0,MAX=1', meta='0=use TOU peak,1=use flat peak')
+    gen: Array = INPUT(label='System power generated', units='kW', type='ARRAY', group='System Output', required='*')
+    load: Array = INOUT(label='Electricity load (year 1)', units='kW', type='ARRAY', group='Load')
+    bill_load: Final[Array] = OUTPUT(label='Bill load (year 1)', units='kWh', type='ARRAY', group='Load', required='*')
+    inflation_rate: float = INPUT(label='Inflation rate', units='%', type='NUMBER', group='Lifetime', required='*', constraints='MIN=-99')
+    degradation: Array = INPUT(label='Annual energy degradation', units='%', type='ARRAY', group='System Output', required='*')
+    load_escalation: Array = INPUT(label='Annual load escalation', units='%/year', type='ARRAY', group='Load', required='?=0')
+    rate_escalation: Array = INPUT(label='Annual electricity rate escalation', units='%/year', type='ARRAY', group='Electricity Rates', required='?=0')
+    ur_metering_option: float = INPUT(label='Metering options', units='0=net energy metering,1=net energy metering with $ credits,2=net billing,3=net billing with carryover to next month,4=buy all - sell all', type='NUMBER', group='Electricity Rates', required='?=0', constraints='INTEGER,MIN=0,MAX=4', meta='Net metering monthly excess')
+    ur_nm_yearend_sell_rate: float = INPUT(label='Year end sell rate', units='$/kWh', type='NUMBER', group='Electricity Rates', required='?=0.0')
+    ur_monthly_fixed_charge: float = INPUT(label='Monthly fixed charge', units='$', type='NUMBER', group='Electricity Rates', required='?=0.0')
+    ur_sell_eq_buy: float = INPUT(label='Set sell rate equal to buy rate', units='0/1', type='NUMBER', group='Electricity Rates', required='?=0', constraints='BOOLEAN', meta='Optional override')
+    ur_monthly_min_charge: float = INPUT(label='Monthly minimum charge', units='$', type='NUMBER', group='Electricity Rates', required='?=0.0')
+    ur_annual_min_charge: float = INPUT(label='Annual minimum charge', units='$', type='NUMBER', group='Electricity Rates', required='?=0.0')
+    ur_en_ts_sell_rate: float = INPUT(label='Enable time step sell rates', units='0/1', type='NUMBER', group='Electricity Rates', required='?=0', constraints='BOOLEAN')
+    ur_ts_sell_rate: Array = INPUT(label='Time step sell rates', units='0/1', type='ARRAY', group='Electricity Rates')
+    ur_ts_buy_rate: Array = INPUT(label='Time step buy rates', units='0/1', type='ARRAY', group='Electricity Rates')
+    ur_ec_sched_weekday: Matrix = INPUT(label='Energy charge weekday schedule', type='MATRIX', group='Electricity Rates', required='*', meta='12x24')
+    ur_ec_sched_weekend: Matrix = INPUT(label='Energy charge weekend schedule', type='MATRIX', group='Electricity Rates', required='*', meta='12x24')
+    ur_ec_tou_mat: Matrix = INPUT(label='Energy rates table', type='MATRIX', group='Electricity Rates', required='*')
+    ur_dc_enable: float = INPUT(label='Enable demand charge', units='0/1', type='NUMBER', group='Electricity Rates', required='?=0', constraints='BOOLEAN')
+    ur_dc_sched_weekday: Matrix = INPUT(label='Demand charge weekday schedule', type='MATRIX', group='Electricity Rates', meta='12x24')
+    ur_dc_sched_weekend: Matrix = INPUT(label='Demand charge weekend schedule', type='MATRIX', group='Electricity Rates', meta='12x24')
+    ur_dc_tou_mat: Matrix = INPUT(label='Demand rates (TOU) table', type='MATRIX', group='Electricity Rates', required='ur_dc_enable=1')
+    ur_dc_flat_mat: Matrix = INPUT(label='Demand rates (flat) table', type='MATRIX', group='Electricity Rates', required='ur_dc_enable=1')
     annual_energy_value: Final[Array] = OUTPUT(label='Energy value in each year', units='$', type='ARRAY', group='Annual', required='*')
     annual_electric_load: Final[Array] = OUTPUT(label='Electricity load total in each year', units='kWh', type='ARRAY', group='Annual', required='*')
     elec_cost_with_system: Final[Array] = OUTPUT(label='Electricity bill with system', units='$/yr', type='ARRAY', group='Annual', required='*')
@@ -374,6 +376,7 @@ class Data(ssc.DataDict):
                  ur_annual_min_charge: float = ...,
                  ur_en_ts_sell_rate: float = ...,
                  ur_ts_sell_rate: Array = ...,
+                 ur_ts_buy_rate: Array = ...,
                  ur_ec_sched_weekday: Matrix = ...,
                  ur_ec_sched_weekend: Matrix = ...,
                  ur_ec_tou_mat: Matrix = ...,

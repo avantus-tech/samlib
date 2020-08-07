@@ -14,6 +14,7 @@ from ._util import *
 
 DataDict = TypedDict('DataDict', {
     'file_name': str,
+        'solar_resource_data': Table,
         'I_bn_des': float,
         'T_cold_ref': float,
         'P_turb_des': float,
@@ -124,6 +125,8 @@ DataDict = TypedDict('DataDict', {
         'annual_thermal_consumption': float,
         'annual_electricity_consumption': float,
         'annual_total_water_use': float,
+        'capacity_factor': float,
+        'kwh_per_kw': float,
         'adjust:constant': float,
         'adjust:hourly': Array,
         'adjust:periods': Matrix,
@@ -132,6 +135,7 @@ DataDict = TypedDict('DataDict', {
 
 class Data(ssc.DataDict):
     file_name: str = INPUT(label='local weather file path', type='STRING', group='Weather', required='*', constraints='LOCAL_FILE')
+    solar_resource_data: Table = INPUT(label='Weather resource data in memory', type='TABLE', group='Weather', required='?')
     I_bn_des: float = INPUT(label='Design point irradiation value', units='W/m2', type='NUMBER', group='solarfield', required='*')
     T_cold_ref: float = INPUT(label='Reference HTF outlet temperature at design', units='C', type='NUMBER', group='powerblock', required='*')
     P_turb_des: float = INPUT(label='Design-point turbine inlet pressure', units='bar', type='NUMBER', group='solarfield', required='*')
@@ -242,13 +246,16 @@ class Data(ssc.DataDict):
     annual_thermal_consumption: Final[float] = OUTPUT(label='Annual thermal freeze protection required', units='kWt-hr', type='NUMBER', group='Post-process', required='*')
     annual_electricity_consumption: Final[float] = OUTPUT(label='Annual electricity consumptoin w/ avail derate', units='kWe-hr', type='NUMBER', group='Post-process', required='*')
     annual_total_water_use: Final[float] = OUTPUT(label='Total Annual Water Usage', units='m^3', type='NUMBER', group='Post-process', required='*')
-    adjust_constant: float = INPUT(name='adjust:constant', label='Constant loss adjustment', units='%', type='NUMBER', group='Loss Adjustments', required='*', constraints='MAX=100')
-    adjust_hourly: Array = INPUT(name='adjust:hourly', label='Hourly loss adjustments', units='%', type='ARRAY', group='Loss Adjustments', required='?', constraints='LENGTH=8760')
-    adjust_periods: Matrix = INPUT(name='adjust:periods', label='Period-based loss adjustments', units='%', type='MATRIX', group='Loss Adjustments', required='?', constraints='COLS=3', meta='n x 3 matrix [ start, end, loss ]')
+    capacity_factor: Final[float] = OUTPUT(label='Capacity factor', units='%', type='NUMBER', group='Post-process', required='*')
+    kwh_per_kw: Final[float] = OUTPUT(label='First year kWh/kW', units='kWht/kWt', type='NUMBER', group='Post-process', required='*')
+    adjust_constant: float = INPUT(name='adjust:constant', label='Constant loss adjustment', units='%', type='NUMBER', group='Adjustment Factors', required='*', constraints='MAX=100')
+    adjust_hourly: Array = INPUT(name='adjust:hourly', label='Hourly Adjustment Factors', units='%', type='ARRAY', group='Adjustment Factors', required='?', constraints='LENGTH=8760')
+    adjust_periods: Matrix = INPUT(name='adjust:periods', label='Period-based Adjustment Factors', units='%', type='MATRIX', group='Adjustment Factors', required='?', constraints='COLS=3', meta='n x 3 matrix [ start, end, loss ]')
     gen: Final[Array] = OUTPUT(label='System power generated', units='kW', type='ARRAY', group='Time Series', required='*')
 
     def __init__(self, *args: Mapping[str, Any],
                  file_name: str = ...,
+                 solar_resource_data: Table = ...,
                  I_bn_des: float = ...,
                  T_cold_ref: float = ...,
                  P_turb_des: float = ...,

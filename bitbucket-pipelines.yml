@@ -9,6 +9,16 @@ pipelines:
         script:
           - pip install 'mypy>=0.740'
           - mypy samlib --junit-xml test-reports/mypy.xml
+  custom:
+    build-manylinux2010_x86_64:  &manylinux2010_x86_64
+      - step:
+          image: quay.io/pypa/manylinux2010_x86_64
+          script:
+            - /opt/python/cp36-cp36m/bin/python setup.py bdist_wheel --plat-name manylinux2010_x86_64
+            - /opt/python/cp37-cp37m/bin/python setup.py bdist_wheel --plat-name manylinux2010_x86_64 sdist
+            - /opt/python/cp38-cp38/bin/python setup.py bdist_wheel --plat-name manylinux2010_x86_64
+          artifacts:
+            - dist/**
 
 definitions:
   caches:

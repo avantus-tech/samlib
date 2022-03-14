@@ -1,0 +1,103 @@
+[build-system]
+requires = ['hatchling']
+build-backend = 'hatchling.build'
+
+
+[project]
+name = 'samlib'
+version = '0.3.0.240'  # Note: last component should match the SSC revision below
+description = "High-level library for NREL's SAM Simulation Core (SSC)"
+readme = 'README.md'
+requires-python = '>=3.7'
+license = 'BSD-3-clause'
+authors = [
+    {name = 'Brandon Carpenter', email = 'brandon@8minute.com'},
+]
+keywords = [
+    'model',
+    'NREL',
+    'SAM',
+    'SSC',
+    'System Advisor Model',
+    'techno-economic',
+]
+classifiers = [
+    'Development Status :: 4 - Beta',
+    'Intended Audience :: Developers',
+    'Intended Audience :: Science/Research',
+    'License :: OSI Approved :: BSD License',
+    'Operating System :: MacOS',
+    'Operating System :: Microsoft :: Windows',
+    'Operating System :: POSIX :: Linux',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: Implementation :: CPython',
+    'Topic :: Scientific/Engineering',
+    'Typing :: Typed',
+]
+dependencies = [
+    'cffi ~= 1.12',
+    'mypy-extensions',
+    'typing-extensions',
+]
+
+
+[project.license-files]
+paths = [
+    'LICENSE',
+    'SSC-LICENSE',
+]
+
+
+[project.urls]
+'Source Code' = 'https://bitbucket.org/8minutenergy/samlib'
+
+
+[tool.hatch.build]
+exclude = [
+    '.*',
+    '*.pyc',
+    '__pycache__/',
+]
+
+
+[tool.hatch.build.targets.sdist]
+include = [
+    '/samlib/**/*.py',
+    '/samlib/**/*.pyi',
+    '/samlib/py.typed',
+]
+
+
+[tool.hatch.build.targets.wheel]
+packages = ['samlib']
+zip-safe = false  # Allow mypy to perform type checking using py.typed marker
+
+
+[tool.hatch.build.targets.wheel.hooks.custom]
+SAM-version = '2020.2.29.r2'
+SSC-revision = '240'  # Note: Update the last component of the version when changing this value
+dependencies = [
+    'cffi ~= 1.12',
+    'requests',
+]
+
+
+[tool.mypy]
+allow_redefinition = true
+check_untyped_defs = true
+disallow_any_unimported = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+disallow_untyped_defs = true
+follow_imports = 'silent'
+ignore_missing_imports = true
+incremental = true
+scripts_are_modules = true
+show_error_codes = true
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true

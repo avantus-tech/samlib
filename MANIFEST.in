@@ -1,7 +1,0 @@
-recursive-include samlib *.py *.pyi
-include samlib/py.typed
-include genstubs.py
-include LICENSE
-include MANIFEST.in
-include README.md
-include mypy.ini

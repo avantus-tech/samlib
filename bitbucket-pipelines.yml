@@ -1,4 +1,4 @@
-image: python:3.7
+image: python:3.10
 
 pipelines:
   default:
@@ -14,9 +14,10 @@ pipelines:
       - step:
           image: quay.io/pypa/manylinux2010_x86_64
           script:
-            - /opt/python/cp36-cp36m/bin/python setup.py bdist_wheel --plat-name manylinux2010_x86_64
-            - /opt/python/cp37-cp37m/bin/python setup.py bdist_wheel --plat-name manylinux2010_x86_64 sdist
-            - /opt/python/cp38-cp38/bin/python setup.py bdist_wheel --plat-name manylinux2010_x86_64
+            - SSC_BUILD_DIR="$PWD/build" SSC_BUILD_JOBS="$(nproc)" PLATFORM_NAME="$AUDITWHEEL_PLAT" /opt/python/cp37-cp37m/bin/python -m build
+            - SSC_BUILD_DIR="$PWD/build" SSC_BUILD_JOBS="$(nproc)" PLATFORM_NAME="$AUDITWHEEL_PLAT" /opt/python/cp38-cp38/bin/python -m build
+            - SSC_BUILD_DIR="$PWD/build" SSC_BUILD_JOBS="$(nproc)" PLATFORM_NAME="$AUDITWHEEL_PLAT" /opt/python/cp39-cp39/bin/python -m build
+            - SSC_BUILD_DIR="$PWD/build" SSC_BUILD_JOBS="$(nproc)" PLATFORM_NAME="$AUDITWHEEL_PLAT" /opt/python/cp310-cp310/bin/python -m build
           artifacts:
             - dist/**
 

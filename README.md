@@ -33,7 +33,7 @@ module.exec(data)
 
 ## License
 
-[BSD 3-Clause license](LICENSE)
+Samlib is provided under a [BSD 3-Clause license](LICENSE).
 
-The SAM SDK, portions of which are found in the sam-sdk folder, is also
-licensed under a [BSD 3-clause license](sam-sdk/LICENSE).
+The SAM SSC, distributed in binary form in samlib wheels, is also
+licensed under a [BSD 3-clause license](SSC-LICENSE).

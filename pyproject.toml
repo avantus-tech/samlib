@@ -5,7 +5,7 @@ build-backend = 'hatchling.build'
 
 [project]
 name = 'samlib'
-version = '0.3.0.240'  # Note: last component should match the SSC revision below
+version = '0.3.1.240'  # Note: last component should match the SSC revision below
 description = "High-level library for NREL's SAM Simulation Core (SSC)"
 readme = 'README.md'
 requires-python = '>=3.7'

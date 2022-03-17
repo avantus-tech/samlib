@@ -21,6 +21,8 @@ SSC_DIRNAME = f'ssc-{SSC_BASENAME}'
 SSC_TARBALL = f'{SSC_BASENAME}.tar.gz'
 SSC_DOWNLOAD_URL = f'https://github.com/NREL/ssc/archive/'
 
+IS_WINDOWS = sys.platform in ['win32', 'cygwin']
+
 
 class CustomBuildHook(BuildHookInterface):
     def initialize(self, version: str, build_data: Dict[str, Any]) -> None:
@@ -50,6 +52,8 @@ Optional variables:
         sam_version = self.config['SAM-version']
         ssc_revision = self.config['SSC-revision']
         artifacts = Builder(sam_version, ssc_revision, pathlib.Path(build_dir), jobs=jobs, debug=debug).run()
+        if IS_WINDOWS:
+            artifacts = [str(pathlib.Path(p).as_posix()) for p in artifacts]  # hatchling expects POSIX paths
         build_data['artifacts'] += artifacts
         platform_name = os.environ.get('PLATFORM_NAME')
         if not platform_name:
@@ -69,7 +73,7 @@ class Builder:
         self.debug = debug
 
         basename = 'sscd' if self.debug else 'ssc'
-        if sys.platform in ['win32', 'cygwin']:
+        if IS_WINDOWS:
             lib_name = f'{"Debug" if debug else "Release"}/{basename}.dll'
         elif sys.platform == 'darwin':
             lib_name = f'lib{basename}.dylib'

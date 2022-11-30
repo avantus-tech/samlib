@@ -108,12 +108,12 @@ class ProgressUpdate(NamedTuple):
 
 class _ReadOnlyMixin:
     def __delattr__(self, name: str) -> None:
-        if name in self.__slots__:
+        if name in self.__slots__:  # type: ignore[attr-defined]
             raise AttributeError(f'attribute {name!r} is read-only')
         super().__delattr__(name)
 
     def __setattr__(self, name: str, value: Any) -> None:
-        if name in self.__slots__:
+        if name in self.__slots__:  # type: ignore[attr-defined]
             raise AttributeError(f'attribute {name!r} is read-only')
         super().__setattr__(name, value)
 

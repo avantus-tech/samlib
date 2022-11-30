@@ -117,7 +117,12 @@ class Builder:
         self.cmake(f'-DCMAKE_BUILD_TYPE={"Debug" if self.debug else "Release"}', '-DSAMAPI_EXPORT=1')
 
     def _build_lib_macos(self) -> None:
-        self.cmake(f'-DCMAKE_BUILD_TYPE={"Debug" if self.debug else "Release"}')
+        env = {
+            **os.environ,
+            'CFLAGS': f'-Wno-error=implicit-function-declaration {os.environ.get("CFLAGS", "")}',  # Warn on implicit function declaration
+            'CXXFLAGS': f'-D_IOS_VER=1 {os.environ.get("CXXFLAGS", "")}',  # Properly handle definition of finite() macro
+        }
+        self.cmake(f'-DCMAKE_BUILD_TYPE={"Debug" if self.debug else "Release"}', env=env)
         source = self.build_path/'ssc/ssc.dylib'
         target = self.build_path/'ssc/libssc.dylib'
         if newer(source, target):

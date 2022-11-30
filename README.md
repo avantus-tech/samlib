@@ -37,3 +37,14 @@ Samlib is provided under a [BSD 3-Clause license](LICENSE).
 
 The SAM SSC, distributed in binary form in samlib wheels, is also
 licensed under a [BSD 3-clause license](SSC-LICENSE).
+
+## Building
+
+The build-samlib.py script provides a nice wrapper for building *samlib* source
+and wheel distributions. It requires the *build* package, which can be installed
+with `pip install --upgrade build`.
+
+Building universal (fat) wheels on macOS requires a recent SDK. Execute the
+following command, replacing the deployment target if desired.
+
+`env MACOSX_DEPLOYMENT_TARGET=10.9 CMAKE_OSX_ARCHITECTURES="arm64;x86_64" CFLAGS="-arch arm64 -arch x86_64" python build-samlib.py --build-dir build --plat-name macosx_10_9_universal2`

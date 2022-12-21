@@ -11,7 +11,7 @@ readme = 'README.md'
 requires-python = '>=3.7'
 license = 'BSD-3-clause'
 authors = [
-    {name = 'Brandon Carpenter', email = 'brandon@8minute.com'},
+    {name = 'Brandon Carpenter', email = 'brandon@avantus.com'},
 ]
 keywords = [
     'model',
@@ -52,7 +52,7 @@ paths = [
 
 
 [project.urls]
-'Source Code' = 'https://bitbucket.org/8minutenergy/samlib'
+'Source Code' = 'https://bitbucket.org/avantus/samlib'
 
 
 [tool.hatch.build]

@@ -5,7 +5,7 @@ build-backend = 'hatchling.build'
 
 [project]
 name = 'samlib'
-version = '0.3.1.240'  # Note: last component should match the SSC revision below
+version = '0.3.2.240'  # Note: last component should match the SSC revision below
 description = "High-level library for NREL's SAM Simulation Core (SSC)"
 readme = 'README.md'
 requires-python = '>=3.7'
@@ -29,18 +29,19 @@ classifiers = [
     'Operating System :: MacOS',
     'Operating System :: Microsoft :: Windows',
     'Operating System :: POSIX :: Linux',
-    'Programming Language :: Python :: 3.7',
     'Programming Language :: Python :: 3.8',
     'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
     'Programming Language :: Python :: Implementation :: CPython',
     'Topic :: Scientific/Engineering',
     'Typing :: Typed',
 ]
 dependencies = [
-    'cffi ~= 1.12',
-    'mypy-extensions',
-    'typing-extensions',
+    'cffi ~= 1.12',  # Should match cffi version in [tool.hatch.build.targets.wheel.hooks.custom.dependencies]
+    'mypy-extensions ~= 1.0.0',
+    'typing-extensions ~= 4.8.0',
 ]
 
 
@@ -80,8 +81,9 @@ zip-safe = false  # Allow mypy to perform type checking using py.typed marker
 SAM-version = '2020.2.29.r2'
 SSC-revision = '240'  # Note: Update the last component of the version when changing this value
 dependencies = [
-    'cffi ~= 1.12',
+    'cffi ~= 1.12',  # Should match cffi version in [project.dependencies]
     'requests',
+    'setuptools; python_version >= "3.12"',
 ]
 
 

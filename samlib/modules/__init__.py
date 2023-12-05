@@ -28,15 +28,13 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from typing import Set
-
 from .. import ssc
 
 
 __all__ = ()
 
 
-_modules: Set[str]
+_modules: set[str]
 
 
 class ModuleProxy:

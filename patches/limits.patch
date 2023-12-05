@@ -1,0 +1,26 @@
+diff --git a/solarpilot/interop.h b/solarpilot/interop.h
+index 7f0cdceec..cdad35c07 100644
+--- a/solarpilot/interop.h
++++ b/solarpilot/interop.h
+@@ -27,6 +27,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ #include <map>
+ #include <vector>
+ #include <stdio.h>
++#include <limits>
+ 
+ #include "string_util.h"
+ #include "mod_base.h"
+diff --git a/tcs/dispatch_builder.h b/tcs/dispatch_builder.h
+index ad9e47263..098141cdf 100644
+--- a/tcs/dispatch_builder.h
++++ b/tcs/dispatch_builder.h
+@@ -26,7 +26,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ #include <vector>
+ #include <string>
+ #include <unordered_map>
+-#include "../lpsolve/lp_lib.h" 
++#include "../lpsolve/lp_lib.h"
++#include <limits>
+ 
+ //#include "glpk\src\glpk.h"
+ 

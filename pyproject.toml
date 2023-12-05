@@ -5,10 +5,10 @@ build-backend = 'hatchling.build'
 
 [project]
 name = 'samlib'
-version = '0.3.2.240'  # Note: last component should match the SSC revision below
+version = '1.0'  # The API version
 description = "High-level library for NREL's SAM Simulation Core (SSC)"
 readme = 'README.md'
-requires-python = '>=3.7'
+requires-python = '>=3.10'
 license = 'BSD-3-clause'
 authors = [
     {name = 'Brandon Carpenter', email = 'brandon@avantus.com'},
@@ -29,8 +29,6 @@ classifiers = [
     'Operating System :: MacOS',
     'Operating System :: Microsoft :: Windows',
     'Operating System :: POSIX :: Linux',
-    'Programming Language :: Python :: 3.8',
-    'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',
     'Programming Language :: Python :: 3.11',
     'Programming Language :: Python :: 3.12',
@@ -39,9 +37,7 @@ classifiers = [
     'Typing :: Typed',
 ]
 dependencies = [
-    'cffi ~= 1.12',  # Should match cffi version in [tool.hatch.build.targets.wheel.hooks.custom.dependencies]
-    'mypy-extensions ~= 1.0.0',
-    'typing-extensions ~= 4.8.0',
+    # cffi is included by hatch build hooks and will match the version used during the build
 ]
 
 
@@ -56,19 +52,21 @@ paths = [
 'Source Code' = 'https://bitbucket.org/avantus/samlib'
 
 
-[tool.hatch.build]
-exclude = [
-    '.*',
-    '*.pyc',
-    '__pycache__/',
-]
-
-
 [tool.hatch.build.targets.sdist]
 include = [
-    '/samlib/**/*.py',
-    '/samlib/**/*.pyi',
+    '/build-samlib.py',
+    '/hatch_build/metadata.py',
+    '/hatch_build/sdist.py',
+    '/hatch_build/wheel.py',
+    '/patches/limits.patch',
+    '/samlib/__init__.py',
+    '/samlib/_ssc.pyi',
+    '/samlib/_ssc_cffi.pyi',
+    '/samlib/_util.py',
+    '/samlib/modules/__init__.py',
+    '/samlib/modules/_types.pyi',
     '/samlib/py.typed',
+    '/samlib/ssc.py',
 ]
 
 
@@ -76,12 +74,16 @@ include = [
 packages = ['samlib']
 zip-safe = false  # Allow mypy to perform type checking using py.typed marker
 
+[tool.hatch.metadata.hooks.custom]
+path = 'hatch_build/metadata.py'
+
+[tool.hatch.build.targets.sdist.hooks.custom]
+path = 'hatch_build/sdist.py'
 
 [tool.hatch.build.targets.wheel.hooks.custom]
-SAM-version = '2020.2.29.r2'
-SSC-revision = '240'  # Note: Update the last component of the version when changing this value
+path = 'hatch_build/wheel.py'
 dependencies = [
-    'cffi ~= 1.12',  # Should match cffi version in [project.dependencies]
+    'cffi ~= 1.16',  # Will be injected into [project.dependencies] by hatch_build.py
     'requests',
     'setuptools; python_version >= "3.12"',
 ]

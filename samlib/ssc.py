@@ -28,14 +28,19 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+from __future__ import annotations
+
 import enum
 from types import MappingProxyType
-from typing import (Any, Callable, Dict, Generic, Iterator, List, Mapping, NamedTuple,
-                    NewType, Optional, overload, Sequence, SupportsFloat, Union, Type, TypeVar)
-from typing_extensions import Final
+from typing import (Any, Callable, Final, Generic, Iterator, Mapping, NamedTuple,
+                    NewType, overload, Sequence, SupportsFloat, Type, TypeVar)
 
 from ._ssc_cffi import ffi as _ffi, lib as _lib
 from . import _ssc, _util
+
+__all__ = ('Data', 'DataType', 'End', 'Entry', 'LogAction', 'LogLevel',
+           'LogMessage', 'Module', 'ProgressUpdate', 'VarInfo', 'VarType',
+           'build_info', 'iter_entries', 'module_exec_set_print', 'version')
 
 
 _data_t = NewType('_data_t', object)
@@ -45,8 +50,8 @@ _module_t = NewType('_module_t', object)
 
 _Data = TypeVar('_Data', bound='DataDict')
 
-_String = Union[bytes, str]
-_Number = Union[float, int]
+_String = bytes | str
+_Number = float | int
 _Array = Sequence[_Number]
 _Matrix = Sequence[_Array]
 
@@ -63,7 +68,7 @@ class DataType(enum.Enum):
     TABLE = _lib.SSC_TABLE
 
     @classmethod
-    def from_object(cls, obj: Any) -> 'DataType':
+    def from_object(cls, obj: Any) -> DataType:
         if isinstance(obj, (bytes, str)):
             return cls.STRING
         if isinstance(obj, Sequence):
@@ -136,7 +141,7 @@ class VarInfo(_ReadOnlyMixin):
     units: str
     var_type: VarType
 
-    def __init__(self, module: Union['Module', str], index: int) -> None:
+    def __init__(self, module: Module | str, index: int) -> None:
         if not isinstance(module, Module):
             module = Module(module)
         info = _lib.ssc_module_var_info(module._module, index)
@@ -166,7 +171,7 @@ class VarInfo(_ReadOnlyMixin):
 class ModuleLog(Sequence[LogMessage]):
     __slots__ = '_module',
 
-    def __init__(self, module: 'Module') -> None:
+    def __init__(self, module: Module) -> None:
         self._module = module
 
     @overload
@@ -175,7 +180,7 @@ class ModuleLog(Sequence[LogMessage]):
     @overload
     def __getitem__(self, index: slice) -> Sequence[LogMessage]:
         pass
-    def __getitem__(self, index: Union[int, slice]) -> Any:
+    def __getitem__(self, index: int | slice) -> Any:
         if isinstance(index, slice):
             logs = []
             for i in _util.range_from_slice(index):
@@ -219,7 +224,7 @@ class Module(_ReadOnlyMixin, Sequence[VarInfo], Generic[_Data]):
     @overload
     def __getitem__(self, index: slice) -> Sequence[VarInfo]:
         pass
-    def __getitem__(self, index: Union[int, slice]) -> Any:
+    def __getitem__(self, index: int | slice) -> Any:
         if isinstance(index, slice):
             vars = []
             for i in _util.range_from_slice(index):
@@ -242,9 +247,9 @@ class Module(_ReadOnlyMixin, Sequence[VarInfo], Generic[_Data]):
         return ModuleLog(self)
 
     def exec(self, data: _Data, *,
-             set_print: Optional[bool] = None,
-             log_callback: Optional[Callable[[LogMessage], Optional[bool]]] = None,
-             progress_callback: Optional[Callable[[ProgressUpdate], Optional[bool]]] = None) -> bool:
+             set_print: bool | None = None,
+             log_callback: Callable[[LogMessage], bool | None] | None = None,
+             progress_callback: Callable[[ProgressUpdate], bool | None] | None = None) -> bool:
         if set_print is not None:
             module_exec_set_print(set_print)
         if log_callback is None and progress_callback is None:
@@ -373,7 +378,7 @@ class DataDict(Mapping[str, Any]):
             for key, value in table.items():
                 self[key] = value
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {_util.decode(key): value.to_dict() if isinstance(value, DataDict) else value
                 for key, value in self.items()}
 
@@ -407,7 +412,7 @@ class Data(DataDict):
             raise AttributeError(name) from None
 
 
-def iter_entries() -> Iterator['Entry']:
+def iter_entries() -> Iterator[Entry]:
     i = 0
     while True:
         try:
@@ -446,7 +451,7 @@ def data_free(data: _Data) -> None:
     pass
 
 def data_clear(data: _Data) -> None:
-    """Clears all of the variables in a data object."""
+    """Clears all the variables in a data object."""
     _lib.ssc_data_clear(data._data)
 
 def data_unassign(data: _Data, name: _String) -> None:
@@ -460,7 +465,7 @@ def data_rename(data: _Data, oldname: _String, newname: _String) -> bool:
     """
     return _lib.ssc_data_rename(data._data, _util.encode(oldname), _util.encode(newname))
 
-def data_query(data: _Data, name: _String) -> Optional[DataType]:
+def data_query(data: _Data, name: _String) -> DataType | None:
     """Return the data type of the given attribute in the data object.
 
     Returns None if name does not exist.
@@ -470,7 +475,7 @@ def data_query(data: _Data, name: _String) -> Optional[DataType]:
         return None
     return DataType(data_type)
 
-def data_first(data: _Data) -> Optional[str]:
+def data_first(data: _Data) -> str | None:
     """Returns the name of the first variable in the table.
 
     Returns None if the data object is empty.
@@ -480,7 +485,7 @@ def data_first(data: _Data) -> Optional[str]:
         return None
     return _util.decode(_ffi.string(name))
 
-def data_next(data: _Data) -> Optional[str]:
+def data_next(data: _Data) -> str | None:
     """Returns the name of the next variable in the table.
 
     Returns None if there are no more variables in the data object.
@@ -522,7 +527,8 @@ def data_set_matrix(data: _Data, name: _String, value: _Matrix) -> None:
     nrows = len(value)
     ncols = max(len(row) for row in value) if nrows else 0
     matrix = _ffi.cast('ssc_number_t *',
-                       _ffi.new(f'ssc_number_t[{nrows}][{ncols}]', [[float(x) for x in row] for row in value]))
+                       _ffi.new(f'ssc_number_t[{nrows}][{ncols}]',
+                                [[float(x) for x in row] for row in value]))
     _lib.ssc_data_set_matrix(data._data, _util.encode(name), matrix, nrows, ncols)
 
 def data_set_table(data: _Data, name: _String, value: _Data) -> None:
@@ -531,26 +537,26 @@ def data_set_table(data: _Data, name: _String, value: _Data) -> None:
         value = Data.from_dict(value)
     _lib.ssc_data_set_table(data._data, _util.encode(name), value._data)
 
-def data_get_bytes(data: _Data, name: _String) -> Optional[bytes]:
+def data_get_bytes(data: _Data, name: _String) -> bytes | None:
     """Return a string variable as bytes."""
     string = _lib.ssc_data_get_string(data._data, _util.encode(name))
     if string == _ffi.NULL:
         return None
     return _ffi.string(string)
 
-def data_get_string(data: _Data, name: _String) -> Optional[str]:
+def data_get_string(data: _Data, name: _String) -> str | None:
     """Return a string variable as a decoded string."""
     string = data_get_bytes(data, name)
     return None if string is None else _util.decode(string)
 
-def data_get_number(data: _Data, name: _String) -> Optional[float]:
+def data_get_number(data: _Data, name: _String) -> float | None:
     """Return a numeric variable as a float."""
     number = _ffi.new('ssc_number_t *')
     if not _lib.ssc_data_get_number(data._data, _util.encode(name), number):
         return None
     return number[0]
 
-def data_get_array(data: _Data, name: _String) -> Optional[List[float]]:
+def data_get_array(data: _Data, name: _String) -> list[float] | None:
     """Return an array variable as a list."""
     length = _ffi.new('int *')
     array = _lib.ssc_data_get_array(data._data, _util.encode(name), length)
@@ -558,7 +564,7 @@ def data_get_array(data: _Data, name: _String) -> Optional[List[float]]:
         return None
     return _ffi.unpack(array, length[0])
 
-def data_get_matrix(data: _Data, name: _String) -> Optional[List[List[float]]]:
+def data_get_matrix(data: _Data, name: _String) -> list[list[float]] | None:
     """Return a matrix variable as a list of lists."""
     nrows = _ffi.new('int *')
     ncols = _ffi.new('int *')
@@ -568,7 +574,7 @@ def data_get_matrix(data: _Data, name: _String) -> Optional[List[List[float]]]:
     it = iter(_ffi.unpack(matrix, nrows[0] * ncols[0]))
     return [[next(it) for _ in range(ncols[0])] for _ in range(nrows[0])]
 
-def data_get_table(data: _Data, name: _String) -> Optional[Data]:
+def data_get_table(data: _Data, name: _String) -> Data | None:
     """Return a table variable."""
     table = _lib.ssc_data_get_table(data._data, _util.encode(name))
     if table == _ffi.NULL:
@@ -576,7 +582,7 @@ def data_get_table(data: _Data, name: _String) -> Optional[Data]:
     return Data._from_object(table)
 
 
-_getters: Final[Mapping[DataType, Callable[[_Data, _String], Optional[object]]]] = MappingProxyType({
+_getters: Final[Mapping[DataType, Callable[[_Data, _String], object | None]]] = MappingProxyType({
     DataType.STRING: data_get_string,
     DataType.NUMBER: data_get_number,
     DataType.ARRAY: data_get_array,
@@ -593,7 +599,7 @@ _setters: Final[Mapping[DataType, Callable[[_Data, _String, Any], None]]] = Mapp
 })
 
 
-def data_get_value(data: _Data, name: _String, data_type: DataType) -> Optional[object]:
+def data_get_value(data: _Data, name: _String, data_type: DataType) -> object | None:
     """Helper to get attribute without knowing the data type."""
     try:
         get_value = _getters[data_type]
@@ -610,7 +616,7 @@ def data_set_value(data: _Data, name: _String, data_type: DataType, value: Any) 
     set_value(data, name, value)
 
 
-def module_entry(index: int) -> Optional[Entry]:
+def module_entry(index: int) -> Entry | None:
     """Returns compute module information for the i-th module in the SSC library.
 
     Returns None if the module at the given index does not exist.
@@ -635,7 +641,7 @@ def entry_version(entry: Entry) -> int:
     """Returns a short text description of a compute module."""
     return _lib.ssc_entry_version(entry._entry)
 
-def module_create(name: _String) -> Optional[Module]:
+def module_create(name: _String) -> Module | None:
     """Creates an instance of a compute module with the given name.
 
     Returns None if the given module does not exist.
@@ -649,7 +655,7 @@ def module_free(module: Module) -> None:
     """Releases an instance of a compute module created with module_create()."""
     pass
 
-def module_var_info(module: Module, index: int) -> Optional[VarInfo]:
+def module_var_info(module: Module, index: int) -> VarInfo | None:
     """Returns reference to a variable info object.
 
     Returns None if the given index is invalid.
@@ -724,13 +730,13 @@ def module_exec_set_print(print: int) -> None:
 def module_exec_simple(name: str, data: _Data) -> bool:
     """The simplest way to run a computation module over a data set.
 
-    Simply specify the name of the module, and a data set.  If the whole
-    process succeeded, the function returns 1, otherwise 0.  No error
+    Simply specify the name of the module, and a data set. If the whole
+    process succeeded, the function returns 1, otherwise 0. No error
     messages are available. This function can be thread-safe, depending
     on the computation module used. If the computation module requires
     the execution of external binary executables, it is not thread-safe.
     However, simpler implementations that do all calculations internally
-    are probably thread-safe.  Unfortunately there is no standard way to
+    are probably thread-safe. Unfortunately there is no standard way to
     report the thread-safety of a particular computation module.
     """
     return bool(_lib.ssc_module_exec_simple(_util.encode(name), data._data))
@@ -738,8 +744,8 @@ def module_exec_simple(name: str, data: _Data) -> bool:
 def module_exec_simple_nothread(name: str, data: _Data) -> str:
     """Another very simple way to run a computation module over a data set.
 
-    The function returns the empty string on success.  If something went
-    wrong, the first error message is returned.  This function is never
+    The function returns the empty string on success. If something went
+    wrong, the first error message is returned. This function is never
     thread-safe.
     """
     error = _lib.ssc_module_exec_simple_nothread(_util.encode(name), data._data)
@@ -748,15 +754,15 @@ def module_exec_simple_nothread(name: str, data: _Data) -> str:
 def module_exec(module: Module, data: _Data) -> bool:
     """Runs an instantiated computation module over the specified data set.
 
-    Returns True on success, False on failure.  Uses default internal
-    built-in handler.  Detailed notices, warnings, and errors can be
+    Returns True on success, False on failure. Uses default internal
+    built-in handler. Detailed notices, warnings, and errors can be
     retrieved using the module_log() function.
     """
     return bool(_lib.ssc_module_exec(module._module, data._data))
 
 class _Callbacks:
-    def __init__(self, log: Optional[Callable[[LogMessage], Optional[bool]]],
-                 progress: Optional[Callable[[ProgressUpdate], Optional[bool]]]) -> None:
+    def __init__(self, log: Callable[[LogMessage], bool | None] | None,
+                 progress: Callable[[ProgressUpdate], bool | None] | None) -> None:
         self.handle = _ffi.new_handle(self)
         self.log = log
         self.progress = progress
@@ -777,19 +783,20 @@ def _handle_update(_module: _module_t, _handler: object, action: int, f0: float,
 
 def module_exec_with_handler(
         module: Module, data: _Data,
-        log_callback: Optional[Callable[[LogMessage], Optional[bool]]],
-        progress_callback: Optional[Callable[[ProgressUpdate], Optional[bool]]]) -> bool:
+        log_callback: Callable[[LogMessage], bool | None] | None,
+        progress_callback: Callable[[ProgressUpdate], bool | None] | None) -> bool:
     """A full-featured way to run a compute module over a data set.
 
      Supports passing a callback function to handle custom logging,
-     progress updates, and cancelation requests. Returns True on
+     progress updates, and cancellation requests. Returns True on
      success, False on failure.
      """
     callbacks = _Callbacks(log_callback, progress_callback)
-    return bool(_lib.ssc_module_exec_with_handler(module._module, data._data, _lib._handle_update, callbacks.handle))
+    return bool(_lib.ssc_module_exec_with_handler(
+        module._module, data._data, _lib._handle_update, callbacks.handle))
 
-def module_log(module: Module, index: int) -> Optional[LogMessage]:
-    """Retrive notices, warnings, and error messages from the simulation.
+def module_log(module: Module, index: int) -> LogMessage | None:
+    """Retrieve notices, warnings, and error messages from the simulation.
 
     Returns a LogMessage instance or None if the index passed in was
     invalid.

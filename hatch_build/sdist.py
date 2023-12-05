@@ -28,7 +28,15 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from .ssc import *
-from .ssc import __all__
+from typing import Any
 
-__version__ = version()
+# mypy: allow_any_unimported
+from hatchling.builders.hooks.plugin.interface import BuildHookInterface
+
+
+class CustomBuildHook(BuildHookInterface):
+    """Customize sdist building to include the SSC library."""
+
+    def initialize(self, version: str, build_data: dict[str, Any]) -> None:
+        build_version = self.metadata.hatch.metadata.hook_config['custom']['__version__']
+        build_data['artifacts'] = [build_version.dump()]

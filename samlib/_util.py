@@ -30,18 +30,18 @@
 
 import codecs
 import sys
-from typing import Union
+
 
 _codec = codecs.lookup('utf-8')
 
 
-def decode(string: Union[bytes, str]) -> str:
+def decode(string: bytes | str) -> str:
     if isinstance(string, bytes):
         return _codec.decode(string)[0]
     return string
 
 
-def encode(string: Union[bytes, str]) -> bytes:
+def encode(string: bytes | str) -> bytes:
     if isinstance(string, str):
         return _codec.encode(string)[0]
     return string

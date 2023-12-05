@@ -113,3 +113,9 @@ venv.bak/
 
 # vim swap files
 .*.sw?
+
+# Build artifacts
+samlib/modules/[^_]*.pyi
+samlib/modules/_[0-9]*.pyi
+samlib/__version__.py
+samlib/_ssc.py

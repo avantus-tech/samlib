@@ -51,8 +51,8 @@ API version or to a combination of API + _SSC_ revision. The _SSC_ revision is
 the final component of _SSC_ release versions.
 
 Here are a couple of examples:
-* `samlib ~= 0` specifies _samlib_ API version 0, using the latest _SSC_ revision.
-* `samlib ~= 0.240` specifies _samlib_ API version 0, using _SSC_ revision 240
+* `samlib ~= 1.0` specifies _samlib_ API version 0, using the latest _SSC_ revision.
+* `samlib ~= 1.240.0` specifies _samlib_ API version 0, using _SSC_ revision 240
   (which corresponds to SSC release _2020.2.29.r2.ssc.240_)
 
 The major version is incremented for potentially breaking _samlib_ API changes

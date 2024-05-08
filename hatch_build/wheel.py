@@ -228,7 +228,7 @@ class Builder:
 
     def read_sscapi(self) -> str:
         source = []
-        with (self.source_path / 'ssc' / 'sscapi.h').open() as file:
+        with (self.source_path / 'ssc' / 'sscapi.h').open(encoding='utf-8') as file:
             for line in file:
                 if line.startswith('#endif // __SSCLINKAGECPP__'):
                     break
@@ -359,7 +359,7 @@ def _write_module_stub(module: str, entry: Any, attrs: list[str],
     data_attrs = f'\n    '.join(attrs)
     data_kwargs = f',\n{" " * 17}'.join(params)
     dict_keys = f',\n    '.join(keys)
-    with open(f'samlib/modules/{module}.pyi', 'w') as file:
+    with open(f'samlib/modules/{module}.pyi', 'w', encoding='utf-8') as file:
         file.write(f'''
 # This is a generated file
 
@@ -391,7 +391,7 @@ class Module(ssc.Module[Data]):
 
 def _write_ssc(name_map: dict[str, str]) -> str:
     names = '\n'.join(f'    {k!r}: {v!r},' for k, v in name_map.items())
-    with open('samlib/_ssc.py', 'w') as file:
+    with open('samlib/_ssc.py', 'w', encoding='utf-8') as file:
         file.write(f'''
 # This is a generated file
 

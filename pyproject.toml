@@ -1,11 +1,11 @@
 [build-system]
-requires = ['hatchling']
+requires = ['hatchling ~= 1.24.2']
 build-backend = 'hatchling.build'
 
 
 [project]
 name = 'samlib'
-version = '1.0'  # The API version
+dynamic = ['version']  # Built in hatch_build/sdist.py, static components defined below in metadata hook config
 description = "High-level library for NREL's SAM Simulation Core (SSC)"
 readme = 'README.md'
 requires-python = '>=3.10'
@@ -75,7 +75,10 @@ packages = ['samlib']
 zip-safe = false  # Allow mypy to perform type checking using py.typed marker
 
 [tool.hatch.metadata.hooks.custom]
-path = 'hatch_build/metadata.py'
+path = 'hatch_build/sdist.py'
+version = 1
+revision = 0
+file = 'samlib/__version__.py'
 
 [tool.hatch.build.targets.sdist.hooks.custom]
 path = 'hatch_build/sdist.py'

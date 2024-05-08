@@ -73,10 +73,14 @@ class CustomBuildHook(BuildHookInterface):
         debug = os.environ.get('SSC_BUILD_DEBUG', '').lower() in ['y', 'yes', 't', 'true', '1']
         patches = os.environ.get('SSC_PATCHES', '').split()
 
-        build_version = self.metadata.hatch.metadata.hook_config['custom']['__version__']
-        build_data['artifacts'] = [build_version.dump()]
-        artifacts = Builder(build_version.ssc_release, pathlib.Path(build_dir),
-                            jobs=jobs, debug=debug, patches=patches).run()
+        # Read version and SSC revision form version file
+        version_file = self.metadata.config['tool']['hatch']['metadata']['hooks']['custom']['file']
+        version, ssc_release = read_version_file(version_file)
+        assert version == self.metadata.version, 'version mismatch'
+        artifacts = [version_file]
+
+        artifacts += Builder(ssc_release, pathlib.Path(build_dir),
+                             jobs=jobs, debug=debug, patches=patches).run()
         if IS_WINDOWS:
             artifacts = [str(pathlib.Path(p).as_posix()) for p in artifacts]  # hatchling expects POSIX paths
         build_data['artifacts'] += artifacts
@@ -88,6 +92,18 @@ class CustomBuildHook(BuildHookInterface):
         if not platform_name:
             platform_name = sysconfig.get_platform().translate(str.maketrans('.-', '__'))
         build_data['tag'] = str(next(packaging.tags.cpython_tags(platforms=[platform_name])))
+
+
+def read_version_file(version_file: str) -> tuple[str, str]:
+    spec = importlib.util.spec_from_file_location('__version__', version_file)
+    assert spec is not None
+    module = importlib.util.module_from_spec(spec)
+    try:
+        assert spec.loader is not None
+        spec.loader.exec_module(module)
+    except FileNotFoundError:
+        raise ValueError(f'Expected a __version__ module at {version_file} but none was found')
+    return module.VERSION, module.SSC_RELEASE
 
 
 class Builder:

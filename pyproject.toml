@@ -79,7 +79,7 @@ zip-safe = false  # Allow mypy to perform type checking using py.typed marker
 [tool.hatch.metadata.hooks.custom]
 path = 'hatch_build/sdist.py'
 version = 1
-revision = 0
+revision = 1
 file = 'samlib/__version__.py'
 
 [tool.hatch.build.targets.sdist.hooks.custom]

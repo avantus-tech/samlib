@@ -91,7 +91,14 @@ class CustomBuildHook(BuildHookInterface):
         platform_name = os.environ.get('PLATFORM_NAME')
         if not platform_name:
             platform_name = sysconfig.get_platform().translate(str.maketrans('.-', '__'))
-        build_data['tag'] = str(next(packaging.tags.cpython_tags(platforms=[platform_name])))
+
+        # Derive the interpreter tag version from requires-python in pyproject.toml.
+        # Expects that requires-python is something like '>=3.xy'. The tag version
+        # is derived by stripping off all characters but digits, producing '3xy'.
+        requires_python = self.metadata.config['project']['requires-python']
+        interpreter_tag_version = re.sub(r'\D', '', requires_python)
+        assert re.match('^3\d\d$', interpreter_tag_version), 'unexpected interpreter tag version'
+        build_data['tag'] = f'cp{interpreter_tag_version}-abi3-{platform_name}'
 
 
 def read_version_file(version_file: str) -> tuple[str, str]:
@@ -266,8 +273,20 @@ extern "Python" ssc_bool_t _handle_update(ssc_module_t module, ssc_handler_t han
         ffibuilder.set_source('samlib._ssc_cffi', '#include "sscapi.h"', libraries=[self.lib_basename],
                               include_dirs=[str(self.source_path / 'ssc')], library_dirs=[str(self.lib_path.parent)],
                               extra_link_args=(['-Wl,-rpath=${ORIGIN}'] if sys.platform == 'linux' else []))
+
+        # From the cffi package documentation at https://cffi.readthedocs.io/en/stable/cdef.html#id14
+        #
+        # New in version 1.8: the C code produced by emit_c_code() or compile() contains #define
+        # Py_LIMITED_API. This means that on CPython >= 3.2, compiling this source produces a
+        # binary .so/.dll that should work for any version of CPython >= 3.2 (as opposed to only
+        # for the same version of CPython x.y). However, the standard distutils package will still
+        # produce a file called e.g. NAME.cpython-35m-x86_64-linux-gnu.so. You can manually rename
+        # it to NAME.abi3.so, or use setuptools version 26 or later. Also, note that compiling with
+        # a debug version of Python will not actually define Py_LIMITED_API, as doing so makes
+        # Python.h unhappy.
         with tempfile.TemporaryDirectory() as tmpdir:
-            extension = ffibuilder.compile(tmpdir=tmpdir, debug=self.debug)
+            ext = 'pyd' if sys.platform == 'win32' else 'so'
+            extension = ffibuilder.compile(tmpdir=tmpdir, debug=self.debug, target=f'_ssc_cffi.{ext}')
             dest = pathlib.Path('samlib', os.path.basename(extension))
             shutil.copy(extension, dest)
             return str(dest)

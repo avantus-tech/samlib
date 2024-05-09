@@ -148,21 +148,21 @@ docker pull quay.io/pypa/manylinux_2_28_x86_64
 ```shell
 docker run -it --rm --volume $PWD:/home/samlib:rw --user $UID:$GID --workdir /home/samlib quay.io/pypa/manylinux_2_28_x86_64 bash -l
 ```
-3. Build a wheel for each desired Python version:
+3. Build the wheel using the minimum supported Python version (3.10 at the time of this writing):
 ```shell
-/opt/python/cp38-cp38/bin/python build-samlib.py --build-dir=build/manylinux --jobs=10 --plat-name=$AUDITWHEEL_PLAT
+/opt/python/cp10-cp10/bin/python build-samlib.py --build-dir=build/manylinux --jobs=10 --plat-name=$AUDITWHEEL_PLAT
 ```
 4. Exit the shell and docker container:
 ```shell
 exit
 ```
 
-Optionally, this one command can be used to build wheels for a range of Python versions:
+Optionally, this one command can be used to build a manylinux wheel:
 ```shell
 docker pull quay.io/pypa/manylinux_2_28_x86_64 && \
 docker run -it --rm --volume "$PWD":/home/samlib:rw --user "$UID:$GID" --workdir /home/samlib \
   quay.io/pypa/manylinux_2_28_x86_64 bash -c \
-  'for v in {10..12}; do /opt/python/cp3$v-cp3$v/bin/python build-samlib.py --build-dir=build/manylinux --jobs=10 --plat-name="$AUDITWHEEL_PLAT"; done'
+  '/opt/python/cp310-cp310/bin/python build-samlib.py --build-dir=build/manylinux --jobs=10 --plat-name="$AUDITWHEEL_PLAT"'
 ```
 
 

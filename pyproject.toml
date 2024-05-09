@@ -8,6 +8,8 @@ name = 'samlib'
 dynamic = ['version']  # Built in hatch_build/sdist.py, static components defined below in metadata hook config
 description = "High-level library for NREL's SAM Simulation Core (SSC)"
 readme = 'README.md'
+# hatch_build/wheel.py uses requires-python to derive the interpreter tag of wheel files.
+# It expects there to be exactly three digits in the specifier.
 requires-python = '>=3.10'
 license = 'BSD-3-clause'
 authors = [

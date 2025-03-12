@@ -97,7 +97,7 @@ class CustomBuildHook(BuildHookInterface):
         # is derived by stripping off all characters but digits, producing '3xy'.
         requires_python = self.metadata.config['project']['requires-python']
         interpreter_tag_version = re.sub(r'\D', '', requires_python)
-        assert re.match('^3\d\d$', interpreter_tag_version), 'unexpected interpreter tag version'
+        assert re.match(r'^3\d\d$', interpreter_tag_version), 'unexpected interpreter tag version'
         build_data['tag'] = f'cp{interpreter_tag_version}-abi3-{platform_name}'
 
 
@@ -287,12 +287,12 @@ extern "Python" ssc_bool_t _handle_update(ssc_module_t module, ssc_handler_t han
         with tempfile.TemporaryDirectory() as tmpdir:
             ext = 'pyd' if sys.platform == 'win32' else 'so'
             extension = ffibuilder.compile(tmpdir=tmpdir, debug=self.debug, target=f'_ssc_cffi.{ext}')
-            dest = pathlib.Path('samlib', os.path.basename(extension))
+            dest = pathlib.Path('src/samlib', os.path.basename(extension))
             shutil.copy(extension, dest)
             return str(dest)
 
     def copy_lib(self) -> str:
-        dest = pathlib.Path('samlib', self.lib_path.name)
+        dest = pathlib.Path('src/samlib', self.lib_path.name)
         shutil.copyfile(self.lib_path, dest)
         return str(dest)
 
@@ -321,7 +321,7 @@ def build_stubs() -> list[str]:
     name_map: dict[str, str] = {}
     _ssc._name_map = types.MappingProxyType(name_map)  # type: ignore[attr-defined]
 
-    spec = importlib.util.spec_from_file_location('samlib', 'samlib/__init__.py')
+    spec = importlib.util.spec_from_file_location('samlib', 'src/samlib/__init__.py')
     assert spec is not None
     samlib = importlib.util.module_from_spec(spec)
     sys.modules['samlib'] = samlib
@@ -394,7 +394,7 @@ def _write_module_stub(module: str, entry: Any, attrs: list[str],
     data_attrs = f'\n    '.join(attrs)
     data_kwargs = f',\n{" " * 17}'.join(params)
     dict_keys = f',\n    '.join(keys)
-    with open(f'samlib/modules/{module}.pyi', 'w', encoding='utf-8') as file:
+    with open(f'src/samlib/modules/{module}.pyi', 'w', encoding='utf-8') as file:
         file.write(f'''
 # This is a generated file
 
@@ -426,7 +426,7 @@ class Module(ssc.Module[Data]):
 
 def _write_ssc(name_map: dict[str, str]) -> str:
     names = '\n'.join(f'    {k!r}: {v!r},' for k, v in name_map.items())
-    with open('samlib/_ssc.py', 'w', encoding='utf-8') as file:
+    with open('src/samlib/_ssc.py', 'w', encoding='utf-8') as file:
         file.write(f'''
 # This is a generated file
 

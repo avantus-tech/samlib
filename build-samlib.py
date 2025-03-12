@@ -9,6 +9,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description='Kick off a samlib build.',
                                      usage='%(prog)s [OPTIONS...] [--] [BUILD_OPTIONS...]',
                                      epilog='Use `%(prog)s -- --help` for build help.')
+    parser.add_argument('--builder', default='uv', choices=['uv', 'build'],
+                        help='Select uv (default) or build as the build tool.')
     parser.add_argument('--build-dir', default=None, metavar='DIR',
                         dest='SSC_BUILD_DIR',
                         help='Build directory.')
@@ -37,6 +39,11 @@ def main() -> None:
     elif opts.SSC_BUILD_DIR:
         opts.SSC_BUILD_DIR = os.path.abspath(opts.SSC_BUILD_DIR)
 
+    if opts.builder == 'build':
+        cmd = [sys.executable, '-m', 'build']
+    else:
+        cmd = ['uv', 'build']
+
     env = os.environ.copy()
     for key, value in opts.__dict__.items():
         if value is not None:
@@ -46,7 +53,7 @@ def main() -> None:
 
     if build_args and build_args[0] == '--':
         build_args = build_args[1:]
-    sys.exit(subprocess.run([sys.executable, '-m', 'build', *build_args], env=env).returncode)
+    sys.exit(subprocess.run([*cmd, *build_args], env=env).returncode)
 
 
 if __name__ == '__main__':

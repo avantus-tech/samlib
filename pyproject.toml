@@ -1,5 +1,5 @@
 [build-system]
-requires = ['hatchling ~= 1.24.2']
+requires = ['hatchling ~= 1.27']
 build-backend = 'hatchling.build'
 
 
@@ -24,7 +24,7 @@ keywords = [
     'techno-economic',
 ]
 classifiers = [
-    'Development Status :: 4 - Beta',
+    'Development Status :: 5 - Production/Stable',
     'Intended Audience :: Developers',
     'Intended Audience :: Science/Research',
     'License :: OSI Approved :: BSD License',
@@ -34,12 +34,18 @@ classifiers = [
     'Programming Language :: Python :: 3.10',
     'Programming Language :: Python :: 3.11',
     'Programming Language :: Python :: 3.12',
+    'Programming Language :: Python :: 3.13',
     'Programming Language :: Python :: Implementation :: CPython',
     'Topic :: Scientific/Engineering',
     'Typing :: Typed',
 ]
 dependencies = [
     # cffi is included by hatch build hooks and will match the version used during the build
+]
+
+[dependency-groups]
+dev = [
+    "mypy ~= 1.15",
 ]
 
 
@@ -51,7 +57,7 @@ paths = [
 
 
 [project.urls]
-'Source Code' = 'https://bitbucket.org/avantus/samlib'
+'Source Code' = 'https://github.com/avantus-tech/samlib'
 
 
 [tool.hatch.build.targets.sdist]
@@ -61,26 +67,26 @@ include = [
     '/hatch_build/sdist.py',
     '/hatch_build/wheel.py',
     '/patches/limits.patch',
-    '/samlib/__init__.py',
-    '/samlib/_ssc.pyi',
-    '/samlib/_ssc_cffi.pyi',
-    '/samlib/_util.py',
-    '/samlib/modules/__init__.py',
-    '/samlib/modules/_types.pyi',
-    '/samlib/py.typed',
-    '/samlib/ssc.py',
+    '/src/samlib/__init__.py',
+    '/src/samlib/_ssc.pyi',
+    '/src/samlib/_ssc_cffi.pyi',
+    '/src/samlib/_util.py',
+    '/src/samlib/modules/__init__.py',
+    '/src/samlib/modules/_types.pyi',
+    '/src/samlib/py.typed',
+    '/src/samlib/ssc.py',
 ]
 
 
 [tool.hatch.build.targets.wheel]
-packages = ['samlib']
+packages = ['src/samlib']
 zip-safe = false  # Allow mypy to perform type checking using py.typed marker
 
 [tool.hatch.metadata.hooks.custom]
 path = 'hatch_build/sdist.py'
 version = 1
-revision = 1
-file = 'samlib/__version__.py'
+revision = 2
+file = 'src/samlib/__version__.py'
 
 [tool.hatch.build.targets.sdist.hooks.custom]
 path = 'hatch_build/sdist.py'

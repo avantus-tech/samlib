@@ -115,7 +115,7 @@ venv.bak/
 .*.sw?
 
 # Build artifacts
-samlib/modules/[^_]*.pyi
-samlib/modules/_[0-9]*.pyi
-samlib/__version__.py
-samlib/_ssc.py
+/src/samlib/modules/[^_]*.pyi
+/src/samlib/modules/_[0-9]*.pyi
+/src/samlib/__version__.py
+/src/samlib/_ssc.py

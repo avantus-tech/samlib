@@ -1,0 +1,80 @@
+name: Build packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      ssc-release:
+        description: SSC release to build
+        default: 2020.2.29.r2.ssc.240
+        type: string
+        required: true
+      build-linux:
+        description: Build for Linux
+        type: boolean
+        default: true
+      build-macos:
+        description: Build for macOS
+        type: boolean
+        default: true
+      build-windows:
+        description: Build for Windows
+        type: boolean
+        default: true
+
+jobs:
+  build-linux:
+    name: Build for Linux
+    if: ${{ inputs.build-linux }}
+    uses: ./.github/workflows/build-samlib.yaml
+    with:
+      ssc-release: ${{ inputs.ssc-release }}
+      name: Linux
+      runs-on: ubuntu-latest
+      platform: manylinux_2_28_x86_64
+      container: quay.io/pypa/manylinux_2_28_x86_64
+      env: CFLAGS=-Wno-error=implicit-function-declaration
+
+  build-macos:
+    name: Build for macOS
+    if: ${{ inputs.build-macos }}
+    uses: ./.github/workflows/build-samlib.yaml
+    with:
+      ssc-release: ${{ inputs.ssc-release }}
+      name: macOS
+      runs-on: macos-latest
+      platform: macosx_10_9_universal2
+      env: |
+        CFLAGS="-Wno-error=implicit-function-declaration -arch arm64 -arch x86_64" \
+        MACOSX_DEPLOYMENT_TARGET=10.9 \
+        CMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
+
+  build-windows:
+    name: Build for Windows
+    if: ${{ inputs.build-windows }}
+    uses: ./.github/workflows/build-samlib.yaml
+    with:
+      name: Windows
+      ssc-release: ${{ inputs.ssc-release }}
+      runs-on: windows-latest
+      platform: win_amd64
+
+  summary:
+    name: Generate summary
+    runs-on: ubuntu-latest
+    steps:
+      - name: Summary
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<"EOF"
+          **SSC Release:**
+          ```
+          ${{ inputs.ssc-release }}
+          ```
+          
+          **GitHub Run ID:**
+          ```
+          ${{ github.run_id }}
+          ```
+          
+          **Publish to PyPI**
+          After testing the [artifacts](#artifacts) below, copy the Run ID above and use it with the [publish workflow](../workflows/publish.yaml).
+          EOF

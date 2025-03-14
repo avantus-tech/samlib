@@ -1,0 +1,54 @@
+name: Publish packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      run-id:
+        description: Build workflow run ID to publish
+        required: true
+        type: string
+      os:
+        description: OS artifacts to publish
+        type: choice
+        options:
+          - all
+          - Linux
+          - macOS
+          - Windows
+        required: false
+      test-release:
+        description: Publish to the PyPI test server
+        type: boolean
+        default: false
+
+jobs:
+  publish:
+    name: Publish to${{ inputs.test-release && ' Test' || ''}} PyPI
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.test-release && 'test-release' || 'release' }}
+    permissions:
+      id-token: write
+    steps:
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: false
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ (inputs.os && inputs.os != 'all' && format('{0}-packages', inputs.os)) || '' }}
+          path: dist
+          merge-multiple: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ inputs.run-id }}
+
+      - name: Upload package to PyPI
+        run: |
+          uv publish --no-progress --trusted-publishing always ${{ inputs.test-release && '--publish-url https://test.pypi.org/legacy/' || '' }} 2>&1 | tee ./publish.out
+          cat >> "$GITHUB_STEP_SUMMARY" <<EOF
+          Run ID *${{ inputs.run-id }}* published:
+          \`\`\`
+          $(< ./publish.out)
+          \`\`\`
+          EOF

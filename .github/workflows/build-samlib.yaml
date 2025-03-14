@@ -1,0 +1,64 @@
+name: Build samlib
+
+on:
+  workflow_call:
+    inputs:
+      ssc-release:
+        type: string
+        required: true
+      name:
+        type: string
+        required: true
+      runs-on:
+        type: string
+        required: true
+      platform:
+        type: string
+        required: true
+      container:
+        type: string
+      env:
+        type: string
+
+jobs:
+  build:
+    runs-on: ${{ inputs.runs-on }}
+    container: ${{ inputs.container }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+
+      - name: Check for uv
+        id: uv-check
+        run: echo "uv_path=$(command -v uv)" >> $GITHUB_OUTPUT
+
+      - name: Install uv
+        if: ${{ !steps.uv-check.outputs.uv_path }}
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: false
+
+      - name: Cache build
+        uses: actions/cache@v4
+        with:
+          path: ~/ssc-build
+          key: ${{ inputs.platform }}-${{ inputs.ssc-release }}
+
+      - name: Build packages
+        env:
+          SSC_BUILD_JOBS: 4
+          SSC_RELEASE: ${{ inputs.ssc-release  }}
+          PLATFORM_NAME: ${{ inputs.platform }}
+          UV_PYTHON: "3.10"
+        run: env SSC_BUILD_DIR="$HOME/ssc-build" ${{ inputs.env }} uv build
+
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.name }}-packages
+          path: ${{ runner.workspace }}/samlib/dist/
+          if-no-files-found: error
+          compression-level: 0

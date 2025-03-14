@@ -124,7 +124,7 @@ and wheel distributions and sets the appropriate environment variables based
 on the options provided during execution.
 
 
-### Universal wheels
+### Universal macOS wheels
 
 Building universal (fat) wheels on macOS requires a recent SDK. Execute the
 following command, replacing the deployment target if desired.

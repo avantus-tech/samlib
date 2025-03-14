@@ -9,72 +9,52 @@ on:
         type: string
 
 env:
-  UV_PYTHON: "3.10"
+  default_ssc_release: 2020.2.29.r2.ssc.240
 
 jobs:
-  build-linux:
-    name: Build for Linux
-    runs-on: ubuntu-latest
-    container: "quay.io/pypa/manylinux_2_28_x86_64"
+  build-packages:
+    name: Build for ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    container: ${{ matrix.container }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {name: Linux, os: ubuntu-latest, platform: manylinux_2_28_x86_64, container: "quay.io/pypa/manylinux_2_28_x86_64"}
+          - {name: macOS, os: macos-latest, platform: macosx_10_9_universal2}
+          - {name: Windows, os: windows-latest, platform: win_amd64}
     steps:
       - name: Check out branch
         uses: actions/checkout@v4
 
+      - name: Install uv
+        if: ${{ matrix.name != 'Linux' }}
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: false
+
       - name: Cache build
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.cache/uv
-            ~/build
-          key: linux-${{ inputs.ssc-release || '2020.2.29.r2.ssc.240' }}
+          path: ~/ssc-build
+          key: ${{ matrix.platform }}-${{ inputs.ssc-release || env.default_ssc_release }}
 
       - name: Build packages
         shell: bash
         env:
-          CFLAGS: "-Wno-error=implicit-function-declaration"
-        run: |
-          env SSC_BUILD_DIR="$HOME/build" SSC_BUILD_JOBS=4 \
-            PLATFORM_NAME="$AUDITWHEEL_PLAT" \
-            SSC_RELEASE="${{ inputs.ssc-release || '2020.2.29.r2.ssc.240' }}" \
-            uv build
+          CFLAGS: ${{ matrix.name != 'Windows' && '-Wno-error=implicit-function-declaration' || '' }} ${{ matrix.name == 'macOS' && '-arch arm64 -arch x86_64' || '' }}
+          SSC_BUILD_JOBS: 4
+          SSC_RELEASE: ${{ inputs.ssc-release || env.default_ssc_release }}
+          PLATFORM_NAME: ${{ matrix.platform }}
+          UV_PYTHON: "3.10"
+          MACOSX_DEPLOYMENT_TARGET: "10.9"
+          CMAKE_OSX_ARCHITECTURES: arm64;x86_64
+        run: env SSC_BUILD_DIR="$HOME/ssc-build" uv build
 
       - name: Upload packages
         uses: actions/upload-artifact@v4
         with:
-          name: linux-packages
+          name: ${{ matrix.name }}-packages
           path: ${{ runner.workspace }}/samlib/dist/
           if-no-files-found: error
           compression-level: 0
-
-
-#  build-other:
-#    name: Build packages for ${{ matrix.platform }}
-#    runs-on: ${{ matrix.os }}
-#    env:
-#      UV_PYTHON: "3.10"
-#    strategy:
-#      fail-fast: false
-#      matrix:
-#        include:
-#          - {platform: Linux, os: ubuntu-latest, container: "quay.io/pypa/manylinux_2_28_x86_64"}
-#          - {platform: Windows, os: windows-latest}
-#          - {platform: Mac, os: macos-latest}
-#
-#    steps:
-#      - name: Check out branch
-#        uses: actions/checkout@v4
-#
-#      - name: Install uv
-#        uses: astral-sh/setup-uv@v4
-#
-#      - name: Synchronize virtual environment
-#        run: uv sync --frozen --reinstall-package samlib
-#
-#      - name: Lint source code
-#        run: uv run ruff check
-#
-#      - name: Type check code
-#        run: uv run mypy
-#
-#      - name: Run tests
-#        run: uv run pytest

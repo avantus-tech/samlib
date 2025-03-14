@@ -1,0 +1,80 @@
+name: Build Python packages
+
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      ssc-release:
+        description: SSC release to build
+        type: string
+
+env:
+  UV_PYTHON: "3.10"
+
+jobs:
+  build-linux:
+    name: Build for Linux
+    runs-on: ubuntu-latest
+    container: "quay.io/pypa/manylinux_2_28_x86_64"
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+
+      - name: Cache build
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/uv
+            ~/build
+          key: linux-${{ inputs.ssc-release || '2020.2.29.r2.ssc.240' }}
+
+      - name: Build packages
+        shell: bash
+        env:
+          CFLAGS: "-Wno-error=implicit-function-declaration"
+        run: |
+          env SSC_BUILD_DIR="$HOME/build" SSC_BUILD_JOBS=4 \
+            PLATFORM_NAME="$AUDITWHEEL_PLAT" \
+            SSC_RELEASE="${{ inputs.ssc-release || '2020.2.29.r2.ssc.240' }}" \
+            uv build
+
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-packages
+          path: ${{ runner.workspace }}/samlib/dist/
+          if-no-files-found: error
+          compression-level: 0
+
+
+#  build-other:
+#    name: Build packages for ${{ matrix.platform }}
+#    runs-on: ${{ matrix.os }}
+#    env:
+#      UV_PYTHON: "3.10"
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        include:
+#          - {platform: Linux, os: ubuntu-latest, container: "quay.io/pypa/manylinux_2_28_x86_64"}
+#          - {platform: Windows, os: windows-latest}
+#          - {platform: Mac, os: macos-latest}
+#
+#    steps:
+#      - name: Check out branch
+#        uses: actions/checkout@v4
+#
+#      - name: Install uv
+#        uses: astral-sh/setup-uv@v4
+#
+#      - name: Synchronize virtual environment
+#        run: uv sync --frozen --reinstall-package samlib
+#
+#      - name: Lint source code
+#        run: uv run ruff check
+#
+#      - name: Type check code
+#        run: uv run mypy
+#
+#      - name: Run tests
+#        run: uv run pytest

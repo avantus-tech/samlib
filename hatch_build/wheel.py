@@ -50,7 +50,7 @@ import cffi
 import requests
 
 
-SSC_DOWNLOAD_URL: Final = f'https://github.com/NREL/ssc/archive/refs/tags'
+SSC_DOWNLOAD_URL: Final = f'https://github.com/NatLabRockies/ssc/archive/refs/tags'
 IS_WINDOWS: Final = sys.platform in ['win32', 'cygwin']
 
 

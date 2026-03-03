@@ -32,7 +32,9 @@ jobs:
       runs-on: ubuntu-latest
       platform: manylinux_2_28_x86_64
       container: quay.io/pypa/manylinux_2_28_x86_64
-      env: CFLAGS=-Wno-error=implicit-function-declaration
+      env: |
+        CFLAGS=-Wno-error=implicit-function-declaration \
+        CMAKE_POLICY_VERSION_MINIMUM=3.5 \
 
   build-macos:
     name: Build for macOS
@@ -47,6 +49,7 @@ jobs:
         CFLAGS="-Wno-error=implicit-function-declaration -arch arm64 -arch x86_64" \
         MACOSX_DEPLOYMENT_TARGET=10.9 \
         CMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
+        CMAKE_POLICY_VERSION_MINIMUM=3.5 \
 
   build-windows:
     name: Build for Windows

@@ -75,7 +75,7 @@ licensed under a [BSD 3-clause license](SSC-LICENSE).
 Building requires _cmake_ >= 3.24, a C++ compiler, and the Python _build_
 package, which can be installed with `pip install --upgrade build`.
 
-On windows, _cmake_ can be installed using `winget install --id Kitware.CMake`.
+On Windows, _cmake_ can be installed using `winget install --id Kitware.CMake`.
 
 _CMake_ and _SSC_ options can be set using environment variables. See the
 [_CMake_](https://cmake.org/cmake/help/latest/) and

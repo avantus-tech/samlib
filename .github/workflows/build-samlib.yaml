@@ -29,7 +29,7 @@ jobs:
         shell: bash
     steps:
       - name: Check out branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Check for uv
         id: uv-check
@@ -37,12 +37,12 @@ jobs:
 
       - name: Install uv
         if: ${{ !steps.uv-check.outputs.uv_path }}
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v7
         with:
           enable-cache: false
 
       - name: Cache build
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/ssc-build
           key: ${{ inputs.platform }}-${{ inputs.ssc-release }}
@@ -56,7 +56,7 @@ jobs:
         run: env SSC_BUILD_DIR="$HOME/ssc-build" ${{ inputs.env }} uv build
 
       - name: Upload packages
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ inputs.name }}-packages
           path: ${{ runner.workspace }}/samlib/dist/

@@ -1,7 +1,7 @@
 # samlib
 
-_Samlib_ is a high-level Python wrapper to the [_SAM_ _SSC_ library](https://github.com/NREL/ssc/)
-from the [_SAM_ SDK](https://sam.nrel.gov/sdk).
+_Samlib_ is a high-level Python wrapper to the [_SAM_ _SSC_ library](https://github.com/NatLabRockies/ssc/)
+from the [_SAM_ SDK](https://sam.nlr.gov/software-development-kit-sdk).
 
 
 ## Overview
@@ -79,7 +79,7 @@ On windows, _cmake_ can be installed using `winget install --id Kitware.CMake`.
 
 _CMake_ and _SSC_ options can be set using environment variables. See the
 [_CMake_](https://cmake.org/cmake/help/latest/) and
-[_SSC_](https://github.com/NREL/SAM/wiki) documentation for more details.
+[_SSC_](https://github.com/NatLabRockies/SAM/wiki) documentation for more details.
 
 Environment variables may be provided to control the build.
 
@@ -87,7 +87,7 @@ Environment variables may be provided to control the build.
 
 SSC_RELEASE=TAG
 
-: SSC revision to download and build; TAG should match an SSC tag from the NREL
+: SSC revision to download and build; TAG should match an SSC tag from the NLR
   SSC git repository in the form `YYYY.MM.DD[.rcN].ssc.REV`. This variable is
   required when building sdist or wheel distributions from git source.
 

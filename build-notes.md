@@ -10,7 +10,7 @@ building assuming a Linux host system with Windows and macOS virtual machines or
 ## GitHub workflows
 
 1. Push changes, if any, to a branch in the *samlib* GitHub repo.
-2. Check the [SSC releases](https://github.com/NREL/ssc/releases) and decide which release to build wheels for.
+2. Check the [SSC releases](https://github.com/NatLabRockies/ssc/releases) and decide which release to build wheels for.
 3. Kick off a build from the [*Build packages* workflow on the Actions tab](https://github.com/avantus-tech/samlib/actions/workflows/build.yaml)
    by submitting the SSC release from the previous step using the *Run workflow* dropdown.
 4. Once the build completes successfully, download the artifacts and extract the source and wheel

@@ -53,6 +53,7 @@ jobs:
           SSC_RELEASE: ${{ inputs.ssc-release  }}
           PLATFORM_NAME: ${{ inputs.platform }}
           UV_PYTHON: "3.10"
+          CMAKE_POLICY_VERSION_MINIMUM: "3.5"
         run: env SSC_BUILD_DIR="$HOME/ssc-build" ${{ inputs.env }} uv build
 
       - name: Upload packages

@@ -24,19 +24,25 @@ building assuming a Linux host system with Windows and macOS virtual machines or
 
 1. Build sdist and wheel on Linux:
 
-       docker run -it --rm --volume "$PWD":/home/samlib:rw --user "$UID:$GID" \
-         --workdir /home/samlib quay.io/pypa/manylinux_2_28_x86_64 \
-         bash -c 'env SSC_BUILD_DIR="$PWD/build/manylinux" SSC_BUILD_JOBS=10 \
-         PLATFORM_NAME="$AUDITWHEEL_PLAT" SSC_RELEASE=2020.2.29.r2.ssc.240 \
-         uv build --cache-dir "$PWD/build/.cache"'
+       docker run -it --rm --user "$UID:$GID" --workdir /workspace \
+         --mount type=bind,src="$PWD",dst=/workspace \
+         -e UV_CACHE_DIR=/workspace/build/.cache/uv \
+         -e UV_PYTHON_CACHE_DIR=/workspace/build/.cache/python \
+         -e SSC_BUILD_DIR=/workspace/build/manylinux -e SSC_BUILD_JOBS=10 \
+         -e SSC_RELEASE=2020.2.29.r2.ssc.240 \
+         quay.io/pypa/manylinux_2_28_x86_64 \
+         bash -c 'env PLATFORM_NAME="$AUDITWHEEL_PLAT" uv build'
 
    or
 
-       docker run -it --rm --volume "$PWD":/home/samlib:rw --user "$UID:$GID" \
-         --workdir /home/samlib quay.io/pypa/manylinux_2_28_x86_64 \
+       docker run -it --rm --user "$UID:$GID" --workdir /workspace \
+         --mount type=bind,src="$PWD",dst=/workspace \
+         -e UV_CACHE_DIR=/workspace/build/.cache/uv \
+         -e UV_PYTHON_CACHE_DIR=/workspace/build/.cache/python \
+         quay.io/pypa/manylinux_2_28_x86_64 \
          bash -c '/opt/python/cp310-cp310/bin/python build-samlib.py \
          --build-dir build/manylinux --jobs 10 --plat-name "$AUDITWHEEL_PLAT" \
-         --ssc-release 2020.2.29.r2.ssc.240 -- --cache-dir build/.cache'
+         --ssc-release 2020.2.29.r2.ssc.240'
 
 2. Transfer sdist to macos:
 

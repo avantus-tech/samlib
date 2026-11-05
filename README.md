@@ -146,7 +146,8 @@ docker pull quay.io/pypa/manylinux_2_28_x86_64
 ```
 2. Open a bash shell in the docker container:
 ```shell
-docker run -it --rm --volume $PWD:/home/samlib:rw --user $UID:$GID --workdir /home/samlib quay.io/pypa/manylinux_2_28_x86_64 bash -l
+docker run -it --rm --user $UID:$GID --workdir /workspace \
+  --mount type=bind,src="$PWD",dst=/workspace quay.io/pypa/manylinux_2_28_x86_64 bash -l
 ```
 3. Build the wheel using the minimum supported Python version (3.10 at the time of this writing):
 ```shell
@@ -160,7 +161,8 @@ exit
 Optionally, this one command can be used to build a manylinux wheel:
 ```shell
 docker pull quay.io/pypa/manylinux_2_28_x86_64 && \
-docker run -it --rm --volume "$PWD":/home/samlib:rw --user "$UID:$GID" --workdir /home/samlib \
+docker run -it --rm --user "$UID:$GID" --workdir /workspace \
+  --mount type=bind,src="$PWD"dst=/workspace \
   quay.io/pypa/manylinux_2_28_x86_64 bash -c \
   '/opt/python/cp310-cp310/bin/python build-samlib.py --build-dir=build/manylinux --jobs=10 --plat-name="$AUDITWHEEL_PLAT"'
 ```
